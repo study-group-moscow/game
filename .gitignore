@@ -1,0 +1,10 @@
+node_modules
+dist
+*.swp
+.cache
+
+#IDE
+.vscode
+
+#OS
+.DS_Store
