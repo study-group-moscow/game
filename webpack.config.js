@@ -32,6 +32,9 @@ module.exports = {
       }
     ]
   },
+  resolve: {
+    extensions: [".js", ".json", ".ts", ".tsx"],
+  },
   plugins: [
     new HtmlWebpackPlugin({
       template: "./www/index.html"
