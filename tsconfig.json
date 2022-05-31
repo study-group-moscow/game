@@ -26,6 +26,6 @@
     "baseUrl": "./",
   },
   "include": [
-    "src",
+    "src", "index.d.ts"
   ],
 }
