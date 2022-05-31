@@ -1,7 +1,8 @@
 import React, {Suspense} from 'react';
 import {Route, Routes} from "react-router-dom";
+import {withErrorBoundary} from 'react-error-boundary';
 
-export default function App() {
+const App = () => {
     return (
         <div className="App">
             <h1>Главная</h1>
@@ -19,3 +20,9 @@ export default function App() {
         </div>
     );
 };
+
+export default withErrorBoundary(App, {
+        fallback: <>Что-то пошло не так.</>
+    }
+);
+
