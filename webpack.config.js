@@ -1,13 +1,14 @@
-const path = require("path");
-const HtmlWebpackPlugin = require("html-webpack-plugin");
+const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-  entry: "./src/index.js",
+  entry: './src/index.js',
   output: {
-    path: path.join(__dirname, "/dist"),
-    filename: "bundle.js"
+    path: path.join(__dirname, '/dist'),
+    filename: '[name].js',
+    sourceMapFilename: '[name].js.map'
   },
-  devtool: false,
+  devtool: 'source-map',
   module: {
     rules: [
       {
@@ -16,42 +17,48 @@ module.exports = {
           {
             loader: 'ts-loader',
             options: {
-              configFile: path.resolve(__dirname, 'tsconfig.json'),
-            },
-          },
+              configFile: path.resolve(__dirname, 'tsconfig.json')
+            }
+          }
         ],
         exclude: /(node_modules)/
       },
       {
-        test: /\.js$/,
-        exclude: /node_modules/,
-        use: ["babel-loader"]
+        test: /\.m?js$/,
+        exclude: /(node_modules)/,
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: ['@babel/preset-env', '@babel/preset-react'],
+            cacheDirectory: true
+          }
+        }
       },
       {
         test: /\.(css|sass|scss)$/,
         use: [
           {
-            loader: 'style-loader',
+            loader: 'style-loader'
           },
           {
-            loader: 'css-loader',
+            loader: 'css-loader'
           },
           {
-            loader: 'sass-loader',
-          },
-        ],
-      },
-    ],
+            loader: 'sass-loader'
+          }
+        ]
+      }
+    ]
   },
   resolve: {
-    extensions: [".js", ".json", ".ts", ".tsx"],
+    extensions: ['.js', '.json', '.ts', '.tsx']
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: "./www/index.html"
+      template: './www/index.html'
     })
   ],
   devServer: {
-    historyApiFallback: true,
-  },
-}; 
+    historyApiFallback: true
+  }
+}

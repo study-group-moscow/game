@@ -28,5 +28,5 @@ const App = () => (
 )
 
 export default withErrorBoundary(App, {
-  fallback: <>Что-то пошло не так.</>,
+  fallback: <>Что-то пошло не так.</>
 })
