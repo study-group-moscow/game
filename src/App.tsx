@@ -1,12 +1,16 @@
 import React, { Suspense, lazy } from 'react';
+import CssBaseline from '@mui/material/CssBaseline';
 import { Route, Routes } from 'react-router-dom';
 import { withErrorBoundary } from 'react-error-boundary';
 
-const About = lazy(() => import('./pages/About/About.tsx'))
-const Home = lazy(() => import('./pages/Home/Home.tsx'))
+// как пример...
+const About = lazy(() => import(/* webpackChunkName: "About" */ './pages/About/About.tsx'))
+const Home = lazy(() => import(/* webpackChunkName: "Home" */ './pages/Home/Home.tsx'))
 
 const App = () => (
   <div className="App">
+    <CssBaseline />
+
     <h1>Главная</h1>
 
     <Suspense fallback={<div>Loading...</div>}>
@@ -15,8 +19,8 @@ const App = () => (
         <Route path="/registration" element={<div>Registration</div>} />
         <Route path="login" element={<div>Login</div>} />
         <Route path="/game" element={<div>Game</div>} />
-        <Route exact path="/error" element={<div>Error</div>} />
-        <Route exact path="/" element={<Home />} />
+        <Route path="/error" element={<div>Error</div>} />
+        <Route path="/" element={<Home />} />
         <Route path="*" element={<div>NotFound</div>} />
       </Routes>
     </Suspense>

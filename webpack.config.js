@@ -7,6 +7,7 @@ module.exports = {
     path: path.join(__dirname, "/dist"),
     filename: "bundle.js"
   },
+  devtool: false,
   module: {
     rules: [
       {
@@ -27,10 +28,20 @@ module.exports = {
         use: ["babel-loader"]
       },
       {
-        test: /\.scss$/,
-        use: ["style-loader", "css-loader", "sass-loader"]
-      }
-    ]
+        test: /\.(css|sass|scss)$/,
+        use: [
+          {
+            loader: 'style-loader',
+          },
+          {
+            loader: 'css-loader',
+          },
+          {
+            loader: 'sass-loader',
+          },
+        ],
+      },
+    ],
   },
   resolve: {
     extensions: [".js", ".json", ".ts", ".tsx"],
