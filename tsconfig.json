@@ -8,6 +8,7 @@
     ],
     "allowJs": true,
     "skipLibCheck": true,
+    "sourceMap": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "strict": true,
@@ -18,13 +19,12 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": false,
-    "noImplicitAny": true,
-    "strictNullChecks": true,
     "noUnusedLocals": false,
     "noUnusedParameters": false,
-    "jsx": "react-jsx"
+    "jsx": "react-jsx",
+    "baseUrl": "./",
   },
   "include": [
-    "src"
+    "src", "index.d.ts", "webpack.config.js"
   ]
 }
