@@ -31,6 +31,9 @@
         /* quotes */
         "jsx-quotes": ["error", "prefer-single"],
 
+        /* empty lines */
+        "no-multiple-empty-lines": ["error", { "max": 1 }],
+
         /* trailing commas */
         "comma-dangle": ["error", "never"],
         "@typescript-eslint/comma-dangle": ["error", "never"],
