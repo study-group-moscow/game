@@ -3,19 +3,14 @@ import { useFormContext } from 'react-hook-form';
 import Input from '@mui/material/TextField/TextField';
 
 interface ITextFieldProps {
-  name?: string;
-  label?: string;
-  type?: string;
-  autoFocus?: boolean;
+  name?: string
+  label?: string
+  type?: string
+  autoFocus?: boolean
 }
 
-const TextField = ({
-  name = '', label, type, autoFocus = false
-}: ITextFieldProps) => {
-  const {
-    register,
-    formState: { errors }
-  } = useFormContext(); // retrieve all hook methods
+const TextField = ({ name = '', label = '', type = 'text', autoFocus = false }: ITextFieldProps) => {
+  const { register, formState: { errors } } = useFormContext(); // retrieve all hook methods
 
   return (
     <Input
@@ -26,8 +21,9 @@ const TextField = ({
       fullWidth
       error={!!errors?.[name]?.message}
       helperText={errors?.[name]?.message}
+      size='small'
     />
-  );
-};
+  )
+}
 
 export default TextField

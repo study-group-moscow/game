@@ -1,7 +1,12 @@
-.Registration {
-  display: flex;
-  max-width: 500px;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+.form {
+  height: 100%;
+
+  .layout {
+    min-height: 100%;
+
+    .input {
+      min-height: 70px;
+      width: 300px;
+    }
+  }
 }

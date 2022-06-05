@@ -2,7 +2,7 @@ import React, { lazy } from 'react';
 import { useForm, FormProvider } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Container, Grid, Paper } from '@mui/material';
+import { Grid } from '@mui/material';
 import Button from '@mui/material/Button';
 import styles from './registration.module.scss';
 import { InputLabel, InputName } from '../../utils/consts';
@@ -38,7 +38,7 @@ type FormData = {
   [InputName.phone]: string;
 };
 
-const Registration = () => {
+const Registration:React.FC = () => {
   const methods = useForm<FormData>({
     defaultValues: {
       [InputName.firstName]: '',
@@ -52,83 +52,56 @@ const Registration = () => {
     resolver: yupResolver(schema)
   });
 
-  const onSubmit = (data: any) => console.log(data);
+  const onSubmit = (data: FormData) => console.log(data);
 
   return (
-    <Paper style={{ margin: '5px' }}>
-      <div style={{ padding: '30px' }}>
-        <FormProvider {...methods}>
-          <Container>
-            <form className={styles.Registration} onSubmit={methods.handleSubmit(onSubmit)}>
+    <FormProvider {...methods}>
+      <form onSubmit={methods.handleSubmit(onSubmit)} className={styles.form}>
+        <Grid
+          container
+          spacing={0}
+          direction='column'
+          alignItems='center'
+          justifyContent='center'
+          className={styles.layout}
+        >
+          <Grid item xs={12} className={styles.input}>
+            <TextField name={InputName.displayName} label={InputLabel.displayName} autoFocus />
+          </Grid>
 
-              <Grid container spacing={2} justifyContent='center'>
-                <Grid item xs={12}>
-                  <TextField
-                    name={InputName.displayName}
-                    label={InputLabel.displayName}
-                    autoFocus={true}
-                  />
-                </Grid>
+          <Grid item xs={12} className={styles.input}>
+            <TextField name={InputName.firstName} label={InputLabel.firstName} />
+          </Grid>
 
-                <Grid item xs={12}>
-                  <TextField
-                    name={InputName.firstName}
-                    label={InputLabel.firstName}
-                  />
-                </Grid>
+          <Grid item xs={12} className={styles.input}>
+            <TextField name={InputName.secondName} label={InputLabel.secondName} />
+          </Grid>
 
-                <Grid item xs={12}>
-                  <TextField
-                    name={InputName.secondName}
-                    label={InputLabel.secondName}
-                  />
-                </Grid>
+          <Grid item xs={12} className={styles.input}>
+            <TextField name={InputName.login} label={InputLabel.login} />
+          </Grid>
 
-                <Grid item xs={12}>
-                  <TextField
-                    name={InputName.login}
-                    label={InputLabel.login}
-                  />
-                </Grid>
+          <Grid item xs={12} className={styles.input}>
+            <TextField name={InputName.email} label={InputLabel.email} />
+          </Grid>
 
-                <Grid item xs={12}>
-                  <TextField
-                    name={InputName.email}
-                    label={InputLabel.email}
-                  />
-                </Grid>
+          <Grid item xs={12} className={styles.input}>
+            <TextField name={InputName.phone} label={InputLabel.phone} />
+          </Grid>
 
-                <Grid item xs={12}>
-                  <TextField
-                    name={InputName.phone}
-                    label={InputLabel.phone}
-                  />
-                </Grid>
+          <Grid item xs={12} className={styles.input}>
+            <TextField name={InputName.password} label={InputLabel.password} />
+          </Grid>
 
-                <Grid item xs={12}>
-                  <TextField
-                    name={InputName.password}
-                    label={InputLabel.password}
-                  />
-                </Grid>
-
-                <Grid item xs={12}>
-                  <Button
-                    variant='contained'
-                    color='success'
-                    type='submit'
-                  >
-                    Регистрировать
-                  </Button>
-                </Grid>
-              </Grid>
-
-            </form>
-          </Container>
-        </FormProvider>
-      </div>
-    </Paper>
-  );
+          <Grid item xs={12}>
+            <Button variant='contained' color='success' type='submit' disableElevation>
+              Регистрация
+            </Button>
+          </Grid>
+        </Grid>
+      </form>
+    </FormProvider>
+  )
 }
 
-export default Registration;
+export default Registration
