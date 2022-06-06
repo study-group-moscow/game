@@ -1,8 +1,12 @@
-.Login {
-  display: flex;
-  width: 100%;
+.form {
   height: 100%;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+
+  .layout {
+    min-height: 100%;
+
+    .input {
+      min-height: 70px;
+      width: 300px;
+    }
+  }
 }

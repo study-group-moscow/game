@@ -2,7 +2,7 @@ import React, { lazy } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Container, Grid } from '@mui/material';
+import { Grid } from '@mui/material';
 import Button from '@mui/material/Button';
 import styles from './login.module.scss';
 import { InputLabel, InputName } from '../../utils/consts';
@@ -33,42 +33,36 @@ const Login = () => {
     mode: 'onBlur',
     resolver: yupResolver(schema)
   });
-  const onSubmit = (data: any) => console.log(data);
+  const onSubmit = (data: FormData) => console.log(data)
 
   return (
     <FormProvider {...methods}>
-      <Container style={{ width: '100%', height: '100%' }}>
-        <form className={styles.Login} onSubmit={methods.handleSubmit(onSubmit)}>
-
-          <Grid container spacing={2}>
-            <Grid item xs={12}>
-              <TextField
-                name={InputName.login}
-                label={InputLabel.login}
-                autoFocus={true}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                name={InputName.password}
-                label={InputLabel.password}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <Button
-                variant='contained'
-                color='success'
-                type='submit'
-              >
-                Войти
-              </Button>
-            </Grid>
+      <form onSubmit={methods.handleSubmit(onSubmit)} className={styles.form}>
+        <Grid
+          container
+          spacing={0}
+          direction='column'
+          alignItems='center'
+          justifyContent='center'
+          className={styles.layout}
+        >
+          <Grid item xs={12} className={styles.input}>
+            <TextField name={InputName.login} label={InputLabel.login} autoFocus />
           </Grid>
 
-        </form>
-      </Container>
+          <Grid item xs={12} className={styles.input}>
+            <TextField name={InputName.password} label={InputLabel.password} />
+          </Grid>
+
+          <Grid item xs={12}>
+            <Button variant='contained' color='success' type='submit' disableElevation>
+              Войти
+            </Button>
+          </Grid>
+        </Grid>
+      </form>
     </FormProvider>
-  );
+  )
 }
 
-export default Login;
+export default Login

@@ -1,6 +1,8 @@
 export enum RouterLinks {
+  HOME = '/',
+  ABOUT = '/about',
   LOGIN = '/login',
-  REGISTRATION = '/registration',
+  REGISTRATION = '/registration'
 }
 
 export enum InputName {
