@@ -1,0 +1,32 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Chrome (disabled security)",
+      "type": "chrome",
+      "request": "launch",
+      "showAsyncStacks": true,
+      "sourceMaps": true,
+      "url": "http://127.0.0.1:8000",
+      "runtimeArgs": ["--disable-web-security"],
+      "webRoot": "${workspaceFolder}/src",
+      "sourceMapPathOverrides": {
+        "webpack:///src/*": "${webRoot}/*"
+      },
+      "skipFiles": ["node_modules/**", "<node_internals>/**", "${workspaceFolder}/node_modules/**"]
+    },
+    {
+      "name": "Chrome (default)",
+      "type": "chrome",
+      "request": "launch",
+      "showAsyncStacks": true,
+      "sourceMaps": true,
+      "url": "http://127.0.0.1:8000",
+      "webRoot": "${workspaceFolder}/src",
+      "sourceMapPathOverrides": {
+        "webpack:///src/*": "${webRoot}/*"
+      },
+      "skipFiles": ["node_modules/**", "<node_internals>/**", "${workspaceFolder}/node_modules/**"]
+    }
+  ]
+}

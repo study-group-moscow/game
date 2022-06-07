@@ -6,7 +6,9 @@
   "scripts": {
     "start": "webpack serve --mode development --open --hot",
     "build": "webpack --mode production",
-    "lint": "npx eslint src/* --ext .ts,.tsx,.js"
+    "lint": "eslint --ext .js,.jsx,.ts,.tsx src --color --fix",
+    "stylelint": "stylelint '**/*.scss' --fix",
+    "format": "prettier --write 'src/**/*.{ts,tsx,scss,css,json}'"
   },
   "keywords": [],
   "author": "",
