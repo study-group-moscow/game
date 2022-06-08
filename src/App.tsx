@@ -5,6 +5,7 @@ import { withErrorBoundary } from 'react-error-boundary';
 import { RouterLinks } from './utils/consts';
 
 // как пример...
+const AppBar = lazy(() => import(/* webpackChunkName: "AppBar" */ './components/AppBar/AppBar'))
 const About = lazy(() => import(/* webpackChunkName: "About" */ './pages/About/About'))
 const Home = lazy(() => import(/* webpackChunkName: "Home" */ './pages/Home/Home'))
 const Registration = lazy(() => import(/* webpackChunkName: "Registration" */ './pages/Registration/Registration'))
@@ -13,6 +14,8 @@ const Login = lazy(() => import(/* webpackChunkName: "Login" */ './pages/Login/L
 const App = () => (
   <div className='App' style={{ height: '100vh' }}>
     <CssBaseline />
+
+    <AppBar />
 
     <Suspense fallback={<div>Loading...</div>}>
       <Routes>
