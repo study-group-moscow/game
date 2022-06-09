@@ -18,11 +18,7 @@ export enum InputName {
 export enum RouterLinksName {
   NOT_REGISTRATION = 'Не зарегистрированы ?',
   EXIT = 'Выйти',
-  ALREADY_REGISTRATION = 'Уже зарегистрированы ?',
-  BACK_CHATS = 'К чатам',
-  BACK_PROFILE = 'Вернуться в профиль',
-  CHANGE_PROFILE = 'Изменить профиль',
-  CHANGE_PASSWORD = 'Изменить пароль'
+  ALREADY_REGISTRATION = 'Уже зарегистрированы ?'
 }
 
 export enum InputLabel {
@@ -35,3 +31,16 @@ export enum InputLabel {
   file = 'Файл',
   displayName = 'Отображаемое имя'
 }
+
+export const ENDPOINTS = {
+  HTTP: 'https://ya-praktikum.tech/api/v2/',
+  WSS: 'wss://ya-praktikum.tech/ws',
+
+  AUTH: {
+    PATH: '/auth',
+    USER: '/user',
+    SIGNIN: '/signin',
+    SIGNUP: '/signup',
+    LOGOUT: '//logout'
+  }
+};

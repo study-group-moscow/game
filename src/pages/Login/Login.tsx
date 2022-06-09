@@ -4,8 +4,10 @@ import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Grid } from '@mui/material';
 import Button from '@mui/material/Button';
+import { useNavigate } from 'react-router';
 import styles from './login.module.scss';
 import { InputLabel, InputName } from '../../utils/consts';
+import { useFetchSigInMutation, useFetchUserMutation } from '../../services/AuthServices';
 
 const TextField = lazy(() => import(/* webpackChunkName: "TextField" */ '../../components/TextField/TextField'))
 
@@ -19,25 +21,35 @@ const schema = yup.object()
       .required('Логин не указан.')
   })
 
-type FormData = {
+export type TLoginParam = {
   [InputName.login]: string;
   [InputName.password]: string;
 };
 
 const Login = () => {
-  const methods = useForm<FormData>({
+  const methods = useForm<TLoginParam>({
     defaultValues: {
-      [InputName.login]: '',
-      [InputName.password]: ''
+      [InputName.login]: 'Test0010',
+      [InputName.password]: 'Abrikosov8436259'
     },
     mode: 'onBlur',
     resolver: yupResolver(schema)
   });
-  const onSubmit = (data: FormData) => console.log(data)
+
+  const [fetchLogin] = useFetchSigInMutation();
+  const [fetchUser] = useFetchUserMutation();
+  const navigate = useNavigate();
+
+  const onSubmit = async (data: TLoginParam) => {
+    await fetchLogin(data);
+    await fetchUser('');
+    navigate('/home')
+  }
 
   return (
     <FormProvider {...methods}>
       <form onSubmit={methods.handleSubmit(onSubmit)} className={styles.form}>
+
         <Grid
           container
           spacing={0}
