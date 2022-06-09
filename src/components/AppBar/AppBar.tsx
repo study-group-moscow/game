@@ -26,7 +26,6 @@ const CustomAppBar = () => {
   };
 
   return (
-
     <AppBar position='static'>
       <Toolbar>
         <AdbIcon sx={{ mr: 'auto' }} />
