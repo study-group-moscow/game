@@ -1,11 +1,18 @@
-import React, { lazy } from 'react';
+import React, { lazy, useState } from 'react';
 import { useForm, FormProvider } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Grid } from '@mui/material';
+import { Checkbox, FormControlLabel, Grid } from '@mui/material';
 import Button from '@mui/material/Button';
+import { useNavigate } from 'react-router';
 import styles from './registration.module.scss';
-import { InputLabel, InputName } from '../../utils/consts';
+import { InputLabel, InputName, RouterLinks, RouterLinksName, TYPES_ALERT } from '../../utils/consts';
+import { useFetchSigUpMutation, useFetchUserMutation } from '../../services/AuthServices';
+import { useAppDispatch } from '../../hooks/redux';
+import { IAlertTypeProps, showAlert } from '../../store/reducers/AlertSlice';
+import { IErrorResponse } from '../../models/IErrorResponse';
+import { IUserResponse } from '../../models/IUserResponse';
+import { setCredentials } from '../../store/reducers/AuthSlice';
 
 const TextField = lazy(() => import(/* webpackChunkName: "TextField" */ '../../components/TextField/TextField'))
 
@@ -29,18 +36,20 @@ const schema = yup.object()
       .required('Логин не указан.')
   })
 
-type FormData = {
+export interface ISigUpParam {
+  [InputName.displayName]: string;
   [InputName.firstName]: string;
   [InputName.secondName]: string;
   [InputName.login]: string;
   [InputName.email]: string;
   [InputName.password]: string;
   [InputName.phone]: string;
-};
+}
 
 const Registration:React.FC = () => {
-  const methods = useForm<FormData>({
+  const methods = useForm<ISigUpParam>({
     defaultValues: {
+      [InputName.displayName]: '',
       [InputName.firstName]: '',
       [InputName.secondName]: '',
       [InputName.login]: '',
@@ -52,7 +61,34 @@ const Registration:React.FC = () => {
     resolver: yupResolver(schema)
   });
 
-  const onSubmit = (data: FormData) => console.log(data);
+  const [isShowPassword, setIsShowPassword] = useState(false);
+
+  const [fetchSigUp] = useFetchSigUpMutation();
+  const [fetchUser] = useFetchUserMutation();
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+
+  const getUser = async () => {
+    const user: IUserResponse = await fetchUser('').unwrap();
+    dispatch(setCredentials(user));
+  }
+
+  const onSubmit = async (data: ISigUpParam) => {
+    await fetchSigUp(data)
+      .then((response) => {
+        const { error } = (response as IErrorResponse);
+        if (!error) {
+          getUser();
+        } else {
+          const { data } = error;
+          const type: string = TYPES_ALERT.ERROR;
+          dispatch(showAlert({
+            text: data?.reason ?? '',
+            type: type as IAlertTypeProps
+          }))
+        }
+      });
+  }
 
   return (
     <FormProvider {...methods}>
@@ -90,7 +126,27 @@ const Registration:React.FC = () => {
           </Grid>
 
           <Grid item xs={12} className={styles.input}>
-            <TextField name={InputName.password} label={InputLabel.password} />
+            <TextField type={isShowPassword ? '' : InputName.password} name={InputName.password} label={InputLabel.password} />
+          </Grid>
+          <Grid
+            container
+            alignItems='center'
+            justifyContent='center'
+          >
+            <Grid item>
+              <FormControlLabel
+                control={(
+                  <Checkbox
+                    color='primary'
+                    onClick={() => setIsShowPassword((pre) => !pre)}
+                  />
+              )}
+                label={InputLabel.showPassword}
+              />
+            </Grid>
+            <Grid item>
+              <Button onClick={() => navigate(RouterLinks.LOGIN)} disableFocusRipple disableRipple style={{ textTransform: 'none' }} variant='text' color='primary'>{RouterLinksName.ALREADY_REGISTRATION}</Button>
+            </Grid>
           </Grid>
 
           <Grid item xs={12}>

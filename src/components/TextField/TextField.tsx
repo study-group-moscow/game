@@ -3,10 +3,10 @@ import { useFormContext } from 'react-hook-form';
 import Input from '@mui/material/TextField/TextField';
 
 interface ITextFieldProps {
-  name?: string
-  label?: string
-  type?: string
-  autoFocus?: boolean
+  name?: string;
+  label?: string;
+  type?: string;
+  autoFocus?: boolean;
 }
 
 const TextField = ({ name = '', label = '', type = 'text', autoFocus = false }: ITextFieldProps) => {

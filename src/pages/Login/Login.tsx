@@ -1,13 +1,18 @@
-import React, { lazy } from 'react';
+import React, { lazy, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Grid } from '@mui/material';
+import { Checkbox, FormControlLabel, Grid } from '@mui/material';
 import Button from '@mui/material/Button';
 import { useNavigate } from 'react-router';
+import { useDispatch } from 'react-redux';
 import styles from './login.module.scss';
-import { InputLabel, InputName } from '../../utils/consts';
+import { InputLabel, InputName, RouterLinks, RouterLinksName, TYPES_ALERT } from '../../utils/consts';
 import { useFetchSigInMutation, useFetchUserMutation } from '../../services/AuthServices';
+import { setCredentials } from '../../store/reducers/AuthSlice';
+import { IUserResponse } from '../../models/IUserResponse';
+import { IErrorResponse } from '../../models/IErrorResponse';
+import { IAlertTypeProps, showAlert } from '../../store/reducers/AlertSlice';
 
 const TextField = lazy(() => import(/* webpackChunkName: "TextField" */ '../../components/TextField/TextField'))
 
@@ -21,13 +26,13 @@ const schema = yup.object()
       .required('Логин не указан.')
   })
 
-export type TLoginParam = {
+export interface ISigInParam {
   [InputName.login]: string;
   [InputName.password]: string;
-};
+}
 
 const Login = () => {
-  const methods = useForm<TLoginParam>({
+  const methods = useForm<ISigInParam>({
     defaultValues: {
       [InputName.login]: 'Test0010',
       [InputName.password]: 'Abrikosov8436259'
@@ -38,13 +43,31 @@ const Login = () => {
 
   const [fetchLogin] = useFetchSigInMutation();
   const [fetchUser] = useFetchUserMutation();
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const onSubmit = async (data: TLoginParam) => {
-    await fetchLogin(data);
-    await fetchUser('');
-    navigate('/home')
+  const getUser = async () => {
+    const user: IUserResponse = await fetchUser('').unwrap();
+    dispatch(setCredentials(user));
+    navigate(RouterLinks.HOME);
   }
+
+  const onSubmit = async (value: ISigInParam) => {
+    await fetchLogin(value).then((response) => {
+      const { error, data } = (response as IErrorResponse);
+      if (data) {
+        getUser();
+      } else if (error) {
+        const type: string = TYPES_ALERT.ERROR;
+        dispatch(showAlert({
+          text: error?.data?.reason ?? '',
+          type: type as IAlertTypeProps
+        }));
+      }
+    });
+  }
+
+  const [isShowPassword, setIsShowPassword] = useState(false);
 
   return (
     <FormProvider {...methods}>
@@ -63,7 +86,28 @@ const Login = () => {
           </Grid>
 
           <Grid item xs={12} className={styles.input}>
-            <TextField name={InputName.password} label={InputLabel.password} />
+            <TextField type={isShowPassword ? '' : InputName.password} name={InputName.password} label={InputLabel.password} />
+          </Grid>
+
+          <Grid
+            container
+            alignItems='center'
+            justifyContent='center'
+          >
+            <Grid item>
+              <FormControlLabel
+                control={(
+                  <Checkbox
+                    color='primary'
+                    onClick={() => setIsShowPassword((pre) => !pre)}
+                  />
+                )}
+                label={InputLabel.showPassword}
+              />
+            </Grid>
+            <Grid item>
+              <Button onClick={() => navigate(RouterLinks.REGISTRATION)} disableFocusRipple disableRipple style={{ textTransform: 'none' }} variant='text' color='primary'>{RouterLinksName.NOT_REGISTRATION}</Button>
+            </Grid>
           </Grid>
 
           <Grid item xs={12}>

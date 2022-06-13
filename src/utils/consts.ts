@@ -1,7 +1,7 @@
 export enum RouterLinks {
   HOME = '/',
   ABOUT = '/about',
-  LOGIN = '/login',
+  LOGIN = '/',
   REGISTRATION = '/registration'
 }
 
@@ -29,11 +29,12 @@ export enum InputLabel {
   email = 'Почта',
   phone = 'Телефон',
   file = 'Файл',
-  displayName = 'Отображаемое имя'
+  displayName = 'Отображаемое имя',
+  showPassword = 'Показать пароль'
 }
 
 export const ENDPOINTS = {
-  HTTP: 'https://ya-praktikum.tech/api/v2/',
+  HTTP: 'https://ya-praktikum.tech/api/v2',
   WSS: 'wss://ya-praktikum.tech/ws',
 
   AUTH: {
@@ -41,6 +42,11 @@ export const ENDPOINTS = {
     USER: '/user',
     SIGNIN: '/signin',
     SIGNUP: '/signup',
-    LOGOUT: '//logout'
+    LOGOUT: '/logout'
   }
 };
+
+export const TYPES_ALERT = {
+  ERROR: 'error',
+  SUCCESS: ' success'
+}

@@ -1,10 +1,15 @@
-import React, { Suspense, lazy, useEffect } from 'react';
+import React, { lazy, Suspense, useEffect } from 'react';
 import CssBaseline from '@mui/material/CssBaseline';
 import { Route, Routes } from 'react-router-dom';
 import { withErrorBoundary } from 'react-error-boundary';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router';
 import { RouterLinks } from './utils/consts';
-import { useAppDispatch } from './hooks/redux';
+import { useAppSelector } from './hooks/redux';
 import { useFetchUserMutation } from './services/AuthServices';
+import { setCredentials } from './store/reducers/AuthSlice';
+import { IUserResponse } from './models/IUserResponse';
+import { NotFound } from './utils/NotFound';
 
 // как пример...
 const About = lazy(() => import(/* webpackChunkName: "About" */ './pages/About/About'))
@@ -13,28 +18,32 @@ const Registration = lazy(() => import(/* webpackChunkName: "Registration" */ '.
 const Login = lazy(() => import(/* webpackChunkName: "Login" */ './pages/Login/Login'))
 
 const App = () => {
-  const [fetchUser, { data, isLoading }] = useFetchUserMutation();
-  const dispatch = useAppDispatch()
+  const [fetchUser] = useFetchUserMutation();
+  const user = useAppSelector((state) => state.authReducer.user);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const getUser = async () => {
+    const userResponse: IUserResponse = await fetchUser('').unwrap();
+    dispatch(setCredentials(userResponse));
+    if (!userResponse) {
+      navigate(RouterLinks.HOME);
+    }
+  }
 
   useEffect(() => {
-    fetchUser('');
+    getUser()
   }, [])
-
-  // useEffect(() => {
-  //   fetchUser('');
-  // }, [data])
-
-  console.log(data)
 
   return (
     <div className='App' style={{ height: '100vh' }}>
       <CssBaseline />
 
       <Suspense fallback={<div>Loading...</div>}>
-        <Routes>
 
+        <Routes>
           {
-            !data
+            !user
               ? (
                 <>
                   <Route path={RouterLinks.REGISTRATION} element={<Registration />} />
@@ -50,7 +59,7 @@ const App = () => {
                 </>
               )
           }
-          <Route path='*' element={<div>NotFound</div>} />
+          <Route path='*' element={(<NotFound />)} />
         </Routes>
       </Suspense>
     </div>
