@@ -10,6 +10,7 @@ import { useFetchUserMutation } from './services/AuthServices';
 import { setCredentials } from './store/reducers/AuthSlice';
 import { IUserResponse } from './models/IUserResponse';
 import { NotFound } from './utils/NotFound';
+import styles from './app.module.scss';
 
 // как пример...
 const About = lazy(() => import(/* webpackChunkName: "About" */ './pages/About/About'))
@@ -36,7 +37,7 @@ const App = () => {
   }, [])
 
   return (
-    <div className='App' style={{ height: '100vh' }}>
+    <div className={styles.app}>
       <CssBaseline />
 
       <Suspense fallback={<div>Loading...</div>}>

@@ -10,9 +10,10 @@ import { InputLabel, InputName, RouterLinks, RouterLinksName, TYPES_ALERT } from
 import { useFetchSigUpMutation, useFetchUserMutation } from '../../services/AuthServices';
 import { useAppDispatch } from '../../hooks/redux';
 import { IAlertTypeProps, showAlert } from '../../store/reducers/AlertSlice';
+import { setCredentials } from '../../store/reducers/AuthSlice';
+import { ISigUpParams } from '../../models/ISigUpParams';
 import { IErrorResponse } from '../../models/IErrorResponse';
 import { IUserResponse } from '../../models/IUserResponse';
-import { setCredentials } from '../../store/reducers/AuthSlice';
 
 const TextField = lazy(() => import(/* webpackChunkName: "TextField" */ '../../components/TextField/TextField'))
 
@@ -36,18 +37,8 @@ const schema = yup.object()
       .required('Логин не указан.')
   })
 
-export interface ISigUpParam {
-  [InputName.displayName]: string;
-  [InputName.firstName]: string;
-  [InputName.secondName]: string;
-  [InputName.login]: string;
-  [InputName.email]: string;
-  [InputName.password]: string;
-  [InputName.phone]: string;
-}
-
 const Registration:React.FC = () => {
-  const methods = useForm<ISigUpParam>({
+  const methods = useForm<ISigUpParams>({
     defaultValues: {
       [InputName.displayName]: '',
       [InputName.firstName]: '',
@@ -73,7 +64,7 @@ const Registration:React.FC = () => {
     dispatch(setCredentials(user));
   }
 
-  const onSubmit = async (data: ISigUpParam) => {
+  const onSubmit = async (data: ISigUpParams) => {
     await fetchSigUp(data)
       .then((response) => {
         const { error } = (response as IErrorResponse);

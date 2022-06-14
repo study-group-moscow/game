@@ -1,10 +1,16 @@
 node_modules
-dist
+
 *.swp
 .cache
 
 #IDE
 .vscode
 
+# production
+/build
+dist
+
 #OS
 .DS_Store
+.env
+.idea/

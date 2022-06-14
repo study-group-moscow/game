@@ -1,15 +1,12 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { ENDPOINTS } from '../utils/consts';
 import { IUserResponse } from '../models/IUserResponse';
-import { ISigUpParam } from '../pages/Registration/Registration';
-import { ISigInParam } from '../pages/Login/Login';
 import { IErrorResponse } from '../models/IErrorResponse';
+import { ISigInParams } from '../models/ISigInParams';
+import { ISigUpParams } from '../models/ISigUpParams';
+import { baseApi } from '../store/api/emptySplitApi';
 
 // Как образец, не финальное решение!!!!
-export const authAPI = createApi({
-  reducerPath: 'authAPI',
-  tagTypes: ['Auth'],
-  baseQuery: fetchBaseQuery({ baseUrl: `${ENDPOINTS.HTTP}${ENDPOINTS.AUTH.PATH}` }),
+export const authAPI = baseApi.injectEndpoints({
   endpoints: (build) => ({
     fetchUser: build.mutation<IUserResponse, string>({
       query: () => ({
@@ -19,7 +16,7 @@ export const authAPI = createApi({
         credentials: 'include'
       })
     }),
-    fetchSigIn: build.mutation<IErrorResponse, ISigInParam>({
+    fetchSigIn: build.mutation<IErrorResponse, ISigInParams>({
       query: (body) => ({
         url: ENDPOINTS.AUTH.SIGNIN,
         mode: 'cors',
@@ -33,7 +30,7 @@ export const authAPI = createApi({
       }),
       invalidatesTags: ['Auth']
     }),
-    fetchSigUp: build.mutation<IUserResponse, ISigUpParam>({
+    fetchSigUp: build.mutation<IUserResponse, ISigUpParams>({
       query: (body) => ({
         url: ENDPOINTS.AUTH.SIGNUP,
         mode: 'cors',
@@ -52,7 +49,9 @@ export const authAPI = createApi({
       }),
       invalidatesTags: ['Auth']
     })
-  })
+  }),
+  overrideExisting: false
 })
 
-export const { useFetchSigInMutation, useFetchSigUpMutation, useFetchUserMutation, useFetchLogoutMutation } = authAPI;
+export const { useFetchSigInMutation, useFetchSigUpMutation } = authAPI;
+export const { useFetchUserMutation, useFetchLogoutMutation } = authAPI;

@@ -1,11 +1,8 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/dist/query/react';
 import { IUser } from '../models/IUser';
+import { baseApi } from '../store/api/emptySplitApi';
 
 // Как образец, не финальное решение!!!!
-const userAPI = createApi({
-  reducerPath: 'userAPI',
-  baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:5000' }),
-  tagTypes: ['User'],
+const userAPI = baseApi.injectEndpoints({
   endpoints: (build) => ({
     fetchAllUsers: build.query<IUser[], number>({
       query: (limit = 5) => ({

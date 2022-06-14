@@ -13,6 +13,7 @@ import { setCredentials } from '../../store/reducers/AuthSlice';
 import { IUserResponse } from '../../models/IUserResponse';
 import { IErrorResponse } from '../../models/IErrorResponse';
 import { IAlertTypeProps, showAlert } from '../../store/reducers/AlertSlice';
+import { ISigInParams } from '../../models/ISigInParams';
 
 const TextField = lazy(() => import(/* webpackChunkName: "TextField" */ '../../components/TextField/TextField'))
 
@@ -21,18 +22,13 @@ const schema = yup.object()
     password: yup.string()
       .required('Пароль не указан.')
       .min(8, 'Пароль может содержать только латинские буквы.')
-      .matches(/[a-zA-Z]/, 'Password can only contain Latin letters.'),
+      .matches(/[a-zA-Z]/, 'Пароль может содержать только латинские буквы.'),
     login: yup.string()
       .required('Логин не указан.')
   })
 
-export interface ISigInParam {
-  [InputName.login]: string;
-  [InputName.password]: string;
-}
-
 const Login = () => {
-  const methods = useForm<ISigInParam>({
+  const methods = useForm<ISigInParams>({
     defaultValues: {
       [InputName.login]: 'Test0010',
       [InputName.password]: 'Abrikosov8436259'
@@ -52,7 +48,7 @@ const Login = () => {
     navigate(RouterLinks.HOME);
   }
 
-  const onSubmit = async (value: ISigInParam) => {
+  const onSubmit = async (value: ISigInParams) => {
     await fetchLogin(value).then((response) => {
       const { error, data } = (response as IErrorResponse);
       if (data) {
