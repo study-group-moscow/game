@@ -5,12 +5,12 @@ import { withErrorBoundary } from 'react-error-boundary';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router';
 import { RouterLinks } from './utils/consts';
-import { useAppSelector } from './hooks/redux';
 import { useFetchUserMutation } from './services/AuthServices';
 import { setCredentials } from './store/reducers/AuthSlice';
 import { IUserResponse } from './models/IUserResponse';
 import { NotFound } from './utils/NotFound';
 import styles from './app.module.scss';
+import { PrivateRoute } from './utils/PrivateRoute';
 
 // как пример...
 const About = lazy(() => import(/* webpackChunkName: "About" */ './pages/About/About'))
@@ -20,7 +20,7 @@ const Login = lazy(() => import(/* webpackChunkName: "Login" */ './pages/Login/L
 
 const App = () => {
   const [fetchUser] = useFetchUserMutation();
-  const user = useAppSelector((state) => state.authReducer.user);
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -33,7 +33,7 @@ const App = () => {
   }
 
   useEffect(() => {
-    getUser()
+    getUser();
   }, [])
 
   return (
@@ -43,23 +43,44 @@ const App = () => {
       <Suspense fallback={<div>Loading...</div>}>
 
         <Routes>
-          {
-            !user
-              ? (
-                <>
-                  <Route path={RouterLinks.REGISTRATION} element={<Registration />} />
-                  <Route path={RouterLinks.LOGIN} element={<Login />} />
-                </>
-              )
-              : (
-                <>
-                  <Route path={RouterLinks.ABOUT} element={<About />} />
-                  <Route path='/game' element={<div>Game</div>} />
-                  <Route path='/error' element={<div>Error</div>} />
-                  <Route path={RouterLinks.HOME} element={<Home />} />
-                </>
-              )
+
+          <Route
+            path={RouterLinks.REGISTRATION}
+            element={(
+              <PrivateRoute
+                isPrivate={false}
+                element={<Registration />}
+              />
+          )}
+          />
+          <Route
+            path={RouterLinks.LOGIN}
+            element={(
+              <PrivateRoute
+                element={<Login />}
+                isPrivate={false}
+              />
+          )}
+          />
+          <Route path={RouterLinks.ABOUT} element={<About />} />
+          <Route
+            path='/game'
+            element={
+              <PrivateRoute element={<div>Game</div>} />
+            }
+          />
+          <Route
+            path='/error'
+            element={
+              <PrivateRoute element={<div>Error</div>} />
           }
+          />
+          <Route
+            path={RouterLinks.HOME}
+            element={
+              <PrivateRoute element={<Home />} />
+          }
+          />
           <Route path='*' element={(<NotFound />)} />
         </Routes>
       </Suspense>

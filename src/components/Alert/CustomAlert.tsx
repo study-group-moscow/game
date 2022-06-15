@@ -28,12 +28,6 @@ const CustomAlert = () => {
     dispatch(hideAlert())
   };
 
-  // useEffect(() => () => {
-  //   // if (al.visible) {
-  //   dispatch(hideAlert())
-  //   // }
-  // })
-
   return (
     <Stack spacing={2} className={styles.customAlert}>
       <Snackbar open={open} autoHideDuration={5000} onClose={handleClose}>
