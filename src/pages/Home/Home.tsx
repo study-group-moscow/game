@@ -4,16 +4,16 @@ import SendIcon from '@mui/icons-material/Send';
 import { useDispatch } from 'react-redux';
 import styles from './home.module.scss'
 import { useFetchLogoutMutation } from '../../services/AuthServices';
-import { setCredentials } from '../../store/reducers/AuthSlice';
+import { setLogout } from '../../store/reducers/AuthSlice';
 import { RouterLinksName } from '../../utils/consts';
 
 const Home:React.FC = () => {
   const [fetchLogout] = useFetchLogoutMutation();
   const dispatch = useDispatch();
 
-  const handleLogout = () => {
-    fetchLogout('')
-    dispatch(setCredentials(null))
+  const handleLogout = async () => {
+    await fetchLogout('');
+    dispatch(setLogout());
   }
   return (
     <>

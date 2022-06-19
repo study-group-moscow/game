@@ -50,8 +50,8 @@ export const authAPI = baseApi
         }),
         invalidatesTags: ['Auth']
       })
-    }),
-    overrideExisting: false
+    })
+    // overrideExisting: false
   })
 
 export const { useFetchSigInMutation, useFetchSigUpMutation } = authAPI;

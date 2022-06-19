@@ -1,18 +1,16 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { IUserResponse } from '../../models/IUserResponse';
-import { RootState } from '../store';
+import type { RootState } from '../store';
 
 // Как образец, не финальное решение!!!!
 interface IAuthState {
   user: IUserResponse | null;
-  isLoading: boolean;
-  error: string;
+  isAuth: boolean;
 }
 
 const initialState: IAuthState = {
-  user: null,
-  isLoading: false,
-  error: ''
+  isAuth: false,
+  user: null
 }
 
 export const authSlice = createSlice({
@@ -20,16 +18,22 @@ export const authSlice = createSlice({
   initialState,
   reducers: {
     setCredentials: (state, action: PayloadAction<IUserResponse | null>) => {
-      state.isLoading = false;
       state.user = action.payload;
-      state.error = '';
+    },
+    setAuth: (state, action: PayloadAction<boolean>) => {
+      state.isAuth = action.payload;
+    },
+    setLogout: (state) => {
+      state.isAuth = false;
+      state.user = null;
     }
   }
 })
 
-export const { setCredentials } = authSlice.actions
+export const { setCredentials, setAuth, setLogout } = authSlice.actions
 
 export default authSlice.reducer
 
 export const selectCurrentUser = (state: RootState) => state.authReducer.user
+export const selectCurrentIsAuth = (state: RootState) => state.authReducer.isAuth
 

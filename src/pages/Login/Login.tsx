@@ -7,15 +7,21 @@ import Button from '@mui/material/Button';
 import { useNavigate } from 'react-router';
 import { useDispatch } from 'react-redux';
 import styles from './login.module.scss';
-import { InputLabel, InputName, RouterLinks, RouterLinksName, TYPES_ALERT } from '../../utils/consts';
-import { useFetchSigInMutation, useFetchUserMutation } from '../../services/AuthServices';
-import { setCredentials } from '../../store/reducers/AuthSlice';
-import { IUserResponse } from '../../models/IUserResponse';
+import {
+  InputLabel,
+  InputName,
+  MESSAGES_TEXT,
+  RouterLinks,
+  RouterLinksName,
+  TYPES_ALERT
+} from '../../utils/consts';
+import { useFetchSigInMutation } from '../../services/AuthServices';
 import { IErrorResponse } from '../../models/IErrorResponse';
-import { IAlertTypeProps, showAlert } from '../../store/reducers/AlertSlice';
 import { ISigInParams } from '../../models/ISigInParams';
+import { IAlertTypeProps, showAlert } from '../../store/reducers/AlertSlice';
 
 const TextField = lazy(() => import(/* webpackChunkName: "TextField" */ '../../components/TextField/TextField'))
+const AlertContainer = lazy(() => import(/* webpackChunkName: "AlertContainer" */ '../../components/AlertContainer/AlertContainer'))
 
 const schema = yup.object()
   .shape({
@@ -37,83 +43,98 @@ const Login = () => {
     resolver: yupResolver(schema)
   });
 
-  const [fetchLogin] = useFetchSigInMutation();
-  const [fetchUser] = useFetchUserMutation();
+  const [fetchLogin, {
+    isLoading,
+    data,
+    error,
+    isSuccess,
+    isError
+  }] = useFetchSigInMutation();
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
-  const getUser = async () => {
-    const user: IUserResponse = await fetchUser('').unwrap();
-    dispatch(setCredentials(user));
-    navigate(RouterLinks.HOME);
-  }
-
-  const onSubmit = async (value: ISigInParams) => {
-    await fetchLogin(value).then((response) => {
-      const { error, data } = (response as IErrorResponse);
-      if (data) {
-        getUser();
-      } else if (error) {
-        const type: string = TYPES_ALERT.ERROR;
-        dispatch(showAlert({
-          text: error?.data?.reason ?? '',
-          type: type as IAlertTypeProps
-        }));
-      }
-    });
-  }
-
   const [isShowPassword, setIsShowPassword] = useState(false);
 
+  const onSubmit = async (value: ISigInParams) => {
+    try {
+      await fetchLogin(value);
+    } catch (e) {
+      dispatch(showAlert({
+        text: MESSAGES_TEXT.ERROR_OCCURRED,
+        type: TYPES_ALERT.ERROR as IAlertTypeProps
+      }));
+    }
+  }
+
   return (
-    <FormProvider {...methods}>
-      <form onSubmit={methods.handleSubmit(onSubmit)} className={styles.form}>
-
-        <Grid
-          container
-          spacing={0}
-          direction='column'
-          alignItems='center'
-          justifyContent='center'
-          className={styles.layout}
-        >
-          <Grid item xs={12} className={styles.input}>
-            <TextField name={InputName.login} label={InputLabel.login} autoFocus />
-          </Grid>
-
-          <Grid item xs={12} className={styles.input}>
-            <TextField type={isShowPassword ? '' : InputName.password} name={InputName.password} label={InputLabel.password} />
-          </Grid>
-
+    <AlertContainer
+      isLoading={isLoading}
+      isError={isError}
+      isSuccess={isSuccess}
+      error={error as IErrorResponse}
+      data={data}
+    >
+      <FormProvider {...methods}>
+        <form onSubmit={methods.handleSubmit(onSubmit)} className={styles.form}>
           <Grid
             container
+            spacing={0}
+            direction='column'
             alignItems='center'
             justifyContent='center'
+            className={styles.layout}
           >
-            <Grid item>
-              <FormControlLabel
-                control={(
-                  <Checkbox
-                    color='primary'
-                    onClick={() => setIsShowPassword((pre) => !pre)}
-                  />
-                )}
-                label={InputLabel.showPassword}
+            <Grid item xs={12} className={styles.input}>
+              <TextField name={InputName.login} label={InputLabel.login} autoFocus />
+            </Grid>
+
+            <Grid item xs={12} className={styles.input}>
+              <TextField
+                type={isShowPassword ? '' : InputName.password}
+                name={InputName.password}
+                label={InputLabel.password}
               />
             </Grid>
-            <Grid item>
-              <Button onClick={() => navigate(RouterLinks.REGISTRATION)} disableFocusRipple disableRipple style={{ textTransform: 'none' }} variant='text' color='primary'>{RouterLinksName.NOT_REGISTRATION}</Button>
+
+            <Grid
+              container
+              alignItems='center'
+              justifyContent='center'
+            >
+              <Grid item>
+                <FormControlLabel
+                  control={(
+                    <Checkbox
+                      color='primary'
+                      onClick={() => setIsShowPassword((pre) => !pre)}
+                    />
+                )}
+                  label={InputLabel.showPassword}
+                />
+              </Grid>
+              <Grid item>
+                <Button
+                  onClick={() => navigate(RouterLinks.REGISTRATION)}
+                  disableFocusRipple
+                  disableRipple
+                  style={{ textTransform: 'none' }}
+                  variant='text'
+                  color='primary'
+                >
+                  {RouterLinksName.NOT_REGISTRATION}
+                </Button>
+              </Grid>
+            </Grid>
+
+            <Grid item xs={12}>
+              <Button variant='contained' color='success' type='submit' disableElevation>
+                Войти
+              </Button>
             </Grid>
           </Grid>
-
-          <Grid item xs={12}>
-            <Button variant='contained' color='success' type='submit' disableElevation>
-              Войти
-            </Button>
-          </Grid>
-        </Grid>
-      </form>
-    </FormProvider>
+        </form>
+      </FormProvider>
+    </AlertContainer>
   )
 }
 

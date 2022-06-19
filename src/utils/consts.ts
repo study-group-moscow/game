@@ -46,6 +46,10 @@ export const ENDPOINTS = {
   }
 };
 
+export const MESSAGES_TEXT = {
+  ERROR_OCCURRED: 'О нет, произошла ошибка!'
+}
+
 export const TYPES_ALERT = {
   ERROR: 'error',
   SUCCESS: ' success'
