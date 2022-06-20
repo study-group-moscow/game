@@ -64,16 +64,7 @@ const Registration:React.FC = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  const onSubmit = async (value: ISigUpParams) => {
-    try {
-      await fetchSigUp(value);
-    } catch (e) {
-      dispatch(showAlert({
-        text: MESSAGES_TEXT.ERROR_OCCURRED,
-        type: TYPES_ALERT.ERROR as IAlertTypeProps
-      }));
-    }
-  }
+  const onSubmit = (value: ISigUpParams) => fetchSigUp(value)
 
   useEffect(() => {
     if (isSuccess) {
@@ -85,7 +76,7 @@ const Registration:React.FC = () => {
     if (isError) {
       const err = ((error) as IErrorResponse);
       dispatch(showAlert({
-        text: err?.data?.reason ?? '',
+        text: err?.data?.reason ?? MESSAGES_TEXT.ERROR_OCCURRED,
         type: TYPES_ALERT.ERROR as IAlertTypeProps
       }));
     }
