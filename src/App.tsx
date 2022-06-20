@@ -21,43 +21,31 @@ const App = () => (
 
       <Routes>
 
-        {/* <Route */}
-        {/*  path={RouterLinks.REGISTRATION} */}
-        {/*  element={( */}
-        {/*    <PrivateRoute */}
-        {/*      element={<Registration />} */}
-        {/*    /> */}
-        {/*  )} */}
-        {/* /> */}
-        <Route
-          path={RouterLinks.LOGIN}
-          element={<Login />}
-        />
-
-        <Route path='*' element={<PrivateRoute />}>
-          <Route index element={<Home />} />
+        <Route path={RouterLinks.LOGIN} element={<PrivateRoute />}>
+          <Route index element={(<Login />)} />
         </Route>
 
-        {/* <Route path={RouterLinks.ABOUT} element={<About />} /> */}
-        {/* <Route */}
-        {/*  path='/game' */}
-        {/*  element={ */}
-        {/*    <PrivateRoute element={<div>Game</div>} /> */}
-        {/*    } */}
-        {/* /> */}
-        {/* <Route */}
-        {/*  path='/error' */}
-        {/*  element={ */}
-        {/*    <PrivateRoute element={<div>Error</div>} /> */}
-        {/*  } */}
-        {/* /> */}
-        {/* <Route */}
-        {/*  path={RouterLinks.HOME} */}
-        {/*  element={ */}
-        {/*    <PrivateRoute element={<Home />} /> */}
-        {/*  } */}
-        {/* /> */}
-        {/* <Route path='*' element={(<NotFound />)} /> */}
+        <Route path={RouterLinks.REGISTRATION} element={<PrivateRoute />}>
+          <Route index element={(<Registration />)} />
+        </Route>
+
+        <Route path={RouterLinks.HOME} element={<PrivateRoute />}>
+          <Route index element={(<Home />)} />
+        </Route>
+
+        <Route path={RouterLinks.ABOUT} element={<PrivateRoute />}>
+          <Route index element={(<About />)} />
+        </Route>
+
+        <Route path={RouterLinks.GAME} element={<PrivateRoute />}>
+          <Route index element={(<div>Game</div>)} />
+        </Route>
+
+        <Route path={RouterLinks.ERROR} element={<PrivateRoute />}>
+          <Route index element={(<div>Error</div>)} />
+        </Route>
+
+        <Route path='*' element={(<NotFound />)} />
       </Routes>
     </Suspense>
   </div>

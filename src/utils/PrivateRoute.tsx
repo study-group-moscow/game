@@ -3,13 +3,11 @@ import { Navigate, Outlet } from 'react-router';
 import { useAuth } from '../hooks/useAuth';
 
 export const PrivateRoute = () => {
-  const auth = useAuth()
+  const { user, isSuccess, isError } = useAuth();
 
-  return auth.user
-    ? (
-      <Outlet />
-    )
-    : (
-      <Navigate to='/login' />
-    )
+  if ((!user && isError) || (isSuccess && !user)) {
+    return <Navigate to='/login' />
+  }
+
+  return <Outlet />
 };
