@@ -9,7 +9,6 @@ const Loader = () => (
       <div className='cssload-inner cssload-three' />
     </div>
   </div>
-
 );
 
 export default Loader
