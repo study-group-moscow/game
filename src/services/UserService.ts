@@ -1,7 +1,6 @@
 import { IUser } from '../models/IUser';
-import { baseApi } from '../store/api/baseApi';
+import baseApi from '../store/api/baseApi';
 
-// Как образец, не финальное решение!!!!
 const userAPI = baseApi
   .enhanceEndpoints({ addTagTypes: ['User'] })
   .injectEndpoints({
@@ -13,7 +12,7 @@ const userAPI = baseApi
             _limit: limit
           }
         }),
-        providesTags: (result) => ['User']
+        providesTags: ['User']
       }),
       createUser: build.mutation<IUser, IUser>({
         query: (user) => ({

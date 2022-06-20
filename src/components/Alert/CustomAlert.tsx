@@ -1,8 +1,8 @@
 import React from 'react';
 import Stack from '@mui/material/Stack';
-import styles from './customAlert.module.scss';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert, { AlertProps } from '@mui/material/Alert';
+import styles from './customAlert.module.scss';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import {
   hideAlert,

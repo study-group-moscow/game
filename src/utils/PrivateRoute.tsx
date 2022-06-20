@@ -1,8 +1,8 @@
 import React from 'react';
 import { Navigate, Outlet } from 'react-router';
-import { useAuth } from '../hooks/useAuth';
+import useAuth from '../hooks/useAuth';
 
-export const PrivateRoute = () => {
+export default () => {
   const { user, isSuccess, isError } = useAuth();
 
   if ((!user && isError) || (isSuccess && !user)) {

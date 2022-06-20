@@ -4,9 +4,9 @@ import { Route, Routes } from 'react-router-dom';
 import { withErrorBoundary } from 'react-error-boundary';
 import { RouterLinks } from './utils/consts';
 
-import { NotFound } from './utils/NotFound';
+import NotFound from './utils/NotFound';
+import PrivateRoute from './utils/PrivateRoute';
 import styles from './app.module.scss';
-import { PrivateRoute } from './utils/PrivateRoute';
 
 const About = lazy(() => import(/* webpackChunkName: "About" */ './pages/About/About'))
 const Home = lazy(() => import(/* webpackChunkName: "Home" */ './pages/Home/Home'))

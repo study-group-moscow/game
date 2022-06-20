@@ -3,9 +3,9 @@ import { IUserResponse } from '../models/IUserResponse';
 import { IErrorResponse } from '../models/IErrorResponse';
 import { ISigInParams } from '../models/ISigInParams';
 import { ISigUpParams } from '../models/ISigUpParams';
-import { baseApi } from '../store/api/baseApi';
+import baseApi from '../store/api/baseApi';
 
-export const authAPI = baseApi
+const authAPI = baseApi
   .enhanceEndpoints({ addTagTypes: ['Auth'] })
   .injectEndpoints({
     endpoints: (build) => ({
@@ -50,8 +50,12 @@ export const authAPI = baseApi
         invalidatesTags: ['Auth']
       })
     })
-    // overrideExisting: false
   })
 
-export const { useFetchSigInMutation, useFetchSigUpMutation } = authAPI;
-export const { useFetchUserQuery, useFetchLogoutMutation } = authAPI;
+export const {
+  useFetchSigInMutation,
+  useFetchSigUpMutation,
+  useFetchUserQuery,
+  useFetchLogoutMutation
+} = authAPI;
+
