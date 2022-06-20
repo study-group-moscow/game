@@ -9,11 +9,10 @@ export const authAPI = baseApi
   .enhanceEndpoints({ addTagTypes: ['Auth'] })
   .injectEndpoints({
     endpoints: (build) => ({
-      fetchUser: build.mutation<IUserResponse, string>({
+      fetchUser: build.query<IUserResponse, string>({
         query: () => ({
           url: `${ENDPOINTS.AUTH.PATH}${ENDPOINTS.AUTH.USER}`,
           mode: 'cors',
-          method: 'GET',
           credentials: 'include'
         })
       }),
@@ -55,4 +54,4 @@ export const authAPI = baseApi
   })
 
 export const { useFetchSigInMutation, useFetchSigUpMutation } = authAPI;
-export const { useFetchUserMutation, useFetchLogoutMutation } = authAPI;
+export const { useFetchUserQuery, useFetchLogoutMutation } = authAPI;

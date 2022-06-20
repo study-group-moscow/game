@@ -12,59 +12,55 @@ const About = lazy(() => import(/* webpackChunkName: "About" */ './pages/About/A
 const Home = lazy(() => import(/* webpackChunkName: "Home" */ './pages/Home/Home'))
 const Registration = lazy(() => import(/* webpackChunkName: "Registration" */ './pages/Registration/Registration'))
 const Login = lazy(() => import(/* webpackChunkName: "Login" */ './pages/Login/Login'))
-const CustomContainer = lazy(() => import(/* webpackChunkName: "CustomContainer" */ './components/CustomContainer/CustomContainer'))
 
 const App = () => (
-  <CustomContainer>
-    <div className={styles.app}>
-      <CssBaseline />
+  <div className={styles.app}>
+    <CssBaseline />
 
-      <Suspense fallback={<div>Loading...</div>}>
+    <Suspense fallback={<div>Loading...</div>}>
 
-        <Routes>
+      <Routes>
 
-          <Route
-            path={RouterLinks.REGISTRATION}
-            element={(
-              <PrivateRoute
-                isPrivate={false}
-                element={<Registration />}
-              />
-          )}
-          />
-          <Route
-            path={RouterLinks.LOGIN}
-            element={(
-              <PrivateRoute
-                element={<Login />}
-                isPrivate={false}
-              />
-          )}
-          />
-          <Route path={RouterLinks.ABOUT} element={<About />} />
-          <Route
-            path='/game'
-            element={
-              <PrivateRoute element={<div>Game</div>} />
-            }
-          />
-          <Route
-            path='/error'
-            element={
-              <PrivateRoute element={<div>Error</div>} />
-          }
-          />
-          <Route
-            path={RouterLinks.HOME}
-            element={
-              <PrivateRoute element={<Home />} />
-          }
-          />
-          <Route path='*' element={(<NotFound />)} />
-        </Routes>
-      </Suspense>
-    </div>
-  </CustomContainer>
+        {/* <Route */}
+        {/*  path={RouterLinks.REGISTRATION} */}
+        {/*  element={( */}
+        {/*    <PrivateRoute */}
+        {/*      element={<Registration />} */}
+        {/*    /> */}
+        {/*  )} */}
+        {/* /> */}
+        <Route
+          path={RouterLinks.LOGIN}
+          element={<Login />}
+        />
+
+        <Route path='*' element={<PrivateRoute />}>
+          <Route index element={<Home />} />
+        </Route>
+
+        {/* <Route path={RouterLinks.ABOUT} element={<About />} /> */}
+        {/* <Route */}
+        {/*  path='/game' */}
+        {/*  element={ */}
+        {/*    <PrivateRoute element={<div>Game</div>} /> */}
+        {/*    } */}
+        {/* /> */}
+        {/* <Route */}
+        {/*  path='/error' */}
+        {/*  element={ */}
+        {/*    <PrivateRoute element={<div>Error</div>} /> */}
+        {/*  } */}
+        {/* /> */}
+        {/* <Route */}
+        {/*  path={RouterLinks.HOME} */}
+        {/*  element={ */}
+        {/*    <PrivateRoute element={<Home />} /> */}
+        {/*  } */}
+        {/* /> */}
+        {/* <Route path='*' element={(<NotFound />)} /> */}
+      </Routes>
+    </Suspense>
+  </div>
 )
 
 export default withErrorBoundary(App, {

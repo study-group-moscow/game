@@ -1,4 +1,4 @@
-import React, { lazy, useState } from 'react';
+import React, { lazy, useEffect, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -21,7 +21,7 @@ import { ISigInParams } from '../../models/ISigInParams';
 import { IAlertTypeProps, showAlert } from '../../store/reducers/AlertSlice';
 
 const TextField = lazy(() => import(/* webpackChunkName: "TextField" */ '../../components/TextField/TextField'))
-const AlertContainer = lazy(() => import(/* webpackChunkName: "AlertContainer" */ '../../components/AlertContainer/AlertContainer'))
+const Loader = lazy(() => import(/* webpackChunkName: "Loader" */ '../../components/Loader/Loader'))
 
 const schema = yup.object()
   .shape({
@@ -65,76 +65,86 @@ const Login = () => {
       }));
     }
   }
+  useEffect(() => {
+    if (isSuccess) {
+      navigate(RouterLinks.HOME)
+    }
+  }, [data])
+
+  useEffect(() => {
+    if (isError) {
+      const err = ((error) as IErrorResponse);
+      dispatch(showAlert({
+        text: err?.data?.reason ?? '',
+        type: TYPES_ALERT.ERROR as IAlertTypeProps
+      }));
+    }
+  }, [error])
 
   return (
-    <AlertContainer
-      isLoading={isLoading}
-      isError={isError}
-      isSuccess={isSuccess}
-      error={error as IErrorResponse}
-      data={data}
-    >
-      <FormProvider {...methods}>
-        <form onSubmit={methods.handleSubmit(onSubmit)} className={styles.form}>
+    <FormProvider {...methods}>
+      <form onSubmit={methods.handleSubmit(onSubmit)} className={styles.form}>
+        {
+          isLoading && <Loader />
+        }
+        <Grid
+          container
+          spacing={0}
+          direction='column'
+          alignItems='center'
+          justifyContent='center'
+          className={styles.layout}
+        >
+          <Grid item xs={12} className={styles.input}>
+            <TextField name={InputName.login} label={InputLabel.login} autoFocus />
+          </Grid>
+
+          <Grid item xs={12} className={styles.input}>
+            <TextField
+              type={isShowPassword ? '' : InputName.password}
+              name={InputName.password}
+              label={InputLabel.password}
+            />
+          </Grid>
+
           <Grid
             container
-            spacing={0}
-            direction='column'
             alignItems='center'
             justifyContent='center'
-            className={styles.layout}
           >
-            <Grid item xs={12} className={styles.input}>
-              <TextField name={InputName.login} label={InputLabel.login} autoFocus />
-            </Grid>
-
-            <Grid item xs={12} className={styles.input}>
-              <TextField
-                type={isShowPassword ? '' : InputName.password}
-                name={InputName.password}
-                label={InputLabel.password}
+            <Grid item>
+              <FormControlLabel
+                control={(
+                  <Checkbox
+                    color='primary'
+                    onClick={() => setIsShowPassword((pre) => !pre)}
+                  />
+                )}
+                label={InputLabel.showPassword}
               />
             </Grid>
-
-            <Grid
-              container
-              alignItems='center'
-              justifyContent='center'
-            >
-              <Grid item>
-                <FormControlLabel
-                  control={(
-                    <Checkbox
-                      color='primary'
-                      onClick={() => setIsShowPassword((pre) => !pre)}
-                    />
-                )}
-                  label={InputLabel.showPassword}
-                />
-              </Grid>
-              <Grid item>
-                <Button
-                  onClick={() => navigate(RouterLinks.REGISTRATION)}
-                  disableFocusRipple
-                  disableRipple
-                  style={{ textTransform: 'none' }}
-                  variant='text'
-                  color='primary'
-                >
-                  {RouterLinksName.NOT_REGISTRATION}
-                </Button>
-              </Grid>
-            </Grid>
-
-            <Grid item xs={12}>
-              <Button variant='contained' color='success' type='submit' disableElevation>
-                Войти
+            <Grid item>
+              <Button
+                onClick={() => navigate(RouterLinks.REGISTRATION)}
+                disableFocusRipple
+                disableRipple
+                style={{ textTransform: 'none' }}
+                variant='text'
+                color='primary'
+              >
+                {RouterLinksName.NOT_REGISTRATION}
               </Button>
             </Grid>
           </Grid>
-        </form>
-      </FormProvider>
-    </AlertContainer>
+
+          <Grid item xs={12}>
+            <Button variant='contained' color='success' type='submit' disableElevation>
+              Войти
+            </Button>
+          </Grid>
+        </Grid>
+      </form>
+    </FormProvider>
   )
 }
 

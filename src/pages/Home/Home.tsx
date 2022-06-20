@@ -1,19 +1,18 @@
 import React from 'react'
 import Button from '@mui/material/Button'
 import SendIcon from '@mui/icons-material/Send';
-import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import styles from './home.module.scss'
 import { useFetchLogoutMutation } from '../../services/AuthServices';
-import { setLogout } from '../../store/reducers/AuthSlice';
 import { RouterLinksName } from '../../utils/consts';
 
 const Home:React.FC = () => {
   const [fetchLogout] = useFetchLogoutMutation();
-  const dispatch = useDispatch();
+  const navigation = useNavigate();
 
   const handleLogout = async () => {
     await fetchLogout('');
-    dispatch(setLogout());
+    navigation('/login')
   }
   return (
     <>
