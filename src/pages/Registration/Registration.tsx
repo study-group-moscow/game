@@ -1,13 +1,27 @@
-import React, { lazy } from 'react';
+import React, { lazy, useEffect, useState } from 'react';
 import { useForm, FormProvider } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Grid } from '@mui/material';
+import { Checkbox, FormControlLabel, Grid } from '@mui/material';
 import Button from '@mui/material/Button';
+import { useNavigate } from 'react-router-dom';
 import styles from './registration.module.scss';
-import { InputLabel, InputName } from '../../utils/consts';
+import {
+  InputLabel,
+  InputName,
+  MESSAGES_TEXT,
+  RouterLinks,
+  RouterLinksName,
+  TYPES_ALERT
+} from '../../utils/consts';
+import { useFetchSigUpMutation } from '../../services/AuthServices';
+import { useAppDispatch } from '../../hooks/redux';
+import { IAlertTypeProps, showAlert } from '../../store/reducers/AlertSlice';
+import { ISigUpParams } from '../../models/ISigUpParams';
+import { IErrorResponse } from '../../models/IErrorResponse';
 
 const TextField = lazy(() => import(/* webpackChunkName: "TextField" */ '../../components/TextField/TextField'))
+const Loader = lazy(() => import(/* webpackChunkName: "TextField" */ '../../components/Loader/Loader'))
 
 const schema = yup.object()
   .shape({
@@ -29,34 +43,53 @@ const schema = yup.object()
       .required('Логин не указан.')
   })
 
-type FormData = {
-  [InputName.firstName]: string;
-  [InputName.secondName]: string;
-  [InputName.login]: string;
-  [InputName.email]: string;
-  [InputName.password]: string;
-  [InputName.phone]: string;
-};
-
 const Registration:React.FC = () => {
-  const methods = useForm<FormData>({
+  const methods = useForm<ISigUpParams>({
     defaultValues: {
-      [InputName.firstName]: '',
-      [InputName.secondName]: '',
-      [InputName.login]: '',
-      [InputName.email]: '',
-      [InputName.password]: '',
-      [InputName.phone]: ''
+      [InputName.displayName]: 'test',
+      [InputName.firstName]: 'test',
+      [InputName.secondName]: 'test',
+      [InputName.login]: 'test00123',
+      [InputName.email]: 'asd@mail.ru',
+      [InputName.password]: 'Abrikosov8436259',
+      [InputName.phone]: '9667772233'
     },
     mode: 'onBlur',
     resolver: yupResolver(schema)
   });
 
-  const onSubmit = (data: FormData) => console.log(data);
+  const [isShowPassword, setIsShowPassword] = useState(false);
+  const [fetchSigUp, { isLoading, isSuccess, data, error, isError }] = useFetchSigUpMutation();
+
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+
+  const onSubmit = (value: ISigUpParams) => fetchSigUp(value)
+
+  useEffect(() => {
+    if (isSuccess) {
+      navigate(RouterLinks.HOME)
+    }
+  }, [data])
+
+  useEffect(() => {
+    if (isError) {
+      const err = ((error) as IErrorResponse);
+      dispatch(showAlert({
+        text: err?.data?.reason ?? MESSAGES_TEXT.ERROR_OCCURRED,
+        type: TYPES_ALERT.ERROR as IAlertTypeProps
+      }));
+    }
+  }, [error])
 
   return (
     <FormProvider {...methods}>
       <form onSubmit={methods.handleSubmit(onSubmit)} className={styles.form}>
+
+        {
+          isLoading && <Loader />
+        }
+
         <Grid
           container
           spacing={0}
@@ -90,7 +123,27 @@ const Registration:React.FC = () => {
           </Grid>
 
           <Grid item xs={12} className={styles.input}>
-            <TextField name={InputName.password} label={InputLabel.password} />
+            <TextField type={isShowPassword ? '' : InputName.password} name={InputName.password} label={InputLabel.password} />
+          </Grid>
+          <Grid
+            container
+            alignItems='center'
+            justifyContent='center'
+          >
+            <Grid item>
+              <FormControlLabel
+                control={(
+                  <Checkbox
+                    color='primary'
+                    onClick={() => setIsShowPassword((pre) => !pre)}
+                  />
+              )}
+                label={InputLabel.showPassword}
+              />
+            </Grid>
+            <Grid item>
+              <Button onClick={() => navigate(RouterLinks.LOGIN)} disableFocusRipple disableRipple style={{ textTransform: 'none' }} variant='text' color='primary'>{RouterLinksName.ALREADY_REGISTRATION}</Button>
+            </Grid>
           </Grid>
 
           <Grid item xs={12}>
@@ -100,6 +153,7 @@ const Registration:React.FC = () => {
           </Grid>
         </Grid>
       </form>
+
     </FormProvider>
   )
 }

@@ -1,25 +1,17 @@
-import {combineReducers, configureStore} from "@reduxjs/toolkit";
-import userReducer from './reducers/UserSlice'
-import userAPI from "../services/UserService";
+import { configureStore } from '@reduxjs/toolkit';
+import authReducer from './reducers/AuthSlice';
+import alertReducer from './reducers/AlertSlice';
+import baseApi from './api/baseApi';
 
-const rootReducer = combineReducers({
-    userReducer,
-    [userAPI.reducerPath]: userAPI.reducer
-})
+export const store = configureStore({
+  reducer: {
+    authReducer,
+    alertReducer,
+    [baseApi.reducerPath]: baseApi.reducer
+  },
 
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(baseApi.middleware)
+});
 
-export const createStore = () => {
-    return configureStore({
-        reducer: rootReducer,
-
-        middleware: (getDefaultMiddleware) =>
-            getDefaultMiddleware({
-                serializableCheck: false
-            })
-                .concat(userAPI.middleware)
-    })
-}
-
-export type RootState = ReturnType<typeof rootReducer>
-export type AppStore = ReturnType<typeof createStore>
-export type AppDispatch = AppStore['dispatch']
+export type RootState = ReturnType<typeof store.getState>
+export type AppDispatch = typeof store.dispatch

@@ -2,7 +2,10 @@ export enum RouterLinks {
   HOME = '/',
   ABOUT = '/about',
   LOGIN = '/login',
-  REGISTRATION = '/registration'
+  REGISTRATION = '/registration',
+  GAME = '/game',
+  ERROR = '/error',
+  NOT_FOUND = '*'
 }
 
 export enum InputName {
@@ -18,11 +21,7 @@ export enum InputName {
 export enum RouterLinksName {
   NOT_REGISTRATION = 'Не зарегистрированы ?',
   EXIT = 'Выйти',
-  ALREADY_REGISTRATION = 'Уже зарегистрированы ?',
-  BACK_CHATS = 'К чатам',
-  BACK_PROFILE = 'Вернуться в профиль',
-  CHANGE_PROFILE = 'Изменить профиль',
-  CHANGE_PASSWORD = 'Изменить пароль'
+  ALREADY_REGISTRATION = 'Уже зарегистрированы ?'
 }
 
 export enum InputLabel {
@@ -33,5 +32,28 @@ export enum InputLabel {
   email = 'Почта',
   phone = 'Телефон',
   file = 'Файл',
-  displayName = 'Отображаемое имя'
+  displayName = 'Отображаемое имя',
+  showPassword = 'Показать пароль'
+}
+
+export const ENDPOINTS = {
+  HTTP: 'https://ya-praktikum.tech/api/v2',
+  WSS: 'wss://ya-praktikum.tech/ws',
+
+  AUTH: {
+    PATH: '/auth',
+    USER: '/user',
+    SIGNIN: '/signin',
+    SIGNUP: '/signup',
+    LOGOUT: '/logout'
+  }
+};
+
+export const MESSAGES_TEXT = {
+  ERROR_OCCURRED: 'О нет, произошла ошибка!'
+}
+
+export const TYPES_ALERT = {
+  ERROR: 'error',
+  SUCCESS: ' success'
 }
