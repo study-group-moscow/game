@@ -20,14 +20,8 @@ const App = () => (
     <Suspense fallback={<div>Loading...</div>}>
 
       <Routes>
-
-        <Route path={RouterLinks.LOGIN} element={<PrivateRoute />}>
-          <Route index element={(<Login />)} />
-        </Route>
-
-        <Route path={RouterLinks.REGISTRATION} element={<PrivateRoute />}>
-          <Route index element={(<Registration />)} />
-        </Route>
+        <Route path={RouterLinks.LOGIN} element={<Login />} />
+        <Route path={RouterLinks.REGISTRATION} element={<Registration />} />
 
         <Route path={RouterLinks.HOME} element={<PrivateRoute />}>
           <Route index element={(<Home />)} />

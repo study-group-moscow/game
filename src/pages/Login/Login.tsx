@@ -16,6 +16,7 @@ import {
   TYPES_ALERT
 } from '../../utils/consts';
 import { useFetchSigInMutation } from '../../services/AuthServices';
+import { setLoginStatus } from '../../store/reducers/AuthSlice'
 import { IErrorResponse } from '../../models/IErrorResponse';
 import { ISigInParams } from '../../models/ISigInParams';
 import { IAlertTypeProps, showAlert } from '../../store/reducers/AlertSlice';
@@ -59,6 +60,7 @@ const Login = () => {
 
   useEffect(() => {
     if (isSuccess) {
+      dispatch(setLoginStatus(true))
       navigate(RouterLinks.HOME)
     }
   }, [data])

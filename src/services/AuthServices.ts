@@ -5,16 +5,17 @@ import { ISigInParams } from '../models/ISigInParams';
 import { ISigUpParams } from '../models/ISigUpParams';
 import baseApi from '../store/api/baseApi';
 
-const authAPI = baseApi
+export const authAPI = baseApi
   .enhanceEndpoints({ addTagTypes: ['Auth'] })
   .injectEndpoints({
     endpoints: (build) => ({
-      fetchUser: build.query<IUserResponse, string>({
+      fetchUser: build.query<IUserResponse, void>({
         query: () => ({
           url: `${ENDPOINTS.AUTH.PATH}${ENDPOINTS.AUTH.USER}`,
           mode: 'cors',
           credentials: 'include'
-        })
+        }),
+        providesTags: ['Auth']
       }),
       fetchSigIn: build.mutation<IErrorResponse, ISigInParams>({
         query: (body) => ({

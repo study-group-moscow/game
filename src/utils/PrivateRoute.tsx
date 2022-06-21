@@ -1,13 +1,14 @@
 import React from 'react';
 import { Navigate, Outlet } from 'react-router';
 import useAuth from '../hooks/useAuth';
+import { useAppSelector } from '../hooks/redux'
+import { selectCurrentUser, selectIsLoggedIn } from '../store/reducers/AuthSlice'
 
 export default () => {
-  const { user, isSuccess, isError } = useAuth();
+  const user = useAppSelector(selectCurrentUser)
+  const isLoggedIn = useAppSelector(selectIsLoggedIn)
+  const { isLoading } = useAuth();
+  console.log('---user=', user, 'isLoggedIn=', isLoggedIn)
 
-  if ((!user && isError) || (isSuccess && !user)) {
-    return <Navigate to='/login' />
-  }
-
-  return <Outlet />
+  return user || (isLoggedIn && isLoading) ? <Outlet /> : <Navigate to='/login' />
 };
