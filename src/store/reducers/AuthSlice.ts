@@ -30,6 +30,7 @@ export const authSlice = createSlice({
       (state, { payload }) => {
         if (payload?.id) {
           state.user = payload
+          state.isLoggedIn = true
         } else {
           state.user = null
           state.isLoggedIn = false
