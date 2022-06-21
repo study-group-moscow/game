@@ -1,58 +1,62 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { ENDPOINTS } from '../utils/consts';
 import { IUserResponse } from '../models/IUserResponse';
-import { ISigUpParam } from '../pages/Registration/Registration';
-import { ISigInParam } from '../pages/Login/Login';
 import { IErrorResponse } from '../models/IErrorResponse';
+import { ISigInParams } from '../models/ISigInParams';
+import { ISigUpParams } from '../models/ISigUpParams';
+import baseApi from '../store/api/baseApi';
 
-// Как образец, не финальное решение!!!!
-export const authAPI = createApi({
-  reducerPath: 'authAPI',
-  tagTypes: ['Auth'],
-  baseQuery: fetchBaseQuery({ baseUrl: `${ENDPOINTS.HTTP}${ENDPOINTS.AUTH.PATH}` }),
-  endpoints: (build) => ({
-    fetchUser: build.mutation<IUserResponse, string>({
-      query: () => ({
-        url: ENDPOINTS.AUTH.USER,
-        mode: 'cors',
-        method: 'GET',
-        credentials: 'include'
+export const authAPI = baseApi
+  .enhanceEndpoints({ addTagTypes: ['Auth'] })
+  .injectEndpoints({
+    endpoints: (build) => ({
+      fetchUser: build.query<IUserResponse, void>({
+        query: () => ({
+          url: `${ENDPOINTS.AUTH.PATH}${ENDPOINTS.AUTH.USER}`,
+          mode: 'cors',
+          credentials: 'include'
+        }),
+        providesTags: ['Auth']
+      }),
+      fetchSigIn: build.mutation<IErrorResponse, ISigInParams>({
+        query: (body) => ({
+          url: `${ENDPOINTS.AUTH.PATH}${ENDPOINTS.AUTH.SIGNIN}`,
+          mode: 'cors',
+          credentials: 'include',
+          method: 'POST',
+          responseHandler: (response) => (
+            (response.status === 200)
+              ? response.text()
+              : response.json()),
+          body
+        }),
+        invalidatesTags: ['Auth']
+      }),
+      fetchSigUp: build.mutation<IUserResponse, ISigUpParams>({
+        query: (body) => ({
+          url: `${ENDPOINTS.AUTH.PATH}${ENDPOINTS.AUTH.SIGNUP}`,
+          mode: 'cors',
+          credentials: 'include',
+          method: 'POST',
+          body
+        }),
+        invalidatesTags: ['Auth']
+      }),
+      fetchLogout: build.mutation<IUserResponse, string>({
+        query: () => ({
+          url: `${ENDPOINTS.HTTP}${ENDPOINTS.AUTH.PATH}${ENDPOINTS.AUTH.LOGOUT}`,
+          mode: 'cors',
+          credentials: 'include',
+          method: 'POST'
+        }),
+        invalidatesTags: ['Auth']
       })
-    }),
-    fetchSigIn: build.mutation<IErrorResponse, ISigInParam>({
-      query: (body) => ({
-        url: ENDPOINTS.AUTH.SIGNIN,
-        mode: 'cors',
-        credentials: 'include',
-        method: 'POST',
-        responseHandler: (response) => (
-          (response.status === 200)
-            ? response.text()
-            : response.json()),
-        body
-      }),
-      invalidatesTags: ['Auth']
-    }),
-    fetchSigUp: build.mutation<IUserResponse, ISigUpParam>({
-      query: (body) => ({
-        url: ENDPOINTS.AUTH.SIGNUP,
-        mode: 'cors',
-        credentials: 'include',
-        method: 'POST',
-        body
-      }),
-      invalidatesTags: ['Auth']
-    }),
-    fetchLogout: build.mutation<IUserResponse, string>({
-      query: () => ({
-        url: `${ENDPOINTS.HTTP}/${ENDPOINTS.AUTH.PATH}/${ENDPOINTS.AUTH.LOGOUT}`,
-        mode: 'cors',
-        credentials: 'include',
-        method: 'POST'
-      }),
-      invalidatesTags: ['Auth']
     })
   })
-})
 
-export const { useFetchSigInMutation, useFetchSigUpMutation, useFetchUserMutation, useFetchLogoutMutation } = authAPI;
+export const {
+  useFetchSigInMutation,
+  useFetchSigUpMutation,
+  useFetchUserQuery,
+  useFetchLogoutMutation
+} = authAPI;
+

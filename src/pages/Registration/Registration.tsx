@@ -1,20 +1,27 @@
-import React, { lazy, useState } from 'react';
+import React, { lazy, useEffect, useState } from 'react';
 import { useForm, FormProvider } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Checkbox, FormControlLabel, Grid } from '@mui/material';
 import Button from '@mui/material/Button';
-import { useNavigate } from 'react-router';
+import { useNavigate } from 'react-router-dom';
 import styles from './registration.module.scss';
-import { InputLabel, InputName, RouterLinks, RouterLinksName, TYPES_ALERT } from '../../utils/consts';
-import { useFetchSigUpMutation, useFetchUserMutation } from '../../services/AuthServices';
+import {
+  InputLabel,
+  InputName,
+  MESSAGES_TEXT,
+  RouterLinks,
+  RouterLinksName,
+  TYPES_ALERT
+} from '../../utils/consts';
+import { useFetchSigUpMutation } from '../../services/AuthServices';
 import { useAppDispatch } from '../../hooks/redux';
 import { IAlertTypeProps, showAlert } from '../../store/reducers/AlertSlice';
+import { ISigUpParams } from '../../models/ISigUpParams';
 import { IErrorResponse } from '../../models/IErrorResponse';
-import { IUserResponse } from '../../models/IUserResponse';
-import { setCredentials } from '../../store/reducers/AuthSlice';
 
 const TextField = lazy(() => import(/* webpackChunkName: "TextField" */ '../../components/TextField/TextField'))
+const Loader = lazy(() => import(/* webpackChunkName: "TextField" */ '../../components/Loader/Loader'))
 
 const schema = yup.object()
   .shape({
@@ -36,63 +43,53 @@ const schema = yup.object()
       .required('Логин не указан.')
   })
 
-export interface ISigUpParam {
-  [InputName.displayName]: string;
-  [InputName.firstName]: string;
-  [InputName.secondName]: string;
-  [InputName.login]: string;
-  [InputName.email]: string;
-  [InputName.password]: string;
-  [InputName.phone]: string;
-}
-
 const Registration:React.FC = () => {
-  const methods = useForm<ISigUpParam>({
+  const methods = useForm<ISigUpParams>({
     defaultValues: {
-      [InputName.displayName]: '',
-      [InputName.firstName]: '',
-      [InputName.secondName]: '',
-      [InputName.login]: '',
-      [InputName.email]: '',
-      [InputName.password]: '',
-      [InputName.phone]: ''
+      [InputName.displayName]: 'test',
+      [InputName.firstName]: 'test',
+      [InputName.secondName]: 'test',
+      [InputName.login]: 'test00123',
+      [InputName.email]: 'asd@mail.ru',
+      [InputName.password]: 'Abrikosov8436259',
+      [InputName.phone]: '9667772233'
     },
     mode: 'onBlur',
     resolver: yupResolver(schema)
   });
 
   const [isShowPassword, setIsShowPassword] = useState(false);
+  const [fetchSigUp, { isLoading, isSuccess, data, error, isError }] = useFetchSigUpMutation();
 
-  const [fetchSigUp] = useFetchSigUpMutation();
-  const [fetchUser] = useFetchUserMutation();
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  const getUser = async () => {
-    const user: IUserResponse = await fetchUser('').unwrap();
-    dispatch(setCredentials(user));
-  }
+  const onSubmit = (value: ISigUpParams) => fetchSigUp(value)
 
-  const onSubmit = async (data: ISigUpParam) => {
-    await fetchSigUp(data)
-      .then((response) => {
-        const { error } = (response as IErrorResponse);
-        if (!error) {
-          getUser();
-        } else {
-          const { data } = error;
-          const type: string = TYPES_ALERT.ERROR;
-          dispatch(showAlert({
-            text: data?.reason ?? '',
-            type: type as IAlertTypeProps
-          }))
-        }
-      });
-  }
+  useEffect(() => {
+    if (isSuccess) {
+      navigate(RouterLinks.HOME)
+    }
+  }, [data])
+
+  useEffect(() => {
+    if (isError) {
+      const err = ((error) as IErrorResponse);
+      dispatch(showAlert({
+        text: err?.data?.reason ?? MESSAGES_TEXT.ERROR_OCCURRED,
+        type: TYPES_ALERT.ERROR as IAlertTypeProps
+      }));
+    }
+  }, [error])
 
   return (
     <FormProvider {...methods}>
       <form onSubmit={methods.handleSubmit(onSubmit)} className={styles.form}>
+
+        {
+          isLoading && <Loader />
+        }
+
         <Grid
           container
           spacing={0}
@@ -156,6 +153,7 @@ const Registration:React.FC = () => {
           </Grid>
         </Grid>
       </form>
+
     </FormProvider>
   )
 }

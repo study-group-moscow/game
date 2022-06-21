@@ -1,18 +1,16 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { IUserResponse } from '../../models/IUserResponse';
-import { RootState } from '../store';
+import { authAPI } from '../../services/AuthServices'
+import type { RootState } from '../store';
 
-// Как образец, не финальное решение!!!!
 interface IAuthState {
   user: IUserResponse | null;
-  isLoading: boolean;
-  error: string;
+  isLoggedIn: boolean
 }
 
 const initialState: IAuthState = {
   user: null,
-  isLoading: false,
-  error: ''
+  isLoggedIn: false
 }
 
 export const authSlice = createSlice({
@@ -20,16 +18,31 @@ export const authSlice = createSlice({
   initialState,
   reducers: {
     setCredentials: (state, action: PayloadAction<IUserResponse | null>) => {
-      state.isLoading = false;
       state.user = action.payload;
-      state.error = '';
+    },
+    setLoginStatus: (state, action: PayloadAction<boolean>) => {
+      state.isLoggedIn = action.payload
     }
+  },
+  extraReducers: (builder) => {
+    builder.addMatcher(
+      authAPI.endpoints.fetchUser.matchFulfilled,
+      (state, { payload }) => {
+        if (payload?.id) {
+          state.user = payload
+          state.isLoggedIn = true
+        } else {
+          state.user = null
+          state.isLoggedIn = false
+        }
+      }
+    )
   }
 })
 
-export const { setCredentials } = authSlice.actions
+export const { setCredentials, setLoginStatus } = authSlice.actions
 
 export default authSlice.reducer
 
 export const selectCurrentUser = (state: RootState) => state.authReducer.user
-
+export const selectIsLoggedIn = (state: RootState) => state.authReducer.isLoggedIn

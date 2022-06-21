@@ -1,8 +1,11 @@
 export enum RouterLinks {
   HOME = '/',
   ABOUT = '/about',
-  LOGIN = '/',
-  REGISTRATION = '/registration'
+  LOGIN = '/login',
+  REGISTRATION = '/registration',
+  GAME = '/game',
+  ERROR = '/error',
+  NOT_FOUND = '*'
 }
 
 export enum InputName {
@@ -45,6 +48,10 @@ export const ENDPOINTS = {
     LOGOUT: '/logout'
   }
 };
+
+export const MESSAGES_TEXT = {
+  ERROR_OCCURRED: 'О нет, произошла ошибка!'
+}
 
 export const TYPES_ALERT = {
   ERROR: 'error',

@@ -1,20 +1,30 @@
 import React from 'react'
 import Button from '@mui/material/Button'
 import SendIcon from '@mui/icons-material/Send';
-import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import styles from './home.module.scss'
 import { useFetchLogoutMutation } from '../../services/AuthServices';
-import { setCredentials } from '../../store/reducers/AuthSlice';
 import { RouterLinksName } from '../../utils/consts';
+import { useAppDispatch } from '../../hooks/redux'
+import { setCredentials, setLoginStatus } from '../../store/reducers/AuthSlice'
 
 const Home:React.FC = () => {
-  const [fetchLogout] = useFetchLogoutMutation();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch()
 
-  const handleLogout = () => {
-    fetchLogout('')
+  const [fetchLogout] = useFetchLogoutMutation();
+  const navigation = useNavigate();
+
+  const handleLogout = async () => {
+    await fetchLogout('');
     dispatch(setCredentials(null))
+    dispatch(setLoginStatus(false))
+    navigation('/login')
   }
+
+  const goGame = () => {
+    navigation('/game')
+  }
+
   return (
     <>
       <div className={styles.active}>Home</div>
@@ -25,6 +35,15 @@ const Home:React.FC = () => {
         onClick={handleLogout}
       >
         {RouterLinksName.EXIT}
+      </Button>
+
+      <Button
+        variant='contained'
+        color='success'
+        endIcon={<SendIcon />}
+        onClick={goGame}
+      >
+        TO GAME PROTECTED ROUTE
       </Button>
     </>
   )

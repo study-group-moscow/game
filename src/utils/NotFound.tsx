@@ -1,15 +1,14 @@
 import { Navigate, useLocation } from 'react-router-dom'
 import React from 'react';
 
-import { Container } from '@mui/material';
 import { RouterLinks } from './consts';
 
-export const NotFound = () => {
+export default () => {
   const { pathname } = useLocation();
 
   if (pathname === RouterLinks.LOGIN || pathname === RouterLinks.REGISTRATION) {
-    return <Navigate to='/' />;
+    return <Navigate to='/login' />;
   }
 
-  return <Container>Not Found</Container>;
-};
+  return <div>Not Found</div>;
+}

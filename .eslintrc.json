@@ -77,6 +77,10 @@
         "react/require-default-props": ["error", { "functions": "defaultArguments" }],
 
         /* Disallow JSX props spreading  */
-        "react/jsx-props-no-spreading": ["error", { "custom": "ignore" }]
+        "react/jsx-props-no-spreading": ["error", { "custom": "ignore" }],
+
+        /* reassign params */
+        // https://redux-toolkit.js.org/usage/immer-reducers#linting-state-mutations
+        "no-param-reassign": ["error", { "props": true, "ignorePropertyModificationsFor": ["state"] }]
     }
 }

@@ -1,13 +1,14 @@
 import React from 'react';
-import { useAppSelector } from '../hooks/redux';
-import { selectCurrentUser } from '../store/reducers/AuthSlice';
+import { Navigate, Outlet } from 'react-router-dom';
+import useAuth from '../hooks/useAuth';
+import { useAppSelector } from '../hooks/redux'
+import { selectCurrentUser, selectIsLoggedIn } from '../store/reducers/AuthSlice'
 
-export const PrivateRoute: React.FC<{ children: JSX.Element, authComponents: JSX.Element }> = ({ children, authComponents }) => {
-  const user = useAppSelector(selectCurrentUser);
+export default () => {
+  const user = useAppSelector(selectCurrentUser)
+  const isLoggedIn = useAppSelector(selectIsLoggedIn)
+  const { isLoading } = useAuth();
+  console.log('---user=', user, 'isLoggedIn=', isLoggedIn)
 
-  if (user) {
-    return authComponents;
-  }
-
-  return children;
+  return user || (isLoggedIn && isLoading) ? <Outlet /> : <Navigate to='/login' />
 };

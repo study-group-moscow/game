@@ -1,8 +1,8 @@
 import { useMemo } from 'react'
-import { useSelector } from 'react-redux'
-import { selectCurrentUser } from '../store/reducers/AuthSlice';
+import { useFetchUserQuery } from '../services/AuthServices';
 
-export const useAuth = () => {
-  const user = useSelector(selectCurrentUser);
-  return useMemo(() => ({ user }), [user]);
+export default () => {
+  const { data: user, isSuccess, isError, isLoading, error } = useFetchUserQuery();
+
+  return useMemo(() => ({ user, isSuccess, isError, isLoading, error }), [user]);
 }
