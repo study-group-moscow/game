@@ -4,7 +4,7 @@ import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Checkbox, FormControlLabel, Grid } from '@mui/material';
 import Button from '@mui/material/Button';
-import { useNavigate } from 'react-router';
+import { useNavigate } from 'react-router-dom';
 import styles from './registration.module.scss';
 import {
   InputLabel,
@@ -64,16 +64,7 @@ const Registration:React.FC = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  const onSubmit = async (value: ISigUpParams) => {
-    try {
-      await fetchSigUp(value);
-    } catch (e) {
-      dispatch(showAlert({
-        text: MESSAGES_TEXT.ERROR_OCCURRED,
-        type: TYPES_ALERT.ERROR as IAlertTypeProps
-      }));
-    }
-  }
+  const onSubmit = (value: ISigUpParams) => fetchSigUp(value)
 
   useEffect(() => {
     if (isSuccess) {
@@ -85,7 +76,7 @@ const Registration:React.FC = () => {
     if (isError) {
       const err = ((error) as IErrorResponse);
       dispatch(showAlert({
-        text: err?.data?.reason ?? '',
+        text: err?.data?.reason ?? MESSAGES_TEXT.ERROR_OCCURRED,
         type: TYPES_ALERT.ERROR as IAlertTypeProps
       }));
     }

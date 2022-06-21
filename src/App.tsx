@@ -4,9 +4,9 @@ import { Route, Routes } from 'react-router-dom';
 import { withErrorBoundary } from 'react-error-boundary';
 import { RouterLinks } from './utils/consts';
 
-import { NotFound } from './utils/NotFound';
+import NotFound from './utils/NotFound';
+import PrivateRoute from './utils/PrivateRoute';
 import styles from './app.module.scss';
-import { PrivateRoute } from './utils/PrivateRoute';
 
 const About = lazy(() => import(/* webpackChunkName: "About" */ './pages/About/About'))
 const Home = lazy(() => import(/* webpackChunkName: "Home" */ './pages/Home/Home'))
@@ -20,14 +20,8 @@ const App = () => (
     <Suspense fallback={<div>Loading...</div>}>
 
       <Routes>
-
-        <Route path={RouterLinks.LOGIN} element={<PrivateRoute />}>
-          <Route index element={(<Login />)} />
-        </Route>
-
-        <Route path={RouterLinks.REGISTRATION} element={<PrivateRoute />}>
-          <Route index element={(<Registration />)} />
-        </Route>
+        <Route path={RouterLinks.LOGIN} element={<Login />} />
+        <Route path={RouterLinks.REGISTRATION} element={<Registration />} />
 
         <Route path={RouterLinks.HOME} element={<PrivateRoute />}>
           <Route index element={(<Home />)} />

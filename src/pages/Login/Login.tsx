@@ -16,6 +16,7 @@ import {
   TYPES_ALERT
 } from '../../utils/consts';
 import { useFetchSigInMutation } from '../../services/AuthServices';
+import { setLoginStatus } from '../../store/reducers/AuthSlice'
 import { IErrorResponse } from '../../models/IErrorResponse';
 import { ISigInParams } from '../../models/ISigInParams';
 import { IAlertTypeProps, showAlert } from '../../store/reducers/AlertSlice';
@@ -55,18 +56,11 @@ const Login = () => {
   const navigate = useNavigate();
   const [isShowPassword, setIsShowPassword] = useState(false);
 
-  const onSubmit = async (value: ISigInParams) => {
-    try {
-      await fetchLogin(value);
-    } catch (e) {
-      dispatch(showAlert({
-        text: MESSAGES_TEXT.ERROR_OCCURRED,
-        type: TYPES_ALERT.ERROR as IAlertTypeProps
-      }));
-    }
-  }
+  const onSubmit = (value: ISigInParams) => fetchLogin(value)
+
   useEffect(() => {
     if (isSuccess) {
+      dispatch(setLoginStatus(true))
       navigate(RouterLinks.HOME)
     }
   }, [data])
@@ -75,7 +69,7 @@ const Login = () => {
     if (isError) {
       const err = ((error) as IErrorResponse);
       dispatch(showAlert({
-        text: err?.data?.reason ?? '',
+        text: err?.data?.reason ?? MESSAGES_TEXT.ERROR_OCCURRED,
         type: TYPES_ALERT.ERROR as IAlertTypeProps
       }));
     }

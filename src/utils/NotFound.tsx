@@ -3,7 +3,7 @@ import React from 'react';
 
 import { RouterLinks } from './consts';
 
-export const NotFound = () => {
+export default () => {
   const { pathname } = useLocation();
 
   if (pathname === RouterLinks.LOGIN || pathname === RouterLinks.REGISTRATION) {

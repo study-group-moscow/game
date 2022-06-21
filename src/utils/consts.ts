@@ -5,7 +5,7 @@ export enum RouterLinks {
   REGISTRATION = '/registration',
   GAME = '/game',
   ERROR = '/error',
-  NOT_FOUND = '*',
+  NOT_FOUND = '*'
 }
 
 export enum InputName {

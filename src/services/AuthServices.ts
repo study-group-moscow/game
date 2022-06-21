@@ -3,18 +3,19 @@ import { IUserResponse } from '../models/IUserResponse';
 import { IErrorResponse } from '../models/IErrorResponse';
 import { ISigInParams } from '../models/ISigInParams';
 import { ISigUpParams } from '../models/ISigUpParams';
-import { baseApi } from '../store/api/baseApi';
+import baseApi from '../store/api/baseApi';
 
 export const authAPI = baseApi
   .enhanceEndpoints({ addTagTypes: ['Auth'] })
   .injectEndpoints({
     endpoints: (build) => ({
-      fetchUser: build.query<IUserResponse, string>({
+      fetchUser: build.query<IUserResponse, void>({
         query: () => ({
           url: `${ENDPOINTS.AUTH.PATH}${ENDPOINTS.AUTH.USER}`,
           mode: 'cors',
           credentials: 'include'
-        })
+        }),
+        providesTags: ['Auth']
       }),
       fetchSigIn: build.mutation<IErrorResponse, ISigInParams>({
         query: (body) => ({
@@ -42,7 +43,7 @@ export const authAPI = baseApi
       }),
       fetchLogout: build.mutation<IUserResponse, string>({
         query: () => ({
-          url: `${ENDPOINTS.HTTP}/${ENDPOINTS.AUTH.PATH}/${ENDPOINTS.AUTH.LOGOUT}`,
+          url: `${ENDPOINTS.HTTP}${ENDPOINTS.AUTH.PATH}${ENDPOINTS.AUTH.LOGOUT}`,
           mode: 'cors',
           credentials: 'include',
           method: 'POST'
@@ -50,8 +51,12 @@ export const authAPI = baseApi
         invalidatesTags: ['Auth']
       })
     })
-    // overrideExisting: false
   })
 
-export const { useFetchSigInMutation, useFetchSigUpMutation } = authAPI;
-export const { useFetchUserQuery, useFetchLogoutMutation } = authAPI;
+export const {
+  useFetchSigInMutation,
+  useFetchSigUpMutation,
+  useFetchUserQuery,
+  useFetchLogoutMutation
+} = authAPI;
+
