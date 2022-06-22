@@ -3,6 +3,8 @@ export enum RouterLinks {
   ABOUT = '/about',
   LOGIN = '/login',
   REGISTRATION = '/registration',
+  FORUM = '/forum',
+  PROFILE = '/profile',
   GAME = '/game',
   ERROR = '/error',
   NOT_FOUND = '*'
@@ -21,6 +23,9 @@ export enum InputName {
 export enum RouterLinksName {
   NOT_REGISTRATION = 'Не зарегистрированы ?',
   EXIT = 'Выйти',
+  GAME = 'Игра',
+  PROFILE = 'Мой аккаунт',
+  FORUM = 'Форум',
   ALREADY_REGISTRATION = 'Уже зарегистрированы ?'
 }
 
