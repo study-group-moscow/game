@@ -2,23 +2,17 @@ import React from 'react'
 import Button from '@mui/material/Button'
 import SendIcon from '@mui/icons-material/Send';
 import { useNavigate } from 'react-router-dom';
-import styles from './home.module.scss'
+import './Home.scss'
 import { useFetchLogoutMutation } from '../../services/AuthServices';
-import { RouterLinksName } from '../../utils/consts';
-import { useAppDispatch } from '../../hooks/redux'
-import { setCredentials, setLoginStatus } from '../../store/reducers/AuthSlice'
+import { RouterLinks, RouterLinksName } from '../../utils/consts';
 
 const Home:React.FC = () => {
-  const dispatch = useAppDispatch()
-
   const [fetchLogout] = useFetchLogoutMutation();
   const navigation = useNavigate();
 
   const handleLogout = async () => {
     await fetchLogout('');
-    dispatch(setCredentials(null))
-    dispatch(setLoginStatus(false))
-    navigation('/login')
+    navigation(RouterLinks.LOGIN);
   }
 
   const goGame = () => {
@@ -27,7 +21,7 @@ const Home:React.FC = () => {
 
   return (
     <>
-      <div className={styles.active}>Home</div>
+      <div className='Active'>Home</div>
       <Button
         variant='contained'
         color='success'

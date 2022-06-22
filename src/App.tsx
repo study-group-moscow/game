@@ -4,22 +4,23 @@ import { Route, Routes } from 'react-router-dom';
 import { withErrorBoundary } from 'react-error-boundary';
 import { RouterLinks } from './utils/consts';
 import NotFound from './utils/NotFound';
-import PrivateRoute from './utils/PrivateRoute';
-import styles from './app.module.scss';
+import './App.scss';
 
 const AppBar = lazy(() => import(/* webpackChunkName: "AppBar" */ './components/AppBar/AppBar'))
 const About = lazy(() => import(/* webpackChunkName: "About" */ './pages/About/About'))
 const Home = lazy(() => import(/* webpackChunkName: "Home" */ './pages/Home/Home'))
 const Registration = lazy(() => import(/* webpackChunkName: "Registration" */ './pages/Registration/Registration'))
 const Login = lazy(() => import(/* webpackChunkName: "Login" */ './pages/Login/Login'))
+const Loader = lazy(() => import(/* webpackChunkName: "Loader" */ './components/Loader/Loader'))
+const PrivateRoute = lazy(() => import(/* webpackChunkName: "PrivateRoute" */ './utils/PrivateRoute'))
 
 const App = () => (
-  <div className={styles.app}>
+  <div className='App'>
     <CssBaseline />
 
     <AppBar />
 
-    <Suspense fallback={<div>Loading...</div>}>
+    <Suspense fallback={<Loader />}>
 
       <Routes>
         <Route path={RouterLinks.LOGIN} element={<Login />} />
