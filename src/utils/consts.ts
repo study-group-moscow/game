@@ -62,3 +62,26 @@ export const TYPES_ALERT = {
   ERROR: 'error',
   SUCCESS: ' success'
 }
+
+export const MENU_ITEMS = [
+  {
+    title: 'Игра',
+    icon: 'SportsEsports',
+    addr: '/game'
+  },
+  {
+    title: 'Рейтинг',
+    icon: 'Leaderboard',
+    addr: '/leaderboard'
+  },
+  {
+    title: 'Форум',
+    icon: 'Forum',
+    addr: '/forum'
+  },
+  {
+    title: 'Выход',
+    icon: 'Logout',
+    addr: '/login'
+  }
+]

@@ -18,9 +18,8 @@ const App = () => (
   <div className='App'>
     <CssBaseline />
 
-    <AppBar />
-
     <Suspense fallback={<Loader />}>
+      <AppBar />
 
       <Routes>
         <Route path={RouterLinks.LOGIN} element={<Login />} />
