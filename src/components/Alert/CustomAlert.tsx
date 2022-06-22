@@ -2,7 +2,7 @@ import React from 'react';
 import Stack from '@mui/material/Stack';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert, { AlertProps } from '@mui/material/Alert';
-import styles from './customAlert.module.scss';
+import './CustomAlert.scss';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import {
   hideAlert,
@@ -29,7 +29,7 @@ const CustomAlert = () => {
   };
 
   return (
-    <Stack spacing={2} className={styles.customAlert}>
+    <Stack spacing={2} className='customAlert'>
       <Snackbar open={open} autoHideDuration={5000} onClose={handleClose}>
         <Alert onClose={handleClose} severity={type}>
           {text}

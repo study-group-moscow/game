@@ -5,7 +5,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { Checkbox, FormControlLabel, Grid } from '@mui/material';
 import Button from '@mui/material/Button';
 import { useNavigate } from 'react-router-dom';
-import styles from './registration.module.scss';
+import './Registration.scss';
 import {
   InputLabel,
   InputName,
@@ -84,7 +84,7 @@ const Registration:React.FC = () => {
 
   return (
     <FormProvider {...methods}>
-      <form onSubmit={methods.handleSubmit(onSubmit)} className={styles.form}>
+      <form onSubmit={methods.handleSubmit(onSubmit)} className='Form'>
 
         {
           isLoading && <Loader />
@@ -96,33 +96,33 @@ const Registration:React.FC = () => {
           direction='column'
           alignItems='center'
           justifyContent='center'
-          className={styles.layout}
+          className='Layout'
         >
-          <Grid item xs={12} className={styles.input}>
+          <Grid item xs={12} className='Input'>
             <TextField name={InputName.displayName} label={InputLabel.displayName} autoFocus />
           </Grid>
 
-          <Grid item xs={12} className={styles.input}>
+          <Grid item xs={12} className='Input'>
             <TextField name={InputName.firstName} label={InputLabel.firstName} />
           </Grid>
 
-          <Grid item xs={12} className={styles.input}>
+          <Grid item xs={12} className='Input'>
             <TextField name={InputName.secondName} label={InputLabel.secondName} />
           </Grid>
 
-          <Grid item xs={12} className={styles.input}>
+          <Grid item xs={12} className='Input'>
             <TextField name={InputName.login} label={InputLabel.login} />
           </Grid>
 
-          <Grid item xs={12} className={styles.input}>
+          <Grid item xs={12} className='Input'>
             <TextField name={InputName.email} label={InputLabel.email} />
           </Grid>
 
-          <Grid item xs={12} className={styles.input}>
+          <Grid item xs={12} className='Input'>
             <TextField name={InputName.phone} label={InputLabel.phone} />
           </Grid>
 
-          <Grid item xs={12} className={styles.input}>
+          <Grid item xs={12} className='Input'>
             <TextField type={isShowPassword ? '' : InputName.password} name={InputName.password} label={InputLabel.password} />
           </Grid>
           <Grid

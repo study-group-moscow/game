@@ -6,7 +6,7 @@ import { Checkbox, FormControlLabel, Grid } from '@mui/material';
 import Button from '@mui/material/Button';
 import { useNavigate } from 'react-router';
 import { useDispatch } from 'react-redux';
-import styles from './login.module.scss';
+import './Login.scss';
 import {
   InputLabel,
   InputName,
@@ -16,7 +16,6 @@ import {
   TYPES_ALERT
 } from '../../utils/consts';
 import { useFetchSigInMutation } from '../../services/AuthServices';
-import { setLoginStatus } from '../../store/reducers/AuthSlice'
 import { IErrorResponse } from '../../models/IErrorResponse';
 import { ISigInParams } from '../../models/ISigInParams';
 import { IAlertTypeProps, showAlert } from '../../store/reducers/AlertSlice';
@@ -60,7 +59,6 @@ const Login = () => {
 
   useEffect(() => {
     if (isSuccess) {
-      dispatch(setLoginStatus(true))
       navigate(RouterLinks.HOME)
     }
   }, [data])
@@ -77,7 +75,7 @@ const Login = () => {
 
   return (
     <FormProvider {...methods}>
-      <form onSubmit={methods.handleSubmit(onSubmit)} className={styles.form}>
+      <form onSubmit={methods.handleSubmit(onSubmit)} className='Form'>
         {
           isLoading && <Loader />
         }
@@ -87,13 +85,13 @@ const Login = () => {
           direction='column'
           alignItems='center'
           justifyContent='center'
-          className={styles.layout}
+          className='Layout'
         >
-          <Grid item xs={12} className={styles.input}>
+          <Grid item xs={12} className='Input'>
             <TextField name={InputName.login} label={InputLabel.login} autoFocus />
           </Grid>
 
-          <Grid item xs={12} className={styles.input}>
+          <Grid item xs={12} className='Input'>
             <TextField
               type={isShowPassword ? '' : InputName.password}
               name={InputName.password}
