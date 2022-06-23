@@ -6,7 +6,7 @@ import { RouterLinks } from './utils/consts';
 import NotFound from './utils/NotFound';
 import './App.scss';
 
-const AppBar = lazy(() => import(/* webpackChunkName: "AppBar" */ './components/AppBar/AppBar'))
+// const AppBar = lazy(() => import(/* webpackChunkName: "AppBar" */ './components/AppBar/AppBar'))
 const About = lazy(() => import(/* webpackChunkName: "About" */ './pages/About/About'))
 const Home = lazy(() => import(/* webpackChunkName: "Home" */ './pages/Home/Home'))
 const Registration = lazy(() => import(/* webpackChunkName: "Registration" */ './pages/Registration/Registration'))
@@ -19,8 +19,6 @@ const App = () => (
     <CssBaseline />
 
     <Suspense fallback={<Loader />}>
-      <AppBar />
-
       <Routes>
         <Route path={RouterLinks.LOGIN} element={<Login />} />
         <Route path={RouterLinks.REGISTRATION} element={<Registration />} />
@@ -35,6 +33,18 @@ const App = () => (
 
         <Route path={RouterLinks.GAME} element={<PrivateRoute />}>
           <Route index element={(<div>Game</div>)} />
+        </Route>
+
+        <Route path={RouterLinks.PROFILE} element={<PrivateRoute />}>
+          <Route index element={(<div>Profile</div>)} />
+        </Route>
+
+        <Route path={RouterLinks.FORUM} element={<PrivateRoute />}>
+          <Route index element={(<div>Forum</div>)} />
+        </Route>
+
+        <Route path={RouterLinks.LEADERBOARD} element={<PrivateRoute />}>
+          <Route index element={(<div>Leaderboard</div>)} />
         </Route>
 
         <Route path={RouterLinks.ERROR} element={<PrivateRoute />}>

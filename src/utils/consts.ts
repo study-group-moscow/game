@@ -3,6 +3,7 @@ export enum RouterLinks {
   ABOUT = '/about',
   LOGIN = '/login',
   REGISTRATION = '/registration',
+  LEADERBOARD = '/leaderboard',
   FORUM = '/forum',
   PROFILE = '/profile',
   GAME = '/game',
@@ -22,9 +23,10 @@ export enum InputName {
 
 export enum RouterLinksName {
   NOT_REGISTRATION = 'Не зарегистрированы ?',
-  EXIT = 'Выйти',
+  EXIT = 'Выход',
   GAME = 'Игра',
   PROFILE = 'Мой аккаунт',
+  LEADERBOARD = 'Рейтинг',
   FORUM = 'Форум',
   ALREADY_REGISTRATION = 'Уже зарегистрированы ?'
 }
@@ -63,25 +65,32 @@ export const TYPES_ALERT = {
   SUCCESS: ' success'
 }
 
-export const MENU_ITEMS = [
-  {
-    title: 'Игра',
-    icon: 'SportsEsports',
-    addr: '/game'
+export const MENU_ITEMS = {
+  profile: {
+    title: RouterLinksName.PROFILE,
+    icon: '',
+    link: RouterLinks.PROFILE
   },
-  {
-    title: 'Рейтинг',
-    icon: 'Leaderboard',
-    addr: '/leaderboard'
-  },
-  {
-    title: 'Форум',
-    icon: 'Forum',
-    addr: '/forum'
-  },
-  {
-    title: 'Выход',
-    icon: 'Logout',
-    addr: '/login'
-  }
-]
+  list: [
+    {
+      title: RouterLinksName.GAME,
+      icon: 'SportsEsports',
+      link: RouterLinks.GAME
+    },
+    {
+      title: RouterLinksName.LEADERBOARD,
+      icon: 'Leaderboard',
+      link: RouterLinks.LEADERBOARD
+    },
+    {
+      title: RouterLinksName.FORUM,
+      icon: 'Forum',
+      link: RouterLinks.FORUM
+    },
+    {
+      title: RouterLinksName.EXIT,
+      icon: 'Logout',
+      link: RouterLinks.LOGIN
+    }
+  ]
+}
