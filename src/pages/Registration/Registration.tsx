@@ -19,6 +19,7 @@ import { useAppDispatch } from '../../hooks/redux';
 import { IAlertTypeProps, showAlert } from '../../store/reducers/AlertSlice';
 import { ISigUpParams } from '../../models/ISigUpParams';
 import { IErrorResponse } from '../../models/IErrorResponse';
+import useToggleVisibility from "../../hooks/useToggleVisibility";
 
 const TextField = lazy(() => import(/* webpackChunkName: "TextField" */ '../../components/TextField/TextField'))
 const Loader = lazy(() => import(/* webpackChunkName: "TextField" */ '../../components/Loader/Loader'))
@@ -58,7 +59,7 @@ const Registration:React.FC = () => {
     resolver: yupResolver(schema)
   });
 
-  const [isShowPassword, setIsShowPassword] = useState(false);
+  const { isToggleVisibility, setToggleVisibility } = useToggleVisibility(false);
   const [fetchSigUp, { isLoading, isSuccess, data, error, isError }] = useFetchSigUpMutation();
 
   const dispatch = useAppDispatch();
@@ -123,7 +124,7 @@ const Registration:React.FC = () => {
           </Grid>
 
           <Grid item xs={12} className='Input'>
-            <TextField type={isShowPassword ? '' : InputName.password} name={InputName.password} label={InputLabel.password} />
+            <TextField type={isToggleVisibility ? '' : InputName.password} name={InputName.password} label={InputLabel.password} />
           </Grid>
           <Grid
             container
@@ -135,7 +136,7 @@ const Registration:React.FC = () => {
                 control={(
                   <Checkbox
                     color='primary'
-                    onClick={() => setIsShowPassword((pre) => !pre)}
+                    onClick={setToggleVisibility}
                   />
               )}
                 label={InputLabel.showPassword}

@@ -19,6 +19,7 @@ import { useFetchSigInMutation } from '../../services/AuthServices';
 import { IErrorResponse } from '../../models/IErrorResponse';
 import { ISigInParams } from '../../models/ISigInParams';
 import { IAlertTypeProps, showAlert } from '../../store/reducers/AlertSlice';
+import useToggleVisibility from "../../hooks/useToggleVisibility";
 
 const TextField = lazy(() => import(/* webpackChunkName: "TextField" */ '../../components/TextField/TextField'))
 const Loader = lazy(() => import(/* webpackChunkName: "Loader" */ '../../components/Loader/Loader'))
@@ -53,7 +54,7 @@ const Login = () => {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [isShowPassword, setIsShowPassword] = useState(false);
+  const { isToggleVisibility, setToggleVisibility } = useToggleVisibility(false);
 
   const onSubmit = (value: ISigInParams) => fetchLogin(value)
 
@@ -93,7 +94,7 @@ const Login = () => {
 
           <Grid item xs={12} className='Input'>
             <TextField
-              type={isShowPassword ? '' : InputName.password}
+              type={isToggleVisibility ? '' : InputName.password}
               name={InputName.password}
               label={InputLabel.password}
             />
@@ -109,7 +110,7 @@ const Login = () => {
                 control={(
                   <Checkbox
                     color='primary'
-                    onClick={() => setIsShowPassword((pre) => !pre)}
+                    onClick={setToggleVisibility}
                   />
                 )}
                 label={InputLabel.showPassword}
