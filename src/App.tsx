@@ -6,7 +6,6 @@ import { RouterLinks } from './utils/consts';
 import NotFound from './utils/NotFound';
 import './App.scss';
 
-// const AppBar = lazy(() => import(/* webpackChunkName: "AppBar" */ './components/AppBar/AppBar'))
 const About = lazy(() => import(/* webpackChunkName: "About" */ './pages/About/About'))
 const Home = lazy(() => import(/* webpackChunkName: "Home" */ './pages/Home/Home'))
 const Registration = lazy(() => import(/* webpackChunkName: "Registration" */ './pages/Registration/Registration'))
