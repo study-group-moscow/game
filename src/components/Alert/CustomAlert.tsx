@@ -6,8 +6,7 @@ import './CustomAlert.scss';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import {
   hideAlert,
-  selectCurrentText,
-  selectCurrentOpen, selectCurrentType
+  selectCurrentState
 } from '../../store/reducers/AlertSlice';
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>((
@@ -17,15 +16,13 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>((
 
 const CustomAlert = () => {
   const dispatch = useAppDispatch();
-  const text = useAppSelector(selectCurrentText);
-  const open = useAppSelector(selectCurrentOpen);
-  const type = useAppSelector(selectCurrentType);
+  const { text, open, type } = useAppSelector(selectCurrentState);
 
   const handleClose = (event?: React.SyntheticEvent | Event, reason?: string) => {
     if (reason === 'clickaway') {
       return;
     }
-    dispatch(hideAlert())
+    dispatch(hideAlert());
   };
 
   return (

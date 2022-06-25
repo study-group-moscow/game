@@ -35,7 +35,5 @@ export const { showAlert, hideAlert } = alertSlice.actions;
 
 export default alertSlice.reducer
 
-export const selectCurrentText = (state: RootState) => state.alertReducer.text;
-export const selectCurrentOpen = (state: RootState) => state.alertReducer.open;
-export const selectCurrentType = (state: RootState) => state.alertReducer.type;
+export const selectCurrentState = (state: RootState) => state.alertReducer;
 
