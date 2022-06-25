@@ -41,7 +41,7 @@ export const authAPI = baseApi
         }),
         invalidatesTags: ['Auth']
       }),
-      fetchLogout: build.mutation<IUserResponse, string>({
+      fetchLogout: build.mutation<IUserResponse, void>({
         query: () => ({
           url: `${ENDPOINTS.HTTP}${ENDPOINTS.AUTH.PATH}${ENDPOINTS.AUTH.LOGOUT}`,
           mode: 'cors',

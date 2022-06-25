@@ -3,7 +3,6 @@ import CssBaseline from '@mui/material/CssBaseline';
 import { Route, Routes } from 'react-router-dom';
 import { withErrorBoundary } from 'react-error-boundary';
 import { RouterLinks } from './utils/consts';
-
 import NotFound from './utils/NotFound';
 import './App.scss';
 
@@ -19,7 +18,6 @@ const App = () => (
     <CssBaseline />
 
     <Suspense fallback={<Loader />}>
-
       <Routes>
         <Route path={RouterLinks.LOGIN} element={<Login />} />
         <Route path={RouterLinks.REGISTRATION} element={<Registration />} />
@@ -34,6 +32,18 @@ const App = () => (
 
         <Route path={RouterLinks.GAME} element={<PrivateRoute />}>
           <Route index element={(<div>Game</div>)} />
+        </Route>
+
+        <Route path={RouterLinks.PROFILE} element={<PrivateRoute />}>
+          <Route index element={(<div>Profile</div>)} />
+        </Route>
+
+        <Route path={RouterLinks.FORUM} element={<PrivateRoute />}>
+          <Route index element={(<div>Forum</div>)} />
+        </Route>
+
+        <Route path={RouterLinks.LEADERBOARD} element={<PrivateRoute />}>
+          <Route index element={(<div>Leaderboard</div>)} />
         </Route>
 
         <Route path={RouterLinks.ERROR} element={<PrivateRoute />}>
