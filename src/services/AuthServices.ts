@@ -2,7 +2,7 @@ import { ENDPOINTS } from '../constants/constants';
 import { IUserResponse } from '../models/IUserResponse';
 import { IErrorResponse } from '../models/IErrorResponse';
 import { ISignInParams } from '../models/ISignInParams';
-import { ISigUpParams } from '../models/ISigUpParams';
+import { ISignUpParams } from '../models/ISignUpParams';
 import baseApi from '../store/api/baseApi';
 
 export const authAPI = baseApi
@@ -27,7 +27,7 @@ export const authAPI = baseApi
         }),
         invalidatesTags: ['Auth']
       }),
-      fetchSigUp: build.mutation<IUserResponse, ISigUpParams>({
+      fetchSigUp: build.mutation<IUserResponse, ISignUpParams>({
         query: (body) => ({
           url: `${ENDPOINTS.AUTH.PATH}${ENDPOINTS.AUTH.SIGNUP}`,
           method: 'POST',

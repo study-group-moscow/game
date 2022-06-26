@@ -1,6 +1,6 @@
 import { InputName } from '../constants/constants';
 
-export interface ISigUpParams {
+export interface ISignUpParams {
   [InputName.displayName]: string;
   [InputName.firstName]: string;
   [InputName.secondName]: string;

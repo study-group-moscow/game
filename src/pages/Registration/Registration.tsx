@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import { IAlertTypeProps, showAlert } from '../../store/reducers/AlertSlice';
 import { useFetchSigUpMutation } from '../../services/AuthServices';
 import { useAppDispatch } from '../../hooks/redux';
-import { ISigUpParams } from '../../models/ISigUpParams';
+import { ISignUpParams } from '../../models/ISignUpParams';
 import { IErrorResponse } from '../../models/IErrorResponse';
 import { schemaRegistration } from './schema';
 import {
@@ -27,7 +27,7 @@ const TextField = lazy(() => import(/* webpackChunkName: "TextField" */ '../../c
 const Loader = lazy(() => import(/* webpackChunkName: "TextField" */ '../../components/Loader/Loader'))
 
 const Registration:React.FC = () => {
-  const methods = useForm<ISigUpParams>({
+  const methods = useForm<ISignUpParams>({
     defaultValues: {
       [InputName.displayName]: 'test',
       [InputName.firstName]: 'test',
@@ -47,7 +47,7 @@ const Registration:React.FC = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  const onSubmit = useCallback((value: ISigUpParams) => fetchSigUp(value), [])
+  const onSubmit = useCallback((value: ISignUpParams) => fetchSigUp(value), [])
 
   useEffect(() => {
     if (isSuccess) {
