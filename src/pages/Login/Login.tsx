@@ -1,6 +1,5 @@
-import React, { lazy, useEffect, useState } from 'react';
+import React, { lazy, useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Checkbox, FormControlLabel, Grid } from '@mui/material';
 import Button from '@mui/material/Button';
@@ -9,39 +8,30 @@ import { useDispatch } from 'react-redux';
 import './Login.scss';
 import {
   InputLabel,
-  InputName,
+  InputName, InputType,
   MESSAGES_TEXT,
   RouterLinks,
   RouterLinksName,
   TYPES_ALERT
-} from '../../utils/consts';
+} from '../../constants/constants';
 import { useFetchSigInMutation } from '../../services/AuthServices';
 import { IErrorResponse } from '../../models/IErrorResponse';
-import { ISigInParams } from '../../models/ISigInParams';
+import { ISignInParams } from '../../models/ISignInParams';
 import { IAlertTypeProps, showAlert } from '../../store/reducers/AlertSlice';
-import useToggleVisibility from "../../hooks/useToggleVisibility";
+import useToggleVisibility from '../../hooks/useToggleVisibility';
+import { schemaLogin } from './schema';
 
 const TextField = lazy(() => import(/* webpackChunkName: "TextField" */ '../../components/TextField/TextField'))
 const Loader = lazy(() => import(/* webpackChunkName: "Loader" */ '../../components/Loader/Loader'))
 
-const schema = yup.object()
-  .shape({
-    password: yup.string()
-      .required('Пароль не указан.')
-      .min(8, 'Пароль может содержать только латинские буквы.')
-      .matches(/[a-zA-Z]/, 'Пароль может содержать только латинские буквы.'),
-    login: yup.string()
-      .required('Логин не указан.')
-  })
-
 const Login = () => {
-  const methods = useForm<ISigInParams>({
+  const methods = useForm<ISignInParams>({
     defaultValues: {
       [InputName.login]: 'Test0010',
       [InputName.password]: 'Abrikosov8436259'
     },
     mode: 'onBlur',
-    resolver: yupResolver(schema)
+    resolver: yupResolver(schemaLogin)
   });
 
   const [fetchLogin, {
@@ -56,7 +46,7 @@ const Login = () => {
   const navigate = useNavigate();
   const { isToggleVisibility, setToggleVisibility } = useToggleVisibility(false);
 
-  const onSubmit = (value: ISigInParams) => fetchLogin(value)
+  const onSubmit = (value: ISignInParams) => fetchLogin(value)
 
   useEffect(() => {
     if (isSuccess) {
@@ -89,12 +79,17 @@ const Login = () => {
           className='Layout'
         >
           <Grid item xs={12} className='Input'>
-            <TextField name={InputName.login} label={InputLabel.login} autoFocus />
+            <TextField
+              type={InputType.text}
+              name={InputName.login}
+              label={InputLabel.login}
+              autoFocus
+            />
           </Grid>
 
           <Grid item xs={12} className='Input'>
             <TextField
-              type={isToggleVisibility ? '' : InputName.password}
+              type={isToggleVisibility ? '' : InputType.password}
               name={InputName.password}
               label={InputLabel.password}
             />

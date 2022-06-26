@@ -1,4 +1,4 @@
-import { InputName } from '../utils/consts';
+import { InputName } from '../constants/constants';
 
 export interface ISigUpParams {
   [InputName.displayName]: string;

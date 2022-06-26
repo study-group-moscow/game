@@ -17,6 +17,12 @@ export enum InputName {
   email = 'email',
   phone = 'phone'
 }
+export enum InputType {
+  text = 'text',
+  password = 'password',
+  email = 'email',
+  phone = 'phone'
+}
 
 export enum RouterLinksName {
   NOT_REGISTRATION = 'Не зарегистрированы ?',

@@ -1,7 +1,7 @@
-import { ENDPOINTS } from '../utils/consts';
+import { ENDPOINTS } from '../constants/constants';
 import { IUserResponse } from '../models/IUserResponse';
 import { IErrorResponse } from '../models/IErrorResponse';
-import { ISigInParams } from '../models/ISigInParams';
+import { ISignInParams } from '../models/ISignInParams';
 import { ISigUpParams } from '../models/ISigUpParams';
 import baseApi from '../store/api/baseApi';
 
@@ -11,17 +11,13 @@ export const authAPI = baseApi
     endpoints: (build) => ({
       fetchUser: build.query<IUserResponse, void>({
         query: () => ({
-          url: `${ENDPOINTS.AUTH.PATH}${ENDPOINTS.AUTH.USER}`,
-          mode: 'cors',
-          credentials: 'include'
+          url: `${ENDPOINTS.AUTH.PATH}${ENDPOINTS.AUTH.USER}`
         }),
         providesTags: ['Auth']
       }),
-      fetchSigIn: build.mutation<IErrorResponse, ISigInParams>({
+      fetchSigIn: build.mutation<IErrorResponse, ISignInParams>({
         query: (body) => ({
           url: `${ENDPOINTS.AUTH.PATH}${ENDPOINTS.AUTH.SIGNIN}`,
-          mode: 'cors',
-          credentials: 'include',
           method: 'POST',
           responseHandler: (response) => (
             (response.status === 200)
@@ -34,8 +30,6 @@ export const authAPI = baseApi
       fetchSigUp: build.mutation<IUserResponse, ISigUpParams>({
         query: (body) => ({
           url: `${ENDPOINTS.AUTH.PATH}${ENDPOINTS.AUTH.SIGNUP}`,
-          mode: 'cors',
-          credentials: 'include',
           method: 'POST',
           body
         }),
@@ -44,8 +38,6 @@ export const authAPI = baseApi
       fetchLogout: build.mutation<IUserResponse, string>({
         query: () => ({
           url: `${ENDPOINTS.HTTP}${ENDPOINTS.AUTH.PATH}${ENDPOINTS.AUTH.LOGOUT}`,
-          mode: 'cors',
-          credentials: 'include',
           method: 'POST'
         }),
         invalidatesTags: ['Auth']

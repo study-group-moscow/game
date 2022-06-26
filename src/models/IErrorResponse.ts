@@ -1,6 +1,6 @@
 export interface IErrorResponse {
-  status?: number;
-  data?: {
+  status: number;
+  data: {
     reason?: string;
     id?: number;
   }

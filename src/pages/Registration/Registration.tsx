@@ -1,6 +1,5 @@
-import React, { lazy, useEffect, useState } from 'react';
+import React, { lazy, useEffect } from 'react';
 import { useForm, FormProvider } from 'react-hook-form';
-import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Checkbox, FormControlLabel, Grid } from '@mui/material';
 import Button from '@mui/material/Button';
@@ -8,41 +7,22 @@ import { useNavigate } from 'react-router-dom';
 import './Registration.scss';
 import {
   InputLabel,
-  InputName,
+  InputName, InputType,
   MESSAGES_TEXT,
   RouterLinks,
   RouterLinksName,
   TYPES_ALERT
-} from '../../utils/consts';
+} from '../../constants/constants';
 import { useFetchSigUpMutation } from '../../services/AuthServices';
 import { useAppDispatch } from '../../hooks/redux';
 import { IAlertTypeProps, showAlert } from '../../store/reducers/AlertSlice';
 import { ISigUpParams } from '../../models/ISigUpParams';
 import { IErrorResponse } from '../../models/IErrorResponse';
-import useToggleVisibility from "../../hooks/useToggleVisibility";
+import useToggleVisibility from '../../hooks/useToggleVisibility';
+import { schemaRegistration } from './schema';
 
 const TextField = lazy(() => import(/* webpackChunkName: "TextField" */ '../../components/TextField/TextField'))
 const Loader = lazy(() => import(/* webpackChunkName: "TextField" */ '../../components/Loader/Loader'))
-
-const schema = yup.object()
-  .shape({
-    first_name: yup.string()
-      .required('Имя не указано.'),
-    second_name: yup.string()
-      .required('Фамилия не указана.'),
-    display_name: yup.string()
-      .required('Логин не указан.'),
-    email: yup
-      .string()
-      .email('Неверный формат электронной почты.')
-      .required('Требуется почта.'),
-    password: yup.string()
-      .required('Пароль не указан.')
-      .min(8, 'Пароль может содержать только латинские буквы.')
-      .matches(/[a-zA-Z]/, 'Пароль может содержать только латинские буквы.'),
-    login: yup.string()
-      .required('Логин не указан.')
-  })
 
 const Registration:React.FC = () => {
   const methods = useForm<ISigUpParams>({
@@ -56,7 +36,7 @@ const Registration:React.FC = () => {
       [InputName.phone]: '9667772233'
     },
     mode: 'onBlur',
-    resolver: yupResolver(schema)
+    resolver: yupResolver(schemaRegistration)
   });
 
   const { isToggleVisibility, setToggleVisibility } = useToggleVisibility(false);
@@ -100,31 +80,60 @@ const Registration:React.FC = () => {
           className='Layout'
         >
           <Grid item xs={12} className='Input'>
-            <TextField name={InputName.displayName} label={InputLabel.displayName} autoFocus />
+            <TextField
+              type={InputType.text}
+              name={InputName.displayName}
+              label={InputLabel.displayName}
+              autoFocus
+            />
           </Grid>
 
           <Grid item xs={12} className='Input'>
-            <TextField name={InputName.firstName} label={InputLabel.firstName} />
+            <TextField
+              type={InputType.text}
+              name={InputName.firstName}
+              label={InputLabel.firstName}
+            />
           </Grid>
 
           <Grid item xs={12} className='Input'>
-            <TextField name={InputName.secondName} label={InputLabel.secondName} />
+            <TextField
+              type={InputType.text}
+              name={InputName.secondName}
+              label={InputLabel.secondName}
+            />
           </Grid>
 
           <Grid item xs={12} className='Input'>
-            <TextField name={InputName.login} label={InputLabel.login} />
+            <TextField
+              type={InputType.text}
+              name={InputName.login}
+              label={InputLabel.login}
+            />
           </Grid>
 
           <Grid item xs={12} className='Input'>
-            <TextField name={InputName.email} label={InputLabel.email} />
+            <TextField
+              type={InputType.email}
+              name={InputName.email}
+              label={InputLabel.email}
+            />
           </Grid>
 
           <Grid item xs={12} className='Input'>
-            <TextField name={InputName.phone} label={InputLabel.phone} />
+            <TextField
+              type={InputType.text}
+              name={InputName.phone}
+              label={InputLabel.phone}
+            />
           </Grid>
 
           <Grid item xs={12} className='Input'>
-            <TextField type={isToggleVisibility ? '' : InputName.password} name={InputName.password} label={InputLabel.password} />
+            <TextField
+              type={isToggleVisibility ? '' : InputType.password}
+              name={InputName.password}
+              label={InputLabel.password}
+            />
           </Grid>
           <Grid
             container
@@ -143,7 +152,16 @@ const Registration:React.FC = () => {
               />
             </Grid>
             <Grid item>
-              <Button onClick={() => navigate(RouterLinks.LOGIN)} disableFocusRipple disableRipple style={{ textTransform: 'none' }} variant='text' color='primary'>{RouterLinksName.ALREADY_REGISTRATION}</Button>
+              <Button
+                onClick={() => navigate(RouterLinks.LOGIN)}
+                disableFocusRipple
+                disableRipple
+                style={{ textTransform: 'none' }}
+                variant='text'
+                color='primary'
+              >
+                {RouterLinksName.ALREADY_REGISTRATION}
+              </Button>
             </Grid>
           </Grid>
 

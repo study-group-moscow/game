@@ -9,15 +9,13 @@ interface ITextFieldProps {
   autoFocus?: boolean;
 }
 
-const TextField = ({ name = '', label = '', type = 'text', autoFocus = false }: ITextFieldProps) => {
+const TextField = ({ name = '', ...rest }: ITextFieldProps) => {
   const { register, formState: { errors } } = useFormContext(); // retrieve all hook methods
 
   return (
     <Input
       {...register(name)}
-      label={label}
-      autoFocus={autoFocus}
-      type={type}
+      {...rest}
       fullWidth
       error={!!errors?.[name]?.message}
       helperText={errors?.[name]?.message}

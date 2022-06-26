@@ -2,7 +2,7 @@ import React, { lazy, Suspense } from 'react';
 import CssBaseline from '@mui/material/CssBaseline';
 import { Route, Routes } from 'react-router-dom';
 import { withErrorBoundary } from 'react-error-boundary';
-import { RouterLinks } from './utils/consts';
+import { RouterLinks } from './constants/constants';
 
 import NotFound from './utils/NotFound';
 import './App.scss';

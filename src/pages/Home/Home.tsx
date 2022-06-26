@@ -1,23 +1,23 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 import Button from '@mui/material/Button'
 import SendIcon from '@mui/icons-material/Send';
 import { useNavigate } from 'react-router-dom';
 import './Home.scss'
 import { useFetchLogoutMutation } from '../../services/AuthServices';
-import { RouterLinks, RouterLinksName } from '../../utils/consts';
+import { RouterLinks, RouterLinksName } from '../../constants/constants';
 
 const Home:React.FC = () => {
   const [fetchLogout] = useFetchLogoutMutation();
-  const navigation = useNavigate();
+  const navigate = useNavigate();
 
   const handleLogout = async () => {
     await fetchLogout('');
-    navigation(RouterLinks.LOGIN);
+    navigate(RouterLinks.LOGIN);
   }
 
-  const goGame = () => {
-    navigation('/game')
-  }
+  const goGame = useCallback(() => {
+    navigate('/game')
+  }, [])
 
   return (
     <>
