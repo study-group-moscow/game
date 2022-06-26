@@ -1,8 +1,8 @@
-import React, { useCallback } from 'react'
-import Button from '@mui/material/Button'
+import React, { useCallback } from 'react';
+import './Home.scss'
+import Button from '@mui/material/Button';
 import SendIcon from '@mui/icons-material/Send';
 import { useNavigate } from 'react-router-dom';
-import './Home.scss'
 import { useFetchLogoutMutation } from '../../services/AuthServices';
 import { RouterLinks, RouterLinksName } from '../../constants/constants';
 
@@ -11,7 +11,7 @@ const Home:React.FC = () => {
   const navigate = useNavigate();
 
   const handleLogout = async () => {
-    await fetchLogout('');
+    await fetchLogout();
     navigate(RouterLinks.LOGIN);
   }
 

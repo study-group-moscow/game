@@ -2,10 +2,10 @@ import { useMemo } from 'react'
 import { useFetchUserQuery } from '../services/AuthServices';
 
 export default () => {
-  const { data: user, isSuccess, isError, isLoading, error } = useFetchUserQuery();
+  const { data: user, isSuccess, isError, isFetching, error } = useFetchUserQuery();
   return useMemo(
     () => (
-      { user, isSuccess, isError, isLoading, error }),
-    [user, isLoading, isError, isSuccess]
+      { user, isSuccess, isError, isFetching, error }),
+    [user, isFetching, isError, isSuccess]
   );
 }

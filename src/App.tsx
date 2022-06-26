@@ -2,6 +2,7 @@ import React, { lazy, Suspense } from 'react';
 import CssBaseline from '@mui/material/CssBaseline';
 import { Route, Routes } from 'react-router-dom';
 import { withErrorBoundary } from 'react-error-boundary';
+
 import { RouterLinks } from './constants/constants';
 
 import NotFound from './utils/NotFound';
@@ -13,6 +14,7 @@ const Registration = lazy(() => import(/* webpackChunkName: "Registration" */ '.
 const Login = lazy(() => import(/* webpackChunkName: "Login" */ './pages/Login/Login'))
 const Loader = lazy(() => import(/* webpackChunkName: "Loader" */ './components/Loader/Loader'))
 const PrivateRoute = lazy(() => import(/* webpackChunkName: "PrivateRoute" */ './utils/PrivateRoute'))
+const CustomAlert = lazy(() => import(/* webpackChunkName: "CustomAlert" */ './components/Alert/CustomAlert'))
 
 const App = () => (
   <div className='App'>
@@ -53,6 +55,8 @@ const App = () => (
 
         <Route path='*' element={(<NotFound />)} />
       </Routes>
+
+      <CustomAlert />
     </Suspense>
   </div>
 )

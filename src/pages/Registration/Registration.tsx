@@ -1,10 +1,15 @@
-import React, { lazy, useEffect } from 'react';
+import React, {lazy, useCallback, useEffect} from 'react';
 import { useForm, FormProvider } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
 import { Checkbox, FormControlLabel, Grid } from '@mui/material';
 import Button from '@mui/material/Button';
+import { yupResolver } from '@hookform/resolvers/yup';
 import { useNavigate } from 'react-router-dom';
-import './Registration.scss';
+import { IAlertTypeProps, showAlert } from '../../store/reducers/AlertSlice';
+import { useFetchSigUpMutation } from '../../services/AuthServices';
+import { useAppDispatch } from '../../hooks/redux';
+import { ISigUpParams } from '../../models/ISigUpParams';
+import { IErrorResponse } from '../../models/IErrorResponse';
+import { schemaRegistration } from './schema';
 import {
   InputLabel,
   InputName, InputType,
@@ -13,13 +18,10 @@ import {
   RouterLinksName,
   TYPES_ALERT
 } from '../../constants/constants';
-import { useFetchSigUpMutation } from '../../services/AuthServices';
-import { useAppDispatch } from '../../hooks/redux';
-import { IAlertTypeProps, showAlert } from '../../store/reducers/AlertSlice';
-import { ISigUpParams } from '../../models/ISigUpParams';
-import { IErrorResponse } from '../../models/IErrorResponse';
+
+import './Registration.scss';
+
 import useToggleVisibility from '../../hooks/useToggleVisibility';
-import { schemaRegistration } from './schema';
 
 const TextField = lazy(() => import(/* webpackChunkName: "TextField" */ '../../components/TextField/TextField'))
 const Loader = lazy(() => import(/* webpackChunkName: "TextField" */ '../../components/Loader/Loader'))
@@ -45,7 +47,7 @@ const Registration:React.FC = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  const onSubmit = (value: ISigUpParams) => fetchSigUp(value)
+  const onSubmit = useCallback((value: ISigUpParams) => fetchSigUp(value), [])
 
   useEffect(() => {
     if (isSuccess) {

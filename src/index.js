@@ -5,7 +5,6 @@ import { Provider } from 'react-redux';
 import { store } from './store/store';
 import App from './App';
 import '@fontsource/graduate'
-import CustomAlert from './components/Alert/CustomAlert';
 
 const container = document.getElementById('root');
 const root = createRoot(container);
@@ -15,7 +14,6 @@ root.render(
     <Provider store={store}>
       <BrowserRouter>
         <App />
-        <CustomAlert />
       </BrowserRouter>
     </Provider>
   </React.StrictMode>

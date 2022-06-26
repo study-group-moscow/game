@@ -5,9 +5,9 @@ import Loader from '../components/Loader/Loader';
 import AppBar from '../components/AppBar/AppBar'
 
 export default () => {
-  const { isLoading, user } = useAuth();
+  const { isFetching, user } = useAuth();
 
-  if (isLoading) return <Loader />
+  if (isFetching) return <Loader />
   if (!user) return <Navigate to='/login' />
   return (
     <>

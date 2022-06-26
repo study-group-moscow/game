@@ -1,11 +1,17 @@
-import React, { lazy, useEffect } from 'react';
+import React, { lazy, useCallback, useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
 import { Checkbox, FormControlLabel, Grid } from '@mui/material';
-import Button from '@mui/material/Button';
+import { yupResolver } from '@hookform/resolvers/yup';
 import { useNavigate } from 'react-router';
 import { useDispatch } from 'react-redux';
+import Button from '@mui/material/Button';
+import { useFetchSigInMutation } from '../../services/AuthServices';
+import { IErrorResponse } from '../../models/IErrorResponse';
+import { ISignInParams } from '../../models/ISignInParams';
+import { schemaLogin } from './schema';
+
 import './Login.scss';
+
 import {
   InputLabel,
   InputName, InputType,
@@ -14,12 +20,9 @@ import {
   RouterLinksName,
   TYPES_ALERT
 } from '../../constants/constants';
-import { useFetchSigInMutation } from '../../services/AuthServices';
-import { IErrorResponse } from '../../models/IErrorResponse';
-import { ISignInParams } from '../../models/ISignInParams';
+
 import { IAlertTypeProps, showAlert } from '../../store/reducers/AlertSlice';
 import useToggleVisibility from '../../hooks/useToggleVisibility';
-import { schemaLogin } from './schema';
 
 const TextField = lazy(() => import(/* webpackChunkName: "TextField" */ '../../components/TextField/TextField'))
 const Loader = lazy(() => import(/* webpackChunkName: "Loader" */ '../../components/Loader/Loader'))
@@ -46,11 +49,11 @@ const Login = () => {
   const navigate = useNavigate();
   const { isToggleVisibility, setToggleVisibility } = useToggleVisibility(false);
 
-  const onSubmit = (value: ISignInParams) => fetchLogin(value)
+  const onSubmit = useCallback((value: ISignInParams) => fetchLogin(value), []);
 
   useEffect(() => {
     if (isSuccess) {
-      navigate(RouterLinks.HOME)
+      navigate(RouterLinks.HOME);
     }
   }, [data])
 
