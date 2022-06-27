@@ -132,7 +132,13 @@ const Login = () => {
           </Grid>
 
           <Grid item xs={12}>
-            <Button variant='contained' color='success' type='submit' disableElevation>
+            <Button
+              variant='contained'
+              color='success'
+              type='submit'
+              disableElevation
+              disabled={isLoading}
+            >
               Войти
             </Button>
           </Grid>

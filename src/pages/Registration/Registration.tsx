@@ -1,4 +1,4 @@
-import React, {lazy, useCallback, useEffect} from 'react';
+import React, { lazy, useCallback, useEffect } from 'react';
 import { useForm, FormProvider } from 'react-hook-form';
 import { Checkbox, FormControlLabel, Grid } from '@mui/material';
 import Button from '@mui/material/Button';
@@ -168,7 +168,13 @@ const Registration:React.FC = () => {
           </Grid>
 
           <Grid item xs={12}>
-            <Button variant='contained' color='success' type='submit' disableElevation>
+            <Button
+              variant='contained'
+              color='success'
+              type='submit'
+              disableElevation
+              disabled={isLoading}
+            >
               Регистрация
             </Button>
           </Grid>
