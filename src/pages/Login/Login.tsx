@@ -30,7 +30,7 @@ const Loader = lazy(() => import(/* webpackChunkName: "Loader" */ '../../compone
 const Login = () => {
   const methods = useForm<ISignInParams>({
     defaultValues: {
-      [InputName.login]: 'Test0010',
+      [InputName.login]: 'test911',
       [InputName.password]: 'Abrikosov8436259'
     },
     mode: 'onBlur',
@@ -49,7 +49,10 @@ const Login = () => {
   const navigate = useNavigate();
   const { isToggleVisibility, setToggleVisibility } = useToggleVisibility(false);
 
-  const onSubmit = useCallback((value: ISignInParams) => fetchLogin(value), []);
+  const onSubmit = useCallback((value: ISignInParams) => {
+    console.log(value)
+    fetchLogin(value)
+  }, []);
 
   useEffect(() => {
     if (isSuccess) {

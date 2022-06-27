@@ -1,14 +1,12 @@
-import React from 'react';
+import * as React from 'react';
+import CircularProgress from '@mui/material/CircularProgress';
+import Box from '@mui/material/Box';
 import './Loader.scss'
 
 const Loader = () => (
-  <div className='cssload-loader-container'>
-    <div className='cssload-loader'>
-      <div className='cssload-inner cssload-one' />
-      <div className='cssload-inner cssload-two' />
-      <div className='cssload-inner cssload-three' />
-    </div>
-  </div>
+  <Box className='Loader'>
+    <CircularProgress />
+  </Box>
 );
 
 export default Loader
