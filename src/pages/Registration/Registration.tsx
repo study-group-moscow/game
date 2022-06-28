@@ -19,7 +19,7 @@ import {
   TYPES_ALERT
 } from '../../constants/constants';
 
-import './Registration.scss';
+import '../../styles/Auth.scss';
 
 import useToggleVisibility from '../../hooks/useToggleVisibility';
 
@@ -29,13 +29,13 @@ const Loader = lazy(() => import(/* webpackChunkName: "TextField" */ '../../comp
 const Registration:React.FC = () => {
   const methods = useForm<ISignUpParams>({
     defaultValues: {
-      [InputName.displayName]: 'test',
-      [InputName.firstName]: 'test',
-      [InputName.secondName]: 'test',
-      [InputName.login]: 'test00123',
-      [InputName.email]: 'asd@mail.ru',
-      [InputName.password]: 'Abrikosov8436259',
-      [InputName.phone]: '9667772233'
+      [InputName.displayName]: '',
+      [InputName.firstName]: '',
+      [InputName.secondName]: '',
+      [InputName.login]: '',
+      [InputName.email]: '',
+      [InputName.password]: '',
+      [InputName.phone]: ''
     },
     mode: 'onBlur',
     resolver: yupResolver(schemaRegistration)
