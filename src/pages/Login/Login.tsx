@@ -10,7 +10,7 @@ import { IErrorResponse } from '../../models/IErrorResponse';
 import { ISignInParams } from '../../models/ISignInParams';
 import { schemaLogin } from './schema';
 
-import '../../styles/Auth.scss';
+import '../../styles/auth.scss';
 
 import {
   InputLabel,
@@ -69,7 +69,7 @@ const Login = () => {
 
   return (
     <FormProvider {...methods}>
-      <form onSubmit={methods.handleSubmit(onSubmit)} className='Form'>
+      <form onSubmit={methods.handleSubmit(onSubmit)} className='form'>
         {
           isLoading && <Loader />
         }
@@ -79,9 +79,9 @@ const Login = () => {
           direction='column'
           alignItems='center'
           justifyContent='center'
-          className='Layout'
+          className='layout'
         >
-          <Grid item xs={12} className='Input'>
+          <Grid item xs={12} className='input'>
             <TextField
               type={InputType.text}
               name={InputName.login}
@@ -90,7 +90,7 @@ const Login = () => {
             />
           </Grid>
 
-          <Grid item xs={12} className='Input'>
+          <Grid item xs={12} className='input'>
             <TextField
               type={isToggleVisibility ? '' : InputType.password}
               name={InputName.password}

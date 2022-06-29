@@ -17,7 +17,7 @@ const PrivateRoute = lazy(() => import(/* webpackChunkName: "PrivateRoute" */ '.
 const CustomAlert = lazy(() => import(/* webpackChunkName: "CustomAlert" */ './components/Alert/CustomAlert'))
 
 const App = () => (
-  <div className='App'>
+  <div className='app'>
     <CssBaseline />
 
     <Suspense fallback={<Loader />}>

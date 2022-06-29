@@ -21,7 +21,7 @@ const Home:React.FC = () => {
 
   return (
     <>
-      <div className='Active'>Home</div>
+      <div className='active'>Home</div>
       <Button
         variant='contained'
         color='success'
