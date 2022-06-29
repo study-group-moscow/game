@@ -59,6 +59,12 @@ export const ENDPOINTS = {
     SIGNIN: '/signin',
     SIGNUP: '/signup',
     LOGOUT: '/logout'
+  },
+
+  LEADERBOARD: {
+    PATH: '/leaderboard',
+    TEAM: '/moscow',
+    ALL: '/all'
   }
 };
 

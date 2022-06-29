@@ -12,6 +12,7 @@ const About = lazy(() => import(/* webpackChunkName: "About" */ './pages/About/A
 const Home = lazy(() => import(/* webpackChunkName: "Home" */ './pages/Home/Home'))
 const Registration = lazy(() => import(/* webpackChunkName: "Registration" */ './pages/Registration/Registration'))
 const Login = lazy(() => import(/* webpackChunkName: "Login" */ './pages/Login/Login'))
+const Leaderboard = lazy(() => import(/* webpackChunkName: "Leaderboard" */ './pages/Leaderboard/Leaderboard'))
 const Loader = lazy(() => import(/* webpackChunkName: "Loader" */ './components/Loader/Loader'))
 const PrivateRoute = lazy(() => import(/* webpackChunkName: "PrivateRoute" */ './utils/PrivateRoute'))
 const CustomAlert = lazy(() => import(/* webpackChunkName: "CustomAlert" */ './components/Alert/CustomAlert'))
@@ -46,7 +47,7 @@ const App = () => (
         </Route>
 
         <Route path={RouterLinks.LEADERBOARD} element={<PrivateRoute />}>
-          <Route index element={(<div>Leaderboard</div>)} />
+          <Route index element={(<Leaderboard />)} />
         </Route>
 
         <Route path={RouterLinks.ERROR} element={<PrivateRoute />}>
