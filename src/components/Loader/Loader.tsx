@@ -4,7 +4,7 @@ import Box from '@mui/material/Box';
 import './Loader.scss'
 
 const Loader = () => (
-  <Box className='Loader'>
+  <Box className='loader'>
     <CircularProgress />
   </Box>
 );

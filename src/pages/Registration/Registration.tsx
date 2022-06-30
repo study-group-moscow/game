@@ -19,7 +19,7 @@ import {
   TYPES_ALERT
 } from '../../constants/constants';
 
-import '../../styles/Auth.scss';
+import '../../styles/auth.scss';
 
 import useToggleVisibility from '../../hooks/useToggleVisibility';
 
@@ -67,7 +67,7 @@ const Registration:React.FC = () => {
 
   return (
     <FormProvider {...methods}>
-      <form onSubmit={methods.handleSubmit(onSubmit)} className='Form'>
+      <form onSubmit={methods.handleSubmit(onSubmit)} className='form'>
 
         {
           isLoading && <Loader />
@@ -79,9 +79,9 @@ const Registration:React.FC = () => {
           direction='column'
           alignItems='center'
           justifyContent='center'
-          className='Layout'
+          className='layout'
         >
-          <Grid item xs={12} className='Input'>
+          <Grid item xs={12} className='input'>
             <TextField
               type={InputType.text}
               name={InputName.displayName}
@@ -90,7 +90,7 @@ const Registration:React.FC = () => {
             />
           </Grid>
 
-          <Grid item xs={12} className='Input'>
+          <Grid item xs={12} className='input'>
             <TextField
               type={InputType.text}
               name={InputName.firstName}
@@ -98,7 +98,7 @@ const Registration:React.FC = () => {
             />
           </Grid>
 
-          <Grid item xs={12} className='Input'>
+          <Grid item xs={12} className='input'>
             <TextField
               type={InputType.text}
               name={InputName.secondName}
@@ -106,7 +106,7 @@ const Registration:React.FC = () => {
             />
           </Grid>
 
-          <Grid item xs={12} className='Input'>
+          <Grid item xs={12} className='input'>
             <TextField
               type={InputType.text}
               name={InputName.login}
@@ -114,7 +114,7 @@ const Registration:React.FC = () => {
             />
           </Grid>
 
-          <Grid item xs={12} className='Input'>
+          <Grid item xs={12} className='input'>
             <TextField
               type={InputType.email}
               name={InputName.email}
@@ -122,7 +122,7 @@ const Registration:React.FC = () => {
             />
           </Grid>
 
-          <Grid item xs={12} className='Input'>
+          <Grid item xs={12} className='input'>
             <TextField
               type={InputType.text}
               name={InputName.phone}
@@ -130,7 +130,7 @@ const Registration:React.FC = () => {
             />
           </Grid>
 
-          <Grid item xs={12} className='Input'>
+          <Grid item xs={12} className='input'>
             <TextField
               type={isToggleVisibility ? '' : InputType.password}
               name={InputName.password}
