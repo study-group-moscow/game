@@ -4,7 +4,6 @@ import useShowError from '../../hooks/useShowError'
 import { useFetchTeamLeaderboardMutation } from '../../services/LeaderboardService'
 import { useAppDispatch } from '../../hooks/redux';
 import styles from '../../styles/centerContent.module.scss'
-import './Leaderboard.module.scss'
 
 const Leaderboard = () => {
   const [pageSize, setPageSize] = React.useState(5)
