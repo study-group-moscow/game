@@ -48,7 +48,7 @@ export default () => {
               <Avatar
                 title={MENU_ITEMS.profile.title}
                 sx={{ width: 120, height: 120 }}
-                src='/broken-image.jpg'
+                src=''
               />
             </IconButton>
           </Box>

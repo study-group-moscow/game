@@ -3,10 +3,8 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { Checkbox, FormControlLabel, Grid } from '@mui/material';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useNavigate } from 'react-router';
-import { useDispatch } from 'react-redux';
 import Button from '@mui/material/Button';
 import { useFetchSigInMutation } from '../../services/AuthServices';
-import { IErrorResponse } from '../../models/IErrorResponse';
 import { ISignInParams } from '../../models/ISignInParams';
 import { schemaLogin } from './schema';
 
@@ -14,14 +12,12 @@ import '../../styles/auth.scss';
 
 import {
   InputLabel,
-  InputName, InputType,
-  MESSAGES_TEXT,
+  InputName,
+  InputType,
   RouterLinks,
-  RouterLinksName,
-  TYPES_ALERT
+  RouterLinksName
 } from '../../constants/constants';
 
-import { IAlertTypeProps, showAlert } from '../../store/reducers/AlertSlice';
 import useToggleVisibility from '../../hooks/useToggleVisibility';
 
 const TextField = lazy(() => import(/* webpackChunkName: "TextField" */ '../../components/TextField/TextField'))
@@ -37,15 +33,8 @@ const Login = () => {
     resolver: yupResolver(schemaLogin)
   });
 
-  const [fetchLogin, {
-    isLoading,
-    data,
-    error,
-    isSuccess,
-    isError
-  }] = useFetchSigInMutation();
+  const [fetchLogin, { isLoading, data, isSuccess }] = useFetchSigInMutation();
 
-  const dispatch = useDispatch();
   const navigate = useNavigate();
   const { isToggleVisibility, setToggleVisibility } = useToggleVisibility(false);
 
@@ -56,16 +45,6 @@ const Login = () => {
       navigate(RouterLinks.HOME);
     }
   }, [data])
-
-  useEffect(() => {
-    if (isError) {
-      const err = ((error) as IErrorResponse);
-      dispatch(showAlert({
-        text: err?.data?.reason ?? MESSAGES_TEXT.ERROR_OCCURRED,
-        type: TYPES_ALERT.ERROR as IAlertTypeProps
-      }));
-    }
-  }, [error])
 
   return (
     <FormProvider {...methods}>

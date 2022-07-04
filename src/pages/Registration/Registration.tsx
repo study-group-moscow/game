@@ -4,19 +4,15 @@ import { Checkbox, FormControlLabel, Grid } from '@mui/material';
 import Button from '@mui/material/Button';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useNavigate } from 'react-router-dom';
-import { IAlertTypeProps, showAlert } from '../../store/reducers/AlertSlice';
 import { useFetchSigUpMutation } from '../../services/AuthServices';
-import { useAppDispatch } from '../../hooks/redux';
 import { ISignUpParams } from '../../models/ISignUpParams';
-import { IErrorResponse } from '../../models/IErrorResponse';
 import { schemaRegistration } from './schema';
 import {
   InputLabel,
-  InputName, InputType,
-  MESSAGES_TEXT,
+  InputName,
+  InputType,
   RouterLinks,
-  RouterLinksName,
-  TYPES_ALERT
+  RouterLinksName
 } from '../../constants/constants';
 
 import '../../styles/auth.scss';
@@ -42,9 +38,8 @@ const Registration:React.FC = () => {
   });
 
   const { isToggleVisibility, setToggleVisibility } = useToggleVisibility(false);
-  const [fetchSigUp, { isLoading, isSuccess, data, error, isError }] = useFetchSigUpMutation();
+  const [fetchSigUp, { isLoading, isSuccess, data }] = useFetchSigUpMutation();
 
-  const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   const onSubmit = useCallback((value: ISignUpParams) => fetchSigUp(value), [])
@@ -54,16 +49,6 @@ const Registration:React.FC = () => {
       navigate(RouterLinks.HOME)
     }
   }, [data])
-
-  useEffect(() => {
-    if (isError) {
-      const err = ((error) as IErrorResponse);
-      dispatch(showAlert({
-        text: err?.data?.reason ?? MESSAGES_TEXT.ERROR_OCCURRED,
-        type: TYPES_ALERT.ERROR as IAlertTypeProps
-      }));
-    }
-  }, [error])
 
   return (
     <FormProvider {...methods}>
