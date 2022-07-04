@@ -1,6 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit';
 import alertReducer from './reducers/AlertSlice';
 import baseApi from './api/baseApi';
+import showToast from './middleware/showToast'
 
 export const store = configureStore({
   reducer: {
@@ -8,7 +9,10 @@ export const store = configureStore({
     [baseApi.reducerPath]: baseApi.reducer
   },
 
-  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(baseApi.middleware)
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat([
+    baseApi.middleware,
+    showToast
+  ])
 });
 
 export type RootState = ReturnType<typeof store.getState>

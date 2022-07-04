@@ -5,9 +5,7 @@ import Button from '@mui/material/Button';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useNavigate } from 'react-router-dom';
 import { useFetchSigUpMutation } from '../../services/AuthServices';
-import { useAppDispatch } from '../../hooks/redux';
 import { ISignUpParams } from '../../models/ISignUpParams';
-import useShowError from '../../hooks/useShowError';
 import { schemaRegistration } from './schema';
 import {
   InputLabel,
@@ -40,9 +38,8 @@ const Registration:React.FC = () => {
   });
 
   const { isToggleVisibility, setToggleVisibility } = useToggleVisibility(false);
-  const [fetchSigUp, { isLoading, isSuccess, data, error, isError }] = useFetchSigUpMutation();
+  const [fetchSigUp, { isLoading, isSuccess, data }] = useFetchSigUpMutation();
 
-  const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   const onSubmit = useCallback((value: ISignUpParams) => fetchSigUp(value), [])
@@ -52,8 +49,6 @@ const Registration:React.FC = () => {
       navigate(RouterLinks.HOME)
     }
   }, [data])
-
-  useShowError({ isError, error, dispatch })
 
   return (
     <FormProvider {...methods}>

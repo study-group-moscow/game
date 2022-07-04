@@ -1,28 +1,17 @@
 import React, { useEffect } from 'react'
 import { DataGrid, ruRU } from '@mui/x-data-grid'
-import useShowError from '../../hooks/useShowError'
 import { useFetchTeamLeaderboardMutation } from '../../services/LeaderboardService'
-import { useAppDispatch } from '../../hooks/redux';
 import styles from '../../styles/centerContent.module.scss'
 import stylesPage from './Leaderboard.module.scss'
 
 const Leaderboard = () => {
   const [pageSize, setPageSize] = React.useState(5)
 
-  const [fetchLeaderboard, {
-    isLoading,
-    data,
-    error,
-    isError
-  }] = useFetchTeamLeaderboardMutation();
-
-  const dispatch = useAppDispatch()
+  const [fetchLeaderboard, { isLoading, data }] = useFetchTeamLeaderboardMutation();
 
   useEffect(() => {
     fetchLeaderboard({ ratingFieldName: 'score', cursor: 0, limit: 100 })
   }, [])
-
-  useShowError({ isError, error, dispatch })
 
   const handlePageSizeChange = (size: number) => setPageSize(size)
 
