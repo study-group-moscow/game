@@ -4,6 +4,7 @@ import useShowError from '../../hooks/useShowError'
 import { useFetchTeamLeaderboardMutation } from '../../services/LeaderboardService'
 import { useAppDispatch } from '../../hooks/redux';
 import styles from '../../styles/centerContent.module.scss'
+import stylesPage from './Leaderboard.module.scss'
 
 const Leaderboard = () => {
   const [pageSize, setPageSize] = React.useState(5)
@@ -34,7 +35,7 @@ const Leaderboard = () => {
 
   return (
     <div className={styles.center}>
-      <div style={{ width: 400 }}>
+      <div className={stylesPage.table}>
         <DataGrid
           rows={dataGetter}
           columns={columns}
