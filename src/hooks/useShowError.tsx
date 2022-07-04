@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import type TErrorResponseRTK from 'src/models/TErrorResponseRTK'
+import type { TErrorResponseRTK } from 'src/models/TErrorResponseRTK'
 import { IErrorResponse } from '../models/IErrorResponse'
 import { IAlertTypeProps, showAlert } from '../store/reducers/AlertSlice'
 import { MESSAGES_TEXT, TYPES_ALERT } from '../constants/constants'
