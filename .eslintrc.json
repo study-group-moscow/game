@@ -24,21 +24,12 @@
         "@typescript-eslint"
     ],
     "rules": {
-        /* semicolons */
         "semi": 0,
         "@typescript-eslint/semi": 0,
-
-        /* quotes */
         "jsx-quotes": ["error", "prefer-single"],
-
-        /* empty lines */
         "no-multiple-empty-lines": ["error", { "max": 1 }],
-
-        /* trailing commas */
         "comma-dangle": ["error", "never"],
         "@typescript-eslint/comma-dangle": ["error", "never"],
-
-        /* react components definition */
         "react/function-component-definition": [
             "error",
             {
@@ -46,8 +37,6 @@
               "unnamedComponents": "arrow-function"
             }
           ],
-
-        /* naming conventions */
         "@typescript-eslint/naming-convention": [
           "error",
           {
@@ -61,13 +50,15 @@
             "prefix": ["T"]
           }
         ],
-
-        /* enable JSX inside TypeScript files */
         "react/jsx-filename-extension": [
           "error",
           {
             "extensions": [".js", ".jsx", ".ts", ".tsx"]
           }
-        ]
+        ],
+        "object-curly-newline": ["error", { "consistent": true }],
+        "react/require-default-props": ["error", { "functions": "defaultArguments" }],
+        "react/jsx-props-no-spreading": ["error", { "custom": "ignore" }],
+        "no-param-reassign": ["error", { "props": true, "ignorePropertyModificationsFor": ["state"] }]
     }
 }
