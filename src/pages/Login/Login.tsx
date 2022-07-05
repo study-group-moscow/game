@@ -1,4 +1,4 @@
-import React, { lazy, useCallback, useEffect } from 'react';
+import React, { lazy, useCallback, useEffect, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { Checkbox, FormControlLabel, Grid } from '@mui/material';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -19,7 +19,6 @@ import {
   RouterLinksName
 } from '../../constants/constants';
 
-import useToggleVisibility from '../../hooks/useToggleVisibility';
 
 const TextField = lazy(() => import(/* webpackChunkName: "TextField" */ '../../components/TextField/TextField'));
 
@@ -36,13 +35,17 @@ const Login = () => {
   const navigate = useNavigate();
 
   const [fetchLogin, { isLoading, data, isSuccess }] = useFetchSignInMutation();
-  const { isToggleVisibility, setToggleVisibility } = useToggleVisibility(false);
+  const [passwordShown, setPasswordShown] = useState(false);
 
   useEffect(() => {
     if (isSuccess) {
       navigate(RouterLinks.HOME);
     }
   }, [data])
+
+  const togglePasswordVisiblity = useCallback(() => {
+    setPasswordShown(!passwordShown);
+  }, [passwordShown])
 
   const onSubmit = useCallback((value: ISignInParams) => fetchLogin(value), []);
 
@@ -68,7 +71,7 @@ const Login = () => {
 
           <Grid item xs={12} className='input'>
             <TextField
-              type={isToggleVisibility ? '' : InputType.password}
+              type={passwordShown ? '' : InputType.password}
               name={InputName.password}
               label={InputLabel.password}
             />
@@ -84,7 +87,7 @@ const Login = () => {
                 control={(
                   <Checkbox
                     color='primary'
-                    onClick={setToggleVisibility}
+                    onClick={togglePasswordVisiblity}
                   />
                 )}
                 label={InputLabel.showPassword}

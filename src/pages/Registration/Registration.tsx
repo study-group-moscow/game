@@ -1,4 +1,4 @@
-import React, { lazy, useCallback, useEffect } from 'react';
+import React, { lazy, useCallback, useEffect, useState } from 'react';
 import { useForm, FormProvider } from 'react-hook-form';
 import { Checkbox, FormControlLabel, Grid } from '@mui/material';
 import Button from '@mui/material/Button';
@@ -18,8 +18,6 @@ import {
 
 import '../../styles/auth.scss';
 
-import useToggleVisibility from '../../hooks/useToggleVisibility';
-
 const TextField = lazy(() => import(/* webpackChunkName: "TextField" */ '../../components/TextField/TextField'));
 
 const Registration:React.FC = () => {
@@ -37,18 +35,21 @@ const Registration:React.FC = () => {
     resolver: yupResolver(schemaRegistration)
   });
 
-  const { isToggleVisibility, setToggleVisibility } = useToggleVisibility(false);
+  const [passwordShown, setPasswordShown] = useState(false);
   const [fetchSignUp, { isLoading, isSuccess, data }] = useFetchSignUpMutation();
 
   const navigate = useNavigate();
-
-  const onSubmit = useCallback((value: ISignUpParams) => fetchSignUp(value), [])
 
   useEffect(() => {
     if (isSuccess) {
       navigate(RouterLinks.HOME)
     }
   }, [data])
+
+  const onSubmit = useCallback((value: ISignUpParams) => fetchSignUp(value), [])
+  const togglePasswordVisiblity = useCallback(() => {
+    setPasswordShown(!passwordShown);
+  }, [passwordShown])
 
   return (
     <FormProvider {...methods}>
@@ -112,7 +113,7 @@ const Registration:React.FC = () => {
 
           <Grid item xs={12} className='input'>
             <TextField
-              type={isToggleVisibility ? '' : InputType.password}
+              type={passwordShown ? '' : InputType.password}
               name={InputName.password}
               label={InputLabel.password}
             />
@@ -127,7 +128,7 @@ const Registration:React.FC = () => {
                 control={(
                   <Checkbox
                     color='primary'
-                    onClick={setToggleVisibility}
+                    onClick={togglePasswordVisiblity}
                   />
               )}
                 label={InputLabel.showPassword}
