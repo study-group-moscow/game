@@ -4,7 +4,7 @@ import { Checkbox, FormControlLabel, Grid } from '@mui/material';
 import Button from '@mui/material/Button';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useNavigate } from 'react-router-dom';
-import { useFetchSigUpMutation } from '../../services/AuthServices';
+import { useFetchSignUpMutation } from '../../services/AuthServices';
 import { ISignUpParams } from '../../models/ISignUpParams';
 import { schemaRegistration } from './schema';
 import {
@@ -38,11 +38,11 @@ const Registration:React.FC = () => {
   });
 
   const { isToggleVisibility, setToggleVisibility } = useToggleVisibility(false);
-  const [fetchSigUp, { isLoading, isSuccess, data }] = useFetchSigUpMutation();
+  const [fetchSignUp, { isLoading, isSuccess, data }] = useFetchSignUpMutation();
 
   const navigate = useNavigate();
 
-  const onSubmit = useCallback((value: ISignUpParams) => fetchSigUp(value), [])
+  const onSubmit = useCallback((value: ISignUpParams) => fetchSignUp(value), [])
 
   useEffect(() => {
     if (isSuccess) {

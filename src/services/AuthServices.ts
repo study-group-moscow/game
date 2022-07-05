@@ -15,7 +15,7 @@ export const authAPI = baseApi
         }),
         providesTags: ['Auth']
       }),
-      fetchSigIn: build.mutation<IErrorResponse, ISignInParams>({
+      fetchSignIn: build.mutation<IErrorResponse, ISignInParams>({
         query: (body) => ({
           url: `${ENDPOINTS.AUTH.PATH}${ENDPOINTS.AUTH.SIGNIN}`,
           method: 'POST',
@@ -27,7 +27,7 @@ export const authAPI = baseApi
         }),
         invalidatesTags: ['Auth']
       }),
-      fetchSigUp: build.mutation<IUserResponse, ISignUpParams>({
+      fetchSignUp: build.mutation<IUserResponse, ISignUpParams>({
         query: (body) => ({
           url: `${ENDPOINTS.AUTH.PATH}${ENDPOINTS.AUTH.SIGNUP}`,
           method: 'POST',
@@ -46,8 +46,8 @@ export const authAPI = baseApi
   })
 
 export const {
-  useFetchSigInMutation,
-  useFetchSigUpMutation,
+  useFetchSignInMutation,
+  useFetchSignUpMutation,
   useFetchUserQuery,
   useFetchLogoutMutation
 } = authAPI;

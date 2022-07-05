@@ -4,7 +4,7 @@ import { Checkbox, FormControlLabel, Grid } from '@mui/material';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useNavigate } from 'react-router';
 import Button from '@mui/material/Button';
-import { useFetchSigInMutation } from '../../services/AuthServices';
+import { useFetchSignInMutation } from '../../services/AuthServices';
 import { ISignInParams } from '../../models/ISignInParams';
 import { schemaLogin } from './schema';
 
@@ -33,7 +33,7 @@ const Login = () => {
     resolver: yupResolver(schemaLogin)
   });
 
-  const [fetchLogin, { isLoading, data, isSuccess }] = useFetchSigInMutation();
+  const [fetchLogin, { isLoading, data, isSuccess }] = useFetchSignInMutation();
 
   const navigate = useNavigate();
   const { isToggleVisibility, setToggleVisibility } = useToggleVisibility(false);
