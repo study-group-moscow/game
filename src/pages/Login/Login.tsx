@@ -4,6 +4,7 @@ import { Checkbox, FormControlLabel, Grid } from '@mui/material';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useNavigate } from 'react-router';
 import Button from '@mui/material/Button';
+import { LoadingButton } from '@mui/lab';
 import { useFetchSignInMutation } from '../../services/AuthServices';
 import { ISignInParams } from '../../models/ISignInParams';
 import { schemaLogin } from './schema';
@@ -20,8 +21,7 @@ import {
 
 import useToggleVisibility from '../../hooks/useToggleVisibility';
 
-const TextField = lazy(() => import(/* webpackChunkName: "TextField" */ '../../components/TextField/TextField'))
-const Loader = lazy(() => import(/* webpackChunkName: "Loader" */ '../../components/Loader/Loader'))
+const TextField = lazy(() => import(/* webpackChunkName: "TextField" */ '../../components/TextField/TextField'));
 
 const Login = () => {
   const methods = useForm<ISignInParams>({
@@ -33,12 +33,10 @@ const Login = () => {
     resolver: yupResolver(schemaLogin)
   });
 
-  const [fetchLogin, { isLoading, data, isSuccess }] = useFetchSignInMutation();
-
   const navigate = useNavigate();
-  const { isToggleVisibility, setToggleVisibility } = useToggleVisibility(false);
 
-  const onSubmit = useCallback((value: ISignInParams) => fetchLogin(value), []);
+  const [fetchLogin, { isLoading, data, isSuccess }] = useFetchSignInMutation();
+  const { isToggleVisibility, setToggleVisibility } = useToggleVisibility(false);
 
   useEffect(() => {
     if (isSuccess) {
@@ -46,12 +44,11 @@ const Login = () => {
     }
   }, [data])
 
+  const onSubmit = useCallback((value: ISignInParams) => fetchLogin(value), []);
+
   return (
     <FormProvider {...methods}>
       <form onSubmit={methods.handleSubmit(onSubmit)} className='form'>
-        {
-          isLoading && <Loader />
-        }
         <Grid
           container
           spacing={0}
@@ -108,15 +105,14 @@ const Login = () => {
           </Grid>
 
           <Grid item xs={12}>
-            <Button
-              variant='contained'
-              color='success'
+            <LoadingButton
+              size='small'
               type='submit'
-              disableElevation
-              disabled={isLoading}
+              loading={isLoading}
+              variant='outlined'
             >
               Войти
-            </Button>
+            </LoadingButton>
           </Grid>
         </Grid>
       </form>

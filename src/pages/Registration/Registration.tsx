@@ -2,6 +2,7 @@ import React, { lazy, useCallback, useEffect } from 'react';
 import { useForm, FormProvider } from 'react-hook-form';
 import { Checkbox, FormControlLabel, Grid } from '@mui/material';
 import Button from '@mui/material/Button';
+import { LoadingButton } from '@mui/lab';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useNavigate } from 'react-router-dom';
 import { useFetchSignUpMutation } from '../../services/AuthServices';
@@ -19,8 +20,7 @@ import '../../styles/auth.scss';
 
 import useToggleVisibility from '../../hooks/useToggleVisibility';
 
-const TextField = lazy(() => import(/* webpackChunkName: "TextField" */ '../../components/TextField/TextField'))
-const Loader = lazy(() => import(/* webpackChunkName: "TextField" */ '../../components/Loader/Loader'))
+const TextField = lazy(() => import(/* webpackChunkName: "TextField" */ '../../components/TextField/TextField'));
 
 const Registration:React.FC = () => {
   const methods = useForm<ISignUpParams>({
@@ -53,11 +53,6 @@ const Registration:React.FC = () => {
   return (
     <FormProvider {...methods}>
       <form onSubmit={methods.handleSubmit(onSubmit)} className='form'>
-
-        {
-          isLoading && <Loader />
-        }
-
         <Grid
           container
           spacing={0}
@@ -153,15 +148,15 @@ const Registration:React.FC = () => {
           </Grid>
 
           <Grid item xs={12}>
-            <Button
-              variant='contained'
-              color='success'
+            <LoadingButton
+              size='small'
               type='submit'
-              disableElevation
-              disabled={isLoading}
+              loading={isLoading}
+              variant='outlined'
+              disabled
             >
               Регистрация
-            </Button>
+            </LoadingButton>
           </Grid>
         </Grid>
       </form>
