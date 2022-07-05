@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
@@ -20,7 +20,7 @@ export default () => {
   const [isOpened, setIsOpened] = React.useState(false)
   const navigate = useNavigate()
 
-  const toggleDrawer = (state: boolean): void => setIsOpened(state)
+  const toggleDrawer = useCallback((): void => setIsOpened(!isOpened), []);
 
   const goToRoute = async (route: string): Promise<void> => {
     if (route === RouterLinks.LOGIN) {
@@ -32,16 +32,16 @@ export default () => {
 
   return (
     <>
-      <IconButton color='inherit' onClick={() => toggleDrawer(true)}>
+      <IconButton color='inherit' onClick={toggleDrawer}>
         <SailingIcon sx={{ mr: 'auto' }} />
       </IconButton>
 
-      <Drawer anchor='left' open={isOpened} onClose={() => toggleDrawer(false)}>
+      <Drawer anchor='left' open={isOpened} onClose={toggleDrawer}>
         <Box
           sx={{ width: 200 }}
           role='presentation'
-          onClick={() => toggleDrawer(false)}
-          onKeyDown={() => toggleDrawer(false)}
+          onClick={toggleDrawer}
+          onKeyDown={toggleDrawer}
         >
           <Box sx={{ width: '100%', my: 4 }} display='flex' justifyContent='center'>
             <IconButton onClick={() => goToRoute(MENU_ITEMS.profile.link)}>

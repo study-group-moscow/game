@@ -17,7 +17,7 @@ const TextField = ({ name = '', ...rest }: ITextFieldProps) => {
       {...register(name)}
       {...rest}
       fullWidth
-      error={!!errors?.[name]?.message}
+      error={Boolean(errors?.[name]?.message)}
       helperText={errors?.[name]?.message}
       size='small'
     />
