@@ -1,24 +1,23 @@
-import React, { lazy, Suspense } from 'react';
+import React, { Suspense } from 'react';
 import CssBaseline from '@mui/material/CssBaseline';
 import { Route, Routes } from 'react-router-dom';
 import { withErrorBoundary } from 'react-error-boundary';
+import About from './pages/About/About';
+import Home from './pages/Home/Home'
+import Registration from './pages/Registration/Registration';
+import Login from './pages/Login/Login'
+import Leaderboard from './pages/Leaderboard/Leaderboard'
+import Loader from './components/Loader/Loader'
+import PrivateRoute from './utils/PrivateRoute'
+import CustomAlert from './components/Alert/CustomAlert'
 
 import { RouterLinks } from './constants/constants';
 
 import NotFound from './utils/NotFound';
-import './App.scss';
-
-const About = lazy(() => import(/* webpackChunkName: "About" */ './pages/About/About'))
-const Home = lazy(() => import(/* webpackChunkName: "Home" */ './pages/Home/Home'))
-const Registration = lazy(() => import(/* webpackChunkName: "Registration" */ './pages/Registration/Registration'))
-const Login = lazy(() => import(/* webpackChunkName: "Login" */ './pages/Login/Login'))
-const Leaderboard = lazy(() => import(/* webpackChunkName: "Leaderboard" */ './pages/Leaderboard/Leaderboard'))
-const Loader = lazy(() => import(/* webpackChunkName: "Loader" */ './components/Loader/Loader'))
-const PrivateRoute = lazy(() => import(/* webpackChunkName: "PrivateRoute" */ './utils/PrivateRoute'))
-const CustomAlert = lazy(() => import(/* webpackChunkName: "CustomAlert" */ './components/Alert/CustomAlert'))
+import app from './App.module.scss';
 
 const App = () => (
-  <div className='app'>
+  <div className={app.app}>
     <CssBaseline />
 
     <Suspense fallback={<Loader />}>
