@@ -9,12 +9,12 @@ import '@fontsource/graduate'
 const container = document.getElementById('root');
 
 hydrateRoot(
-    container,
-    <React.StrictMode>
-        <Provider store={store}>
-            <BrowserRouter>
-                <App />
-            </BrowserRouter>
-        </Provider>
-    </React.StrictMode>
+  container,
+  <React.StrictMode>
+    <Provider store={store}>
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    </Provider>
+  </React.StrictMode>
 );

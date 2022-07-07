@@ -1,10 +1,11 @@
-import React, { lazy, useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useForm, FormProvider } from 'react-hook-form';
 import { Checkbox, FormControlLabel, Grid } from '@mui/material';
 import Button from '@mui/material/Button';
 import { LoadingButton } from '@mui/lab';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useNavigate } from 'react-router-dom';
+import TextField from 'src/components/TextField/TextField';
 import { useFetchSignUpMutation } from '../../services/AuthServices';
 import { ISignUpParams } from '../../models/ISignUpParams';
 import { schemaRegistration } from './schema';
@@ -16,9 +17,7 @@ import {
   RouterLinksName
 } from '../../constants/constants';
 
-import '../../styles/auth.scss';
-
-const TextField = lazy(() => import(/* webpackChunkName: "TextField" */ '../../components/TextField/TextField'));
+import style from '../../styles/auth.module.scss';
 
 const Registration:React.FC = () => {
   const methods = useForm<ISignUpParams>({
@@ -53,16 +52,16 @@ const Registration:React.FC = () => {
 
   return (
     <FormProvider {...methods}>
-      <form onSubmit={methods.handleSubmit(onSubmit)} className='form'>
+      <form onSubmit={methods.handleSubmit(onSubmit)} className={style.form}>
         <Grid
           container
           spacing={0}
           direction='column'
           alignItems='center'
           justifyContent='center'
-          className='layout'
+          className={style.layout}
         >
-          <Grid item xs={12} className='input'>
+          <Grid item xs={12} className={style.input}>
             <TextField
               type={InputType.text}
               name={InputName.displayName}
@@ -71,7 +70,7 @@ const Registration:React.FC = () => {
             />
           </Grid>
 
-          <Grid item xs={12} className='input'>
+          <Grid item xs={12} className={style.input}>
             <TextField
               type={InputType.text}
               name={InputName.firstName}
@@ -79,7 +78,7 @@ const Registration:React.FC = () => {
             />
           </Grid>
 
-          <Grid item xs={12} className='input'>
+          <Grid item xs={12} className={style.input}>
             <TextField
               type={InputType.text}
               name={InputName.secondName}
@@ -87,7 +86,7 @@ const Registration:React.FC = () => {
             />
           </Grid>
 
-          <Grid item xs={12} className='input'>
+          <Grid item xs={12} className={style.inout}>
             <TextField
               type={InputType.text}
               name={InputName.login}
@@ -95,7 +94,7 @@ const Registration:React.FC = () => {
             />
           </Grid>
 
-          <Grid item xs={12} className='input'>
+          <Grid item xs={12} className={style.input}>
             <TextField
               type={InputType.email}
               name={InputName.email}
@@ -103,7 +102,7 @@ const Registration:React.FC = () => {
             />
           </Grid>
 
-          <Grid item xs={12} className='input'>
+          <Grid item xs={12} className={style.input}>
             <TextField
               type={InputType.text}
               name={InputName.phone}
@@ -111,7 +110,7 @@ const Registration:React.FC = () => {
             />
           </Grid>
 
-          <Grid item xs={12} className='input'>
+          <Grid item xs={12} className={style.input}>
             <TextField
               type={passwordShown ? '' : InputType.password}
               name={InputName.password}
