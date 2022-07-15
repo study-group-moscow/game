@@ -11,12 +11,13 @@ import ListItemText from '@mui/material/ListItemText';
 import IconButton from '@mui/material/IconButton';
 import SailingIcon from '@mui/icons-material/Sailing';
 import Avatar from '@mui/material/Avatar';
-import { useFetchLogoutMutation } from '../../services/AuthServices';
+import { useFetchLogoutMutation, useFetchUserQuery } from '../../services/AuthServices';
 import Icon from '../../utils/Icon'
-import { MENU_ITEMS, RouterLinks } from '../../constants/constants'
+import { MENU_ITEMS, RouterLinks, ENDPOINTS } from '../../constants/constants'
 
 export default () => {
   const [fetchLogout] = useFetchLogoutMutation();
+  const { data: user } = useFetchUserQuery()
   const [isOpened, setIsOpened] = React.useState(false)
   const navigate = useNavigate()
 
@@ -48,7 +49,7 @@ export default () => {
               <Avatar
                 title={MENU_ITEMS.profile.title}
                 sx={{ width: 120, height: 120 }}
-                src=''
+                src={ENDPOINTS.RESOURCES + (user?.avatar ?? '')}
               />
             </IconButton>
           </Box>
