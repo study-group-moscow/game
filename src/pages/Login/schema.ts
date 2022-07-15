@@ -1,6 +1,6 @@
 import * as yup from 'yup';
 
-export const schemaLogin = yup.object().shape({
+export default yup.object().shape({
   password: yup.string()
     .required('Пароль не указан.')
     .min(8, 'Пароль может содержать только латинские буквы.')

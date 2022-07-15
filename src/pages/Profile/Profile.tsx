@@ -1,46 +1,53 @@
-import React, { lazy, useCallback, useEffect, useState } from 'react';
+import React, { lazy, useCallback } from 'react';
 import { useForm, FormProvider } from 'react-hook-form';
-import { Checkbox, FormControlLabel, Grid } from '@mui/material';
-import Button from '@mui/material/Button';
+import { Grid } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useNavigate } from 'react-router-dom';
-import { useFetchSignUpMutation } from '../../services/AuthServices';
-import { ISignUpParams } from '../../models/ISignUpParams';
-import schemaRegistration from './schema';
+import { useEditProfileMutation } from '../../services/UserService';
+import { useFetchUserQuery } from '../../services/AuthServices';
+import { useAppDispatch } from '../../hooks/redux';
+import { IEditUserProfileParams, IEditUserProfileParamsResponse } from '../../models/IUser';
+import { IAlertTypeProps, showAlert } from '../../store/reducers/AlertSlice'
+import schema from './schema';
 import {
   InputLabel,
   InputName,
   InputType,
-  RouterLinks,
-  RouterLinksName
+  TYPES_ALERT,
+  MESSAGES_TEXT
 } from '../../constants/constants';
 
 import '../../styles/auth.scss';
 
 const TextField = lazy(() => import(/* webpackChunkName: "TextField" */ '../../components/TextField/TextField'));
 
-const Registration:React.FC = () => {
-  const methods = useForm<ISignUpParams>({
+const Profile = () => {
+  const { data: user, isFetching, isSuccess } = useFetchUserQuery()
+  const [editProfile] = useEditProfileMutation();
+  const dispatch = useAppDispatch();
+
+  const methods = useForm<IEditUserProfileParamsResponse>({
+    defaultValues: {
+      [InputName.displayName]: user?.display_name,
+      [InputName.firstName]: user?.first_name,
+      [InputName.secondName]: user?.second_name,
+      [InputName.login]: user?.login,
+      [InputName.email]: user?.email,
+      [InputName.phone]: user?.phone
+    },
     mode: 'onBlur',
-    resolver: yupResolver(schemaRegistration)
+    resolver: yupResolver(schema)
   });
 
-  const [passwordShown, setPasswordShown] = useState(false);
-  const [fetchSignUp, { isLoading, isSuccess, data }] = useFetchSignUpMutation();
-
-  const navigate = useNavigate();
-
-  useEffect(() => {
+  const onSubmit = useCallback(async (value: IEditUserProfileParams) => {
+    await editProfile(value)
     if (isSuccess) {
-      navigate(RouterLinks.HOME)
+      dispatch(showAlert({
+        text: MESSAGES_TEXT.SUCCESS,
+        type: TYPES_ALERT.SUCCESS as IAlertTypeProps
+      }))
     }
-  }, [data])
-
-  const onSubmit = useCallback((value: ISignUpParams) => fetchSignUp(value), [])
-  const togglePasswordVisiblity = useCallback(() => {
-    setPasswordShown(!passwordShown);
-  }, [passwordShown])
+  }, [])
 
   return (
     <FormProvider {...methods}>
@@ -101,51 +108,14 @@ const Registration:React.FC = () => {
             />
           </Grid>
 
-          <Grid item xs={12} className='input'>
-            <TextField
-              type={passwordShown ? '' : InputType.password}
-              name={InputName.password}
-              label={InputLabel.password}
-            />
-          </Grid>
-          <Grid
-            container
-            alignItems='center'
-            justifyContent='center'
-          >
-            <Grid item>
-              <FormControlLabel
-                control={(
-                  <Checkbox
-                    color='primary'
-                    onClick={togglePasswordVisiblity}
-                  />
-              )}
-                label={InputLabel.showPassword}
-              />
-            </Grid>
-            <Grid item>
-              <Button
-                onClick={() => navigate(RouterLinks.LOGIN)}
-                disableFocusRipple
-                disableRipple
-                style={{ textTransform: 'none' }}
-                variant='text'
-                color='primary'
-              >
-                {RouterLinksName.ALREADY_REGISTRATION}
-              </Button>
-            </Grid>
-          </Grid>
-
           <Grid item xs={12}>
             <LoadingButton
               size='small'
               type='submit'
-              loading={isLoading}
+              loading={isFetching}
               variant='outlined'
             >
-              Регистрация
+              Сохранить
             </LoadingButton>
           </Grid>
         </Grid>
@@ -155,4 +125,5 @@ const Registration:React.FC = () => {
   )
 }
 
-export default Registration
+export default Profile
+
