@@ -17,7 +17,8 @@ import {
   InputName,
   InputType,
   RouterLinks,
-  RouterLinksName
+  RouterLinksName,
+  ENDPOINTS
 } from '../../constants/constants';
 
 const TextField = lazy(() => import(/* webpackChunkName: "TextField" */ '../../components/TextField/TextField'));
@@ -42,6 +43,10 @@ const Login = () => {
   const togglePasswordVisiblity = useCallback(() => {
     setPasswordShown(!passwordShown);
   }, [passwordShown])
+
+  const goToOathPage = () => {
+    window.location.replace(ENDPOINTS.OAUTH)
+  }
 
   const onSubmit = useCallback((value: ISignInParams) => fetchLogin(value), []);
 
@@ -133,6 +138,7 @@ const Login = () => {
                 backgroundRepeat: 'no-repeat',
                 height: '20px'
               }}
+              onClick={goToOathPage}
             />
           </Grid>
         </Grid>
