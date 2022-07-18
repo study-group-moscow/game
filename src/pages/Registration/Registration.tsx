@@ -7,7 +7,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useNavigate } from 'react-router-dom';
 import { useFetchSignUpMutation } from '../../services/AuthServices';
 import { ISignUpParams } from '../../models/ISignUpParams';
-import { schemaRegistration } from './schema';
+import schemaRegistration from './schema';
 import {
   InputLabel,
   InputName,
@@ -22,15 +22,6 @@ const TextField = lazy(() => import(/* webpackChunkName: "TextField" */ '../../c
 
 const Registration:React.FC = () => {
   const methods = useForm<ISignUpParams>({
-    defaultValues: {
-      [InputName.displayName]: '',
-      [InputName.firstName]: '',
-      [InputName.secondName]: '',
-      [InputName.login]: '',
-      [InputName.email]: '',
-      [InputName.password]: '',
-      [InputName.phone]: ''
-    },
     mode: 'onBlur',
     resolver: yupResolver(schemaRegistration)
   });
@@ -67,7 +58,6 @@ const Registration:React.FC = () => {
               type={InputType.text}
               name={InputName.displayName}
               label={InputLabel.displayName}
-              autoFocus
             />
           </Grid>
 
@@ -154,7 +144,6 @@ const Registration:React.FC = () => {
               type='submit'
               loading={isLoading}
               variant='outlined'
-              disabled
             >
               Регистрация
             </LoadingButton>

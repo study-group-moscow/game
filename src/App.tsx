@@ -13,6 +13,7 @@ const Home = lazy(() => import(/* webpackChunkName: "Home" */ './pages/Home/Home
 const Registration = lazy(() => import(/* webpackChunkName: "Registration" */ './pages/Registration/Registration'))
 const Login = lazy(() => import(/* webpackChunkName: "Login" */ './pages/Login/Login'))
 const Leaderboard = lazy(() => import(/* webpackChunkName: "Leaderboard" */ './pages/Leaderboard/Leaderboard'))
+const Profile = lazy(() => import(/* webpackChunkName: "Profile" */ './pages/Profile/Profile'))
 const Loader = lazy(() => import(/* webpackChunkName: "Loader" */ './components/Loader/Loader'))
 const PrivateRoute = lazy(() => import(/* webpackChunkName: "PrivateRoute" */ './utils/PrivateRoute'))
 const CustomAlert = lazy(() => import(/* webpackChunkName: "CustomAlert" */ './components/Alert/CustomAlert'))
@@ -39,7 +40,7 @@ const App = () => (
         </Route>
 
         <Route path={RouterLinks.PROFILE} element={<PrivateRoute />}>
-          <Route index element={(<div>Profile</div>)} />
+          <Route index element={(<Profile />)} />
         </Route>
 
         <Route path={RouterLinks.FORUM} element={<PrivateRoute />}>

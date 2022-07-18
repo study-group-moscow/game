@@ -7,7 +7,7 @@ import Button from '@mui/material/Button';
 import { LoadingButton } from '@mui/lab';
 import { useFetchSignInMutation } from '../../services/AuthServices';
 import { ISignInParams } from '../../models/ISignInParams';
-import { schemaLogin } from './schema';
+import schemaLogin from './schema';
 
 import '../../styles/auth.scss';
 
@@ -19,15 +19,10 @@ import {
   RouterLinksName
 } from '../../constants/constants';
 
-
 const TextField = lazy(() => import(/* webpackChunkName: "TextField" */ '../../components/TextField/TextField'));
 
 const Login = () => {
   const methods = useForm<ISignInParams>({
-    defaultValues: {
-      [InputName.login]: '',
-      [InputName.password]: ''
-    },
     mode: 'onBlur',
     resolver: yupResolver(schemaLogin)
   });
