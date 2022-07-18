@@ -154,7 +154,7 @@ const Registration:React.FC = () => {
               type='submit'
               loading={isLoading}
               variant='outlined'
-              disabled
+              disabled={isLoading}
             >
               Регистрация
             </LoadingButton>

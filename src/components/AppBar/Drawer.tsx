@@ -20,7 +20,7 @@ export default () => {
   const [isOpened, setIsOpened] = React.useState(false)
   const navigate = useNavigate()
 
-  const toggleDrawer = useCallback((): void => setIsOpened(!isOpened), []);
+  const toggleDrawer = useCallback((): void => setIsOpened(!isOpened), [isOpened]);
 
   const goToRoute = async (route: string): Promise<void> => {
     if (route === RouterLinks.LOGIN) {
