@@ -66,8 +66,8 @@ module.exports = [
   {
     name: 'server',
     target: 'node',
-    node: { __dirname: false },
-    entry: path.join(path.join(__dirname, '../src'), 'server'),
+    // node: { __dirname: false },
+    entry: './src/server/index.ts',
     module: {
       rules: [
         {
@@ -106,7 +106,7 @@ module.exports = [
     output: {
       filename: 'server.js',
       libraryTarget: 'commonjs2',
-      path: path.join(__dirname, '../dist'),
+      path: path.join(__dirname, './dist'),
       publicPath: '/static/'
     },
     resolve: {

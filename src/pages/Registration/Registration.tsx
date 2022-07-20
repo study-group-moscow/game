@@ -5,7 +5,7 @@ import Button from '@mui/material/Button';
 import { LoadingButton } from '@mui/lab';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useNavigate } from 'react-router-dom';
-import TextField from 'src/components/TextField/TextField';
+import TextField from '../../components/TextField/TextField';
 import { useFetchSignUpMutation } from '../../services/AuthServices';
 import { ISignUpParams } from '../../models/ISignUpParams';
 import { schemaRegistration } from './schema';
