@@ -5,7 +5,11 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useNavigate } from 'react-router';
 import Button from '@mui/material/Button';
 import { LoadingButton } from '@mui/lab';
-import { useFetchSignInMutation, useFetchSignInOauthMutation } from '../../services/AuthServices';
+import {
+  useFetchSignInMutation,
+  useFetchSignInOauthMutation,
+  useFetchServiceIdQuery
+} from '../../services/AuthServices';
 import { ISignInParams } from '../../models/ISignInParams';
 import schemaLogin from './schema';
 import logoYandex from '../../assets/yandex.svg'
@@ -33,11 +37,9 @@ const Login = () => {
 
   const [fetchLogin, { isLoading, data, isSuccess }] = useFetchSignInMutation();
   const [fetchLoginOauth, { data: token }] = useFetchSignInOauthMutation();
-  const [passwordShown, setPasswordShown] = useState(false);
+  const { data: serviceId } = useFetchServiceIdQuery(process.env.REDIRECT_URI ?? '')
 
-  // const getUser = () => {
-  //
-  // }
+  const [passwordShown, setPasswordShown] = useState(false);
 
   useEffect(() => {
     if (isSuccess) {
@@ -62,7 +64,13 @@ const Login = () => {
   }, [passwordShown])
 
   const goToOathPage = () => {
-    window.location.replace(ENDPOINTS.OAUTH)
+    // ...
+    const sId = serviceId?.service_id
+
+    if (sId) {
+      const url = `${ENDPOINTS.OAUTH}/authorize?response_type=code&client_id=${sId}&redirect_uri=${process.env.REDIRECT_URI}`
+      window.location.replace(url)
+    }
   }
 
   const onSubmit = useCallback((value: ISignInParams) => fetchLogin(value), []);
