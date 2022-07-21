@@ -21,7 +21,9 @@ export default () => {
   const [isOpened, setIsOpened] = React.useState(false)
   const navigate = useNavigate()
 
-  const toggleDrawer = (state: boolean): void => setIsOpened(state)
+  const openDrawer = useCallback((): void => setIsOpened(true), [])
+  const closeDrawer = useCallback((): void => setIsOpened(false), [])
+  const avatar = ENDPOINTS.RESOURCES + (user?.avatar ?? '')
 
   const goToRoute = async (route: string): Promise<void> => {
     if (route === RouterLinks.LOGIN) {
@@ -33,23 +35,23 @@ export default () => {
 
   return (
     <>
-      <IconButton color='inherit' onClick={() => toggleDrawer(true)}>
+      <IconButton color='inherit' onClick={openDrawer}>
         <SailingIcon sx={{ mr: 'auto' }} />
       </IconButton>
 
-      <Drawer anchor='left' open={isOpened} onClose={() => toggleDrawer(false)}>
+      <Drawer anchor='left' open={isOpened} onClose={closeDrawer}>
         <Box
           sx={{ width: 200 }}
           role='presentation'
-          onClick={() => toggleDrawer(false)}
-          onKeyDown={() => toggleDrawer(false)}
+          onClick={closeDrawer}
+          onKeyDown={closeDrawer}
         >
           <Box sx={{ width: '100%', my: 4 }} display='flex' justifyContent='center'>
             <IconButton onClick={() => goToRoute(MENU_ITEMS.profile.link)}>
               <Avatar
                 title={MENU_ITEMS.profile.title}
                 sx={{ width: 120, height: 120 }}
-                src={ENDPOINTS.RESOURCES + (user?.avatar ?? '')}
+                src={avatar}
               />
             </IconButton>
           </Box>
