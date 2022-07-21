@@ -1,12 +1,12 @@
 import { ENDPOINTS } from '../constants/constants';
 import { IUserResponse } from '../models/IUserResponse';
 import { IErrorResponse } from '../models/IErrorResponse';
-import { ISignInParams } from '../models/ISignInParams';
+import { ISignInParams, ISignInParamsOauth } from '../models/ISignInParams';
 import { ISignUpParams } from '../models/ISignUpParams';
 import baseApi from '../store/api/baseApi';
 
 export const authAPI = baseApi
-  .enhanceEndpoints({ addTagTypes: ['Auth'] })
+  .enhanceEndpoints({ addTagTypes: ['Auth', 'Token'] })
   .injectEndpoints({
     endpoints: (build) => ({
       fetchUser: build.query<IUserResponse, void>({
@@ -26,6 +26,18 @@ export const authAPI = baseApi
           body
         }),
         invalidatesTags: ['Auth']
+      }),
+      fetchSignInOauth: build.mutation<IErrorResponse, ISignInParamsOauth>({
+        query: (body) => ({
+          url: `${ENDPOINTS.AUTH.PATH_OAUTH}${ENDPOINTS.AUTH.YANDEX}`,
+          method: 'POST',
+          responseHandler: (response) => (
+            (response.status === 200)
+              ? response.text()
+              : response.json()),
+          body
+        }),
+        invalidatesTags: ['Token']
       }),
       fetchSignUp: build.mutation<IUserResponse, ISignUpParams>({
         query: (body) => ({
@@ -47,6 +59,7 @@ export const authAPI = baseApi
 
 export const {
   useFetchSignInMutation,
+  useFetchSignInOauthMutation,
   useFetchSignUpMutation,
   useFetchUserQuery,
   useFetchLogoutMutation

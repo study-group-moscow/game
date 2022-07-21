@@ -5,7 +5,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useNavigate } from 'react-router';
 import Button from '@mui/material/Button';
 import { LoadingButton } from '@mui/lab';
-import { useFetchSignInMutation } from '../../services/AuthServices';
+import { useFetchSignInMutation, useFetchSignInOauthMutation } from '../../services/AuthServices';
 import { ISignInParams } from '../../models/ISignInParams';
 import schemaLogin from './schema';
 import logoYandex from '../../assets/yandex.svg'
@@ -32,13 +32,30 @@ const Login = () => {
   const navigate = useNavigate();
 
   const [fetchLogin, { isLoading, data, isSuccess }] = useFetchSignInMutation();
+  const [fetchLoginOauth, { data: token }] = useFetchSignInOauthMutation();
   const [passwordShown, setPasswordShown] = useState(false);
+
+  // const getUser = () => {
+  //
+  // }
 
   useEffect(() => {
     if (isSuccess) {
       navigate(RouterLinks.HOME);
     }
   }, [data])
+
+  useEffect(() => {
+    const code = new URLSearchParams(window.location.search).get('code')
+    console.log('----this is login code=', code)
+    if (code) {
+      if (!token) {
+        fetchLoginOauth({ code, redirect_uri: process.env.REDIRECT_URI ?? '' })
+      } else {
+        console.log('--WE HAVE TOKEN--token=', token)
+      }
+    }
+  }, [token])
 
   const togglePasswordVisiblity = useCallback(() => {
     setPasswordShown(!passwordShown);

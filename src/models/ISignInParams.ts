@@ -4,3 +4,8 @@ export interface ISignInParams {
   [InputName.login]: string;
   [InputName.password]: string;
 }
+
+export interface ISignInParamsOauth {
+  code: string
+  redirect_uri: string
+}

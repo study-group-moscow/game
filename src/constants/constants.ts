@@ -57,10 +57,12 @@ export const ENDPOINTS = {
 
   AUTH: {
     PATH: '/auth',
+    PATH_OAUTH: '/oauth',
     USER: '/user',
     SIGNIN: '/signin',
     SIGNUP: '/signup',
-    LOGOUT: '/logout'
+    LOGOUT: '/logout',
+    YANDEX: '/yandex'
   },
 
   USER: {
