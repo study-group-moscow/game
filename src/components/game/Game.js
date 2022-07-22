@@ -37,12 +37,6 @@ export class Game {
     requestAnimationFrame((x) => this.tick(x))
   }
 
-  func(event) {
-    // this.player.randoming()
-    console.log('yyyyyy')
-    this.stage = 'play'
-  }
-
   // вводит сколько существует страница в мс
   tick(timestamp) {
     requestAnimationFrame((x) => this.tick(x))
@@ -64,8 +58,7 @@ export class Game {
         computer: this.computer,
         stage: 'preparation',
         ctx: this.ctx,
-        mouse: this.mouse,
-        func: this.func
+        mouse: this.mouse
       })
       this.context.setStrategy(strategyPreparation)
       this.tickPreparation()

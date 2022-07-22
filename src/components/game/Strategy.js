@@ -18,7 +18,6 @@ export class StrategyPreparation extends Strategy {
     this.stage = param.stage
     this.ctx = param.ctx
     this.mouse = param.mouse
-    this.func = param.func
   }
 
   execute(param) {
