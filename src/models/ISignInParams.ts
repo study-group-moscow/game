@@ -9,3 +9,5 @@ export interface ISignInParamsOauth {
   code: string
   redirect_uri: string
 }
+
+export type ISignInResponseOauth = { reason?: string } | string

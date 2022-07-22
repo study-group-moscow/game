@@ -7,7 +7,6 @@ import Button from '@mui/material/Button';
 import { LoadingButton } from '@mui/lab';
 import {
   useFetchSignInMutation,
-  useFetchSignInOauthMutation,
   useFetchServiceIdQuery
 } from '../../services/AuthServices';
 import { ISignInParams } from '../../models/ISignInParams';
@@ -36,7 +35,6 @@ const Login = () => {
   const navigate = useNavigate();
 
   const [fetchLogin, { isLoading, data, isSuccess }] = useFetchSignInMutation();
-  const [fetchLoginOauth, { data: token }] = useFetchSignInOauthMutation();
   const { data: serviceId } = useFetchServiceIdQuery(process.env.REDIRECT_URI ?? '')
 
   const [passwordShown, setPasswordShown] = useState(false);
@@ -47,24 +45,11 @@ const Login = () => {
     }
   }, [data])
 
-  useEffect(() => {
-    const code = new URLSearchParams(window.location.search).get('code')
-    console.log('----this is login code=', code)
-    if (code) {
-      if (!token) {
-        fetchLoginOauth({ code, redirect_uri: process.env.REDIRECT_URI ?? '' })
-      } else {
-        console.log('--WE HAVE TOKEN--token=', token)
-      }
-    }
-  }, [token])
-
   const togglePasswordVisiblity = useCallback(() => {
     setPasswordShown(!passwordShown);
   }, [passwordShown])
 
   const goToOathPage = () => {
-    // ...
     const sId = serviceId?.service_id
 
     if (sId) {

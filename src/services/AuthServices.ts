@@ -1,13 +1,13 @@
 import { ENDPOINTS } from '../constants/constants';
 import { IUserResponse } from '../models/IUserResponse';
 import { IErrorResponse } from '../models/IErrorResponse';
-import { ISignInParams, ISignInParamsOauth } from '../models/ISignInParams';
+import { ISignInParams, ISignInParamsOauth, ISignInResponseOauth } from '../models/ISignInParams';
 import { ISignUpParams } from '../models/ISignUpParams';
 import { IServiceIdResponse } from '../models/IServiceIdResponse';
 import baseApi from '../store/api/baseApi';
 
 export const authAPI = baseApi
-  .enhanceEndpoints({ addTagTypes: ['Auth', 'Token', 'ServiceId'] })
+  .enhanceEndpoints({ addTagTypes: ['Auth', 'SignInOauth', 'ServiceId'] })
   .injectEndpoints({
     endpoints: (build) => ({
       fetchUser: build.query<IUserResponse, void>({
@@ -28,7 +28,7 @@ export const authAPI = baseApi
         }),
         invalidatesTags: ['Auth']
       }),
-      fetchSignInOauth: build.mutation<IErrorResponse, ISignInParamsOauth>({
+      fetchSignInOauth: build.mutation<ISignInResponseOauth, ISignInParamsOauth>({
         query: (body) => ({
           url: `${ENDPOINTS.AUTH.PATH_OAUTH}${ENDPOINTS.AUTH.YANDEX}`,
           method: 'POST',
@@ -38,7 +38,7 @@ export const authAPI = baseApi
               : response.json()),
           body
         }),
-        invalidatesTags: ['Token']
+        invalidatesTags: ['SignInOauth', 'Auth']
       }),
       fetchServiceId: build.query<IServiceIdResponse, string>({
         query: (redirect_uri) => ({
@@ -59,9 +59,11 @@ export const authAPI = baseApi
       fetchLogout: build.mutation<IUserResponse, void>({
         query: () => ({
           url: `${ENDPOINTS.HTTP}${ENDPOINTS.AUTH.PATH}${ENDPOINTS.AUTH.LOGOUT}`,
-          method: 'POST'
-        }),
-        invalidatesTags: ['Auth']
+          method: 'POST',
+          responseHandler: (response) => (
+            response.status === 200 ? response.text() : response.json()
+          )
+        })
       })
     })
   })

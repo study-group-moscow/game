@@ -10,6 +10,11 @@ module.exports = {
     sourceMapFilename: '[name].js.map'
   },
   devtool: 'eval-source-map',
+  devServer: {
+    compress: true,
+    port: 5000,
+    historyApiFallback: true
+  },
   module: {
     rules: [
       {
@@ -63,8 +68,5 @@ module.exports = {
       template: './www/index.html'
     }),
     new Dotenv()
-  ],
-  devServer: {
-    historyApiFallback: true
-  }
+  ]
 }

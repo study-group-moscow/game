@@ -25,7 +25,7 @@ import '../../styles/auth.scss';
 const TextField = lazy(() => import(/* webpackChunkName: "TextField" */ '../../components/TextField/TextField'));
 
 const Profile = () => {
-  const { data: user, isFetching, isSuccess } = useFetchUserQuery()
+  const { data: user, isFetching, isSuccess } = useFetchUserQuery(undefined, { skip: false })
   const [editProfile] = useEditProfileMutation();
   const [editAvatar] = useEditAvatarMutation();
   const dispatch = useAppDispatch();

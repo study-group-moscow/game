@@ -5,12 +5,14 @@ import AppBar from '../components/AppBar/AppBar'
 import { useFetchUserQuery } from '../services/AuthServices';
 
 export default () => {
-  const { data: user, isSuccess } = useFetchUserQuery();
+  const isOnHomeRoute = window.location.pathname === '/'
+  console.log('-----isOnHomeRoute=', isOnHomeRoute)
+  const { data: user, isSuccess } = useFetchUserQuery(undefined, { skip: isOnHomeRoute });
 
-  if (isSuccess && !user) return <Navigate to='/login' />
+  if ((isSuccess && !user)) return <Navigate to='/login' />
   return (
     <>
-      <AppBar />
+      { window.location.pathname !== '/' && <AppBar /> }
 
       <Suspense fallback={<Loader />}>
         <Outlet />

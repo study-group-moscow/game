@@ -17,7 +17,7 @@ import { MENU_ITEMS, RouterLinks, ENDPOINTS } from '../../constants/constants'
 
 export default () => {
   const [fetchLogout] = useFetchLogoutMutation();
-  const { data: user } = useFetchUserQuery()
+  const { data: user } = useFetchUserQuery(undefined, { skip: false })
   const [isOpened, setIsOpened] = React.useState(false)
   const navigate = useNavigate()
 
