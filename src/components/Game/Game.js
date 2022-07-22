@@ -6,7 +6,7 @@ import {
   StrategyPlayPlayer,
   StrategyPreparation
 } from './Strategy';
-import { clearCanvas, drawGrid } from './const';
+import { clearCanvas, drawGrid } from './utils';
 import { getMouse } from './mouse';
 
 export class Game {

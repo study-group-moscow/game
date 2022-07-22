@@ -117,7 +117,7 @@ export class Topology {
   }
 
   // получить координаты клетки
-  getCoordinats(point) {
+  getCoordinates(point) {
     // если мышка не над полем, то возвращаем false
     if (!this.isPointUnder(point)) {
       return false

@@ -1,5 +1,5 @@
 // Типо интерфейс
-import { drawRules, getRandomFrom } from './const';
+import { drawRules, getRandomItem } from './utils';
 
 class Strategy {
   constructor() {
@@ -54,7 +54,7 @@ export class StrategyPreparation extends Strategy {
     // текущий размер корабля
     const sheepSize = sheepSizes[this.player.sheeps.length]
     // получаем координаты клетки
-    const coordinats = this.player.getCoordinats(this.mouse)
+    const coordinats = this.player.getCoordinates(this.mouse)
 
     const sheep = {
       x: coordinats.x,
@@ -108,7 +108,7 @@ export class StrategyPlay extends Strategy {
 
   getPoint() {
     // получам координаты клетки
-    const point = this.topology.getCoordinats(this.mouse)
+    const point = this.topology.getCoordinates(this.mouse)
     return point
   }
 
@@ -130,7 +130,7 @@ export class StrategyPlayPlayer extends StrategyPlay {
       return
     }
     // получам координаты клетки
-    const point = this.topology.getCoordinats(this.mouse)
+    const point = this.topology.getCoordinates(this.mouse)
 
     // добавить выстрел, если нажали левую кнопку мыши
     if (this.mouse.left && !this.mouse.pleft) {
@@ -173,7 +173,7 @@ export class StrategyPlayBot extends StrategyPlay {
         } */
 
     // получаем рандомную точку среди доступным непроверенных
-    const point = getRandomFrom(this.topology.getUnknownFields());
+    const point = getRandomItem(this.topology.getUnknownFields());
     return point
   }
 

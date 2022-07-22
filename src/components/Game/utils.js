@@ -84,7 +84,7 @@ export function drawRules(context) {
 
 // возвращает случайный элемент из массива
 // для БОТА
-export function getRandomFrom(array) {
+export function getRandomItem(array) {
   const index = Math.floor(Math.random() * array.length)
   return array[index]
 }

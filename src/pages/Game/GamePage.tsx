@@ -12,7 +12,6 @@ const GamePage: React.FC = () => {
       const canvas = canvasRef.current
       canvasCtxRef.current = canvas.getContext('2d');
       const ctx = canvasCtxRef.current;
-      // размеры canvas
       canvas.width = 1000;
       canvas.height = 500;
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
