@@ -193,8 +193,6 @@ export class Topology {
   // расстановка кораблей случайным образом
   randoming() {
     this.sheeps = []
-
-    console.log("TEST 2")
     for (let size = 4; size > 0; size--) {
       for (let n = 0; n < 5 - size; n++) {
         let flag = false

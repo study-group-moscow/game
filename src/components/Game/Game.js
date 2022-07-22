@@ -39,10 +39,7 @@ export class Game {
 
   // вводит сколько существует страница в мс
   tick(timestamp) {
-    requestAnimationFrame((x) => this.tick(x))
-
-    // console.log("this.stage")
-    // console.log(this.stage)
+    requestAnimationFrame((x) => this.tick(x));
     // 60 раз в секунду обновлять canvas и заново рисовать drawGrid
     clearCanvas(this.canvas)
     drawGrid(this.ctx, this.canvas)

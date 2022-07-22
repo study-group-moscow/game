@@ -131,8 +131,7 @@ export class Draw {
         y: pointY
       }
       if (!this.isChecked(point, checks)) {
-        this.addChecks(point, checks)
-        console.log(checks)
+        this.addChecks(point, checks);
       }
     }
   }
