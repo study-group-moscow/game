@@ -1,6 +1,6 @@
 import React, { useRef, useEffect } from 'react';
 import { Button, Container } from '@mui/material';
-import { Game } from '../../components/game/Game';
+import { Game } from '../../components/Game/Game';
 import './GamePage.scss'
 
 const GamePage: React.FC = () => {

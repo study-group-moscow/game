@@ -1,7 +1,7 @@
-export const CELL_SIZE = 23 // размер тетрадной клетки в px
-export const FIELD_SIZE = 30 // размер клетки морского боя
 
 // очистка canvas
+import { CELL_SIZE } from '../../constants/constants';
+
 export function clearCanvas(canvas) {
   canvas.width |= 0
 }

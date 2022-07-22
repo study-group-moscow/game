@@ -1,7 +1,6 @@
 // абстракция, здесь операции нужные клиентам
-import { FIELD_SIZE } from './const';
+import { FIELD_SIZE } from '../../constants/constants';
 import { Draw } from './Draw';
-import {logPlugin} from "@babel/preset-env/lib/debug";
 
 export class Topology {
   constructor(param) {

@@ -1,6 +1,6 @@
 // реализация - отрисовка поля игрока, кораблей,
 // точек, ранений и последнего хода
-import { FIELD_SIZE } from './const';
+import { FIELD_SIZE } from '../../constants/constants';
 
 export class Draw {
   constructor(param) {
