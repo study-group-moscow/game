@@ -74,15 +74,15 @@ export class Draw {
   }
 
   // рисование корабля
-  drawSheep(context, sheep) {
+  drawShip(context, ship) {
     context.fillStyle = 'rgba(0, 0, 0, 0.75)'
 
     context.beginPath()
     context.rect(
-      this.offsetX + sheep.x * FIELD_SIZE + FIELD_SIZE + 2,
-      this.offsetY + sheep.y * FIELD_SIZE + FIELD_SIZE + 2,
-      (sheep.direct === 0 ? sheep.size : 1) * FIELD_SIZE - 4,
-      (sheep.direct === 1 ? sheep.size : 1) * FIELD_SIZE - 4
+      this.offsetX + ship.x * FIELD_SIZE + FIELD_SIZE + 2,
+      this.offsetY + ship.y * FIELD_SIZE + FIELD_SIZE + 2,
+      (ship.direct === 0 ? ship.size : 1) * FIELD_SIZE - 4,
+      (ship.direct === 1 ? ship.size : 1) * FIELD_SIZE - 4
     )
     context.fill()
 
@@ -136,29 +136,29 @@ export class Draw {
     }
   }
 
-  drawCheckAroundKills(context, sheep, checks) {
-    if (sheep.direct === 0) {
-      this.drawCircle(sheep.x - 1, sheep.y, checks)
+  drawCheckAroundKills(context, ship, checks) {
+    if (ship.direct === 0) {
+      this.drawCircle(ship.x - 1, ship.y, checks)
 
       let i = -1
-      for (let { x } = sheep; x <= sheep.x + sheep.size + 1; x++) {
-        this.drawCircle(sheep.x + i, sheep.y - 1, checks)
-        this.drawCircle(sheep.x + i, sheep.y + 1, checks)
+      for (let { x } = ship; x <= ship.x + ship.size + 1; x++) {
+        this.drawCircle(ship.x + i, ship.y - 1, checks)
+        this.drawCircle(ship.x + i, ship.y + 1, checks)
 
         i++
       }
-      this.drawCircle(sheep.x + sheep.size, sheep.y, checks)
+      this.drawCircle(ship.x + ship.size, ship.y, checks)
     } else {
-      this.drawCircle(sheep.x, sheep.y - 1, checks)
+      this.drawCircle(ship.x, ship.y - 1, checks)
 
       let i = -1
-      for (let { y } = sheep; y <= sheep.y + sheep.size + 1; y++) {
-        this.drawCircle(sheep.x - 1, sheep.y + i, checks)
-        this.drawCircle(sheep.x + 1, sheep.y + i, checks)
+      for (let { y } = ship; y <= ship.y + ship.size + 1; y++) {
+        this.drawCircle(ship.x - 1, ship.y + i, checks)
+        this.drawCircle(ship.x + 1, ship.y + i, checks)
 
         i++
       }
-      this.drawCircle(sheep.x, sheep.y + sheep.size, checks)
+      this.drawCircle(ship.x, ship.y + ship.size, checks)
     }
   }
 

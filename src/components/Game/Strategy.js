@@ -50,32 +50,32 @@ export class StrategyPreparation extends Strategy {
     }
 
     // массив размеров кораблей
-    const sheepSizes = [4, 3, 3, 2, 2, 2, 1, 1, 1, 1]
+    const shipSizes = [4, 3, 3, 2, 2, 2, 1, 1, 1, 1]
     // текущий размер корабля
-    const sheepSize = sheepSizes[this.player.sheeps.length]
+    const shipSize = shipSizes[this.player.ships.length]
     // получаем координаты клетки
     const coordinats = this.player.getCoordinates(this.mouse)
 
-    const sheep = {
+    const ship = {
       x: coordinats.x,
       y: coordinats.y,
       direct: this.mouse.s ? 0 : 1,
-      size: sheepSize
+      size: shipSize
     }
 
     // если корабль вылезает за поле выход
-    if (!this.player.canStay(sheep)) {
+    if (!this.player.canStay(ship)) {
       return
     }
 
-    this.player.drawer.drawSheep(this.ctx, sheep)
+    this.player.drawer.drawShip(this.ctx, ship)
 
     // добавление корабля, если в текущей итерации прожата левая кнопка мыши
     if (this.mouse.left && !this.mouse.pleft) {
-      this.player.addSheeps(sheep)
+      this.player.addShips(ship)
 
       // проверяем, что выставили все корабли
-      if (this.player.sheeps.length === 10) {
+      if (this.player.ships.length === 10) {
         this.stage = 'play'
       }
     }
@@ -148,7 +148,7 @@ export class StrategyPlayPlayer extends StrategyPlay {
         this.topology.getScore(520, 250)
 
         // проверяем был ли выстрел в корабль или нет
-        if (!this.topology.isSheepUnderPoint(point)) {
+        if (!this.topology.isShipUnderPoint(point)) {
           // передаём ход
           this.playerOrder = false
         }
@@ -188,7 +188,7 @@ export class StrategyPlayBot extends StrategyPlay {
     this.topology.getScore(480, 250);
 
     // проверяем был ли выстрел в корабль или нет
-    if (!this.topology.isSheepUnderPoint(point)) {
+    if (!this.topology.isShipUnderPoint(point)) {
       // передаём ход
       this.playerOrder = true;
     }

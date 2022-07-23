@@ -14,7 +14,7 @@ export class Topology {
     // для того, чтобы не показывать корабли бота
     this.secret = param.secret || false // БОТ
 
-    this.sheeps = []
+    this.ships = []
     this.checks = []
     this.injuries = []
     this.kills = []
@@ -23,13 +23,13 @@ export class Topology {
   }
 
   // добавление кораблей
-  // принимает какое-то кол-во кораблей и добавляет их в массив sheeps
-  addSheeps(...sheeps) {
+  // принимает какое-то кол-во кораблей и добавляет их в массив ships
+  addShips(...ships) {
     // проверяем не был ли ранее добавлен данный корабль,
-    // если не был, то добавляем в sheeps
-    for (const sheep of sheeps) {
-      if (!this.sheeps.includes(sheep)) {
-        this.sheeps.push(sheep)
+    // если не был, то добавляем в ships
+    for (const ship of ships) {
+      if (!this.ships.includes(ship)) {
+        this.ships.push(ship)
       }
     }
     return this
@@ -78,8 +78,8 @@ export class Topology {
     // Отрисовка или не отрисовка кораблей
     // БОТ
     if (!this.secret) {
-      for (const sheep of this.sheeps) {
-        this.drawer.drawSheep(context, sheep)
+      for (const ship of this.ships) {
+        this.drawer.drawShip(context, ship)
       }
     }
 
@@ -91,8 +91,8 @@ export class Topology {
       this.drawer.drawInjury(context, injury)
     }
 
-    for (const sheep of this.kills) {
-      this.drawer.drawCheckAroundKills(context, sheep, this.checks)
+    for (const ship of this.kills) {
+      this.drawer.drawCheckAroundKills(context, ship, this.checks)
     }
 
     this.drawer.drawLast(context, this.last)
@@ -135,12 +135,12 @@ export class Topology {
   }
 
   // проверяем можно ли разместить корабль в топологии
-  canStay(sheep) {
+  canStay(ship) {
     // проверяем не выходит ли корабль за область поля
-    if (sheep.direct === 0 && sheep.x + sheep.size > 10) {
+    if (ship.direct === 0 && ship.x + ship.size > 10) {
       return false
     }
-    if (sheep.direct === 1 && sheep.y + sheep.size > 10) {
+    if (ship.direct === 1 && ship.y + ship.size > 10) {
       return false
     }
 
@@ -154,18 +154,18 @@ export class Topology {
     }
 
     // если на поле стоит корабль, то все его клетки и все клетко вокруг него становятся false
-    for (const sheep of this.sheeps) {
-      if (sheep.direct === 0) {
-        for (let x = sheep.x - 1; x < sheep.x + sheep.size + 1; x++) {
-          for (let y = sheep.y - 1; y < sheep.y + 2; y++) {
+    for (const ship of this.ships) {
+      if (ship.direct === 0) {
+        for (let x = ship.x - 1; x < ship.x + ship.size + 1; x++) {
+          for (let y = ship.y - 1; y < ship.y + 2; y++) {
             if (map[y] && map[y][x]) {
               map[y][x] = false
             }
           }
         }
       } else {
-        for (let x = sheep.x - 1; x < sheep.x + 2; x++) {
-          for (let y = sheep.y - 1; y < sheep.y + sheep.size + 1; y++) {
+        for (let x = ship.x - 1; x < ship.x + 2; x++) {
+          for (let y = ship.y - 1; y < ship.y + ship.size + 1; y++) {
             if (map[y] && map[y][x]) {
               map[y][x] = false
             }
@@ -174,15 +174,15 @@ export class Topology {
       }
     }
 
-    if (sheep.direct === 0) {
-      for (let i = 0; i < sheep.size; i++) {
-        if (!map[sheep.y][sheep.x + i]) {
+    if (ship.direct === 0) {
+      for (let i = 0; i < ship.size; i++) {
+        if (!map[ship.y][ship.x + i]) {
           return false
         }
       }
     } else {
-      for (let i = 0; i < sheep.size; i++) {
-        if (!map[sheep.y + i][sheep.x]) {
+      for (let i = 0; i < ship.size; i++) {
+        if (!map[ship.y + i][ship.x]) {
           return false
         }
       }
@@ -192,21 +192,21 @@ export class Topology {
 
   // расстановка кораблей случайным образом
   randoming() {
-    this.sheeps = []
+    this.ships = []
     for (let size = 4; size > 0; size--) {
       for (let n = 0; n < 5 - size; n++) {
         let flag = false
 
         while (!flag) {
-          const sheep = {
+          const ship = {
             x: Math.floor(Math.random() * 10),
             y: Math.floor(Math.random() * 10),
             direct: Math.random() > Math.random() ? 0 : 1,
             size
           }
 
-          if (this.canStay(sheep)) {
-            this.addSheeps(sheep)
+          if (this.canStay(ship)) {
+            this.addShips(ship)
             flag = true
           }
         }
@@ -215,7 +215,7 @@ export class Topology {
     return true
   }
 
-  getSheepsMap() {
+  getShipsMap() {
     // формируем карту кораблей
     const map = []
     for (let i = 0; i < 10; i++) {
@@ -226,17 +226,17 @@ export class Topology {
     }
 
     // ставим true, где стоит корабль
-    for (const sheep of this.sheeps) {
-      if (sheep.direct === 0) {
-        for (let { x } = sheep; x < sheep.x + sheep.size; x++) {
-          if (map[sheep.y] && !map[sheep.y][x]) {
-            map[sheep.y][x] = true
+    for (const ship of this.ships) {
+      if (ship.direct === 0) {
+        for (let { x } = ship; x < ship.x + ship.size; x++) {
+          if (map[ship.y] && !map[ship.y][x]) {
+            map[ship.y][x] = true
           }
         }
       } else {
-        for (let { y } = sheep; y < sheep.y + sheep.size; y++) {
-          if (map[y] && !map[y][sheep.x]) {
-            map[y][sheep.x] = true
+        for (let { y } = ship; y < ship.y + ship.size; y++) {
+          if (map[y] && !map[y][ship.x]) {
+            map[y][ship.x] = true
           }
         }
       }
@@ -267,7 +267,7 @@ export class Topology {
     // добавляем возможность ранения
 
     // карта кораблей
-    const map = this.getSheepsMap()
+    const map = this.getShipsMap()
 
     // проверяем, является ли точка, которую ранили - положением корабля
     for (const check of this.checks) {
@@ -283,9 +283,9 @@ export class Topology {
   }
 
   // возвращаем true, если в ячейке стоит корабль
-  isSheepUnderPoint(point) {
+  isShipUnderPoint(point) {
     // карта кораблей
-    const map = this.getSheepsMap()
+    const map = this.getShipsMap()
 
     return map[point.y][point.x]
   }
@@ -326,35 +326,35 @@ export class Topology {
   }
 
   addKills() {
-    for (const sheep of this.sheeps) {
-      if (sheep.direct === 0) {
-        const flag = sheep.size
+    for (const ship of this.ships) {
+      if (ship.direct === 0) {
+        const flag = ship.size
         let i = 0
-        for (let { x } = sheep; x < sheep.x + sheep.size; x++) {
+        for (let { x } = ship; x < ship.x + ship.size; x++) {
           for (const injury of this.injuries) {
-            if (injury.x === x && injury.y === sheep.y) {
+            if (injury.x === x && injury.y === ship.y) {
               i++
             }
           }
         }
         if (flag === i) {
-          if (!this.kills.includes(sheep)) {
-            this.kills.push(sheep)
+          if (!this.kills.includes(ship)) {
+            this.kills.push(ship)
           }
         }
       } else {
-        const flag = sheep.size
+        const flag = ship.size
         let i = 0
-        for (let { y } = sheep; y < sheep.y + sheep.size; y++) {
+        for (let { y } = ship; y < ship.y + ship.size; y++) {
           for (const injury of this.injuries) {
-            if (injury.y === y && injury.x === sheep.x) {
+            if (injury.y === y && injury.x === ship.x) {
               i++
             }
           }
         }
         if (flag === i) {
-          if (!this.kills.includes(sheep)) {
-            this.kills.push(sheep)
+          if (!this.kills.includes(ship)) {
+            this.kills.push(ship)
           }
         }
       }
@@ -364,7 +364,7 @@ export class Topology {
   // проверяет убиты ли все корабли
   isEnd() {
     // карта кораблей
-    const map = this.getSheepsMap()
+    const map = this.getShipsMap()
 
     // делаем false все клетки с ранениями
     for (const injury of this.injuries) {
