@@ -93,23 +93,21 @@ export class StrategyPlay extends Strategy {
   }
 
   execute(param) {
-    this.opening(param)
-    const point = this.getPoint()
-    this.addPoint(point)
+    this.opening(param);
+    this.addPoint(this.getPoint());
   }
 
   opening(param) {
-    this.playerOrder = param.playerOrder
-    this.topology = param.topology
+    this.playerOrder = param.playerOrder;
+    this.topology = param.topology;
 
     const a = document.getElementById('Button');
-    a.style.visibility = 'hidden'
+    a.style.visibility = 'hidden';
   }
 
   getPoint() {
     // получам координаты клетки
-    const point = this.topology.getCoordinates(this.mouse)
-    return point
+    return this.topology.getCoordinates(this.mouse);
   }
 
   addPoint(point) {}
@@ -118,10 +116,10 @@ export class StrategyPlay extends Strategy {
 export class StrategyPlayPlayer extends StrategyPlay {
   constructor(param) {
     super(param);
-    this.playerOrder = param.playerOrder
-    this.stage = param.stage
-    this.topology = param.topology
-    this.mouse = param.mouse
+    this.playerOrder = param.playerOrder;
+    this.stage = param.stage;
+    this.topology = param.topology;
+    this.mouse = param.mouse;
   }
 
   addPoint() {
@@ -130,27 +128,24 @@ export class StrategyPlayPlayer extends StrategyPlay {
       return
     }
     // получам координаты клетки
-    const point = this.topology.getCoordinates(this.mouse)
+    const point = this.topology.getCoordinates(this.mouse);
 
     // добавить выстрел, если нажали левую кнопку мыши
     if (this.mouse.left && !this.mouse.pleft) {
       // нельзя стрелять в одну и ту же клетку
       if (!this.topology.isChecked(point)) {
-        this.topology.addChecks(point)
+        this.topology.addChecks(point);
         // добавляем последний ход
-        this.topology.addThelast(point)
-
+        this.topology.addThelast(point);
         // логика добавления точки
-        this.topology.update()
-
-        this.topology.addKills()
-
-        this.topology.getScore(520, 250)
+        this.topology.update();
+        this.topology.addKills();
+        this.topology.getScore(520, 250);
 
         // проверяем был ли выстрел в корабль или нет
         if (!this.topology.isShipUnderPoint(point)) {
           // передаём ход
-          this.playerOrder = false
+          this.playerOrder = false;
         }
       }
     }
@@ -160,27 +155,20 @@ export class StrategyPlayPlayer extends StrategyPlay {
 export class StrategyPlayBot extends StrategyPlay {
   constructor(param) {
     super(param);
-    this.playerOrder = param.playerOrder
-    this.stage = param.stage
-    this.topology = param.topology
+    this.playerOrder = param.playerOrder;
+    this.stage = param.stage;
+    this.topology = param.topology;
   }
 
   getPoint() {
-    /* задаём рандомную точку
-        const point = {
-            x: Math.floor(Math.random() *10),
-            y: Math.floor(Math.random() *10)
-        } */
-
     // получаем рандомную точку среди доступным непроверенных
-    const point = getRandomItem(this.topology.getUnknownFields());
-    return point
+    return getRandomItem(this.topology.getUnknownFields());
   }
 
   addPoint(point) {
-    this.topology.addChecks(point)
+    this.topology.addChecks(point);
     // добавляем последний ход
-    this.topology.addThelast(point)
+    this.topology.addThelast(point);
 
     // логика добавления точки
     this.topology.update();
@@ -197,22 +185,22 @@ export class StrategyPlayBot extends StrategyPlay {
 
 // Конкретная стратегия (3)
 export class StrategyCompletion extends Strategy {
-  constructor(param) {
+  constructor(params) {
     super();
-    this.stage = param.stage
+    this.stage = params.stage;
   }
 
   execute(param) {
     if (this.stage === 'completionWin') {
       const div = document.getElementById('Winner');
       div.style.visibility = 'visible';
-      setTimeout("alert('Вы выиграли! Начать заново?')", 500)
-      setTimeout('window.location.reload()', 1000)
+      setTimeout("alert('Вы выиграли! Начать заново?')", 500);
+      setTimeout('window.location.reload()', 1000);
     } else if (this.stage === 'completionLose') {
       const div = document.getElementById('Loser');
       div.style.visibility = 'visible';
-      setTimeout("alert('Вы проиграли! Начать заново?')", 500)
-      setTimeout('window.location.reload()', 1000)
+      setTimeout("alert('Вы проиграли! Начать заново?')", 500);
+      setTimeout('window.location.reload()', 1000);
     }
   }
 }
@@ -221,15 +209,14 @@ export class StrategyCompletion extends Strategy {
 // интерфейс. Он не знает, какая именно стратегия ему подана.
 export class Context {
   constructor() {
-    this.strategy = new Strategy()
+    this.strategy = new Strategy();
   }
 
   setStrategy(strategy) {
-    this.strategy = strategy
+    this.strategy = strategy;
   }
 
   executeStrategy(param) {
-    this.strategy.execute(param)
+    this.strategy.execute(param);
   }
 }
-

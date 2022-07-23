@@ -246,11 +246,7 @@ export class Topology {
   }
 
   isCheckedInjury(point) {
-    const flag = this.injuries.find((injury) => injury.x === point.x && injury.y === point.y)
-    if (flag) {
-      return true
-    }
-    return false
+    return this.injuries.find((injury) => injury.x === point.x && injury.y === point.y);
   }
 
   update() {
