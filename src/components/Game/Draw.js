@@ -132,27 +132,27 @@ export class Draw {
 
   drawCheckAroundKills(context, ship, checks) {
     if (ship.direct === 0) {
-      this.drawCircle(ship.x - 1, ship.y, checks)
+      this.drawCircle(ship.x - 1, ship.y, checks);
 
-      let i = -1
+      let i = -1;
       for (let { x } = ship; x <= ship.x + ship.size + 1; x++) {
-        this.drawCircle(ship.x + i, ship.y - 1, checks)
-        this.drawCircle(ship.x + i, ship.y + 1, checks)
+        this.drawCircle(ship.x + i, ship.y - 1, checks);
+        this.drawCircle(ship.x + i, ship.y + 1, checks);
 
-        i++
+        i++;
       }
-      this.drawCircle(ship.x + ship.size, ship.y, checks)
+      this.drawCircle(ship.x + ship.size, ship.y, checks);
     } else {
-      this.drawCircle(ship.x, ship.y - 1, checks)
+      this.drawCircle(ship.x, ship.y - 1, checks);
 
-      let i = -1
+      let i = -1;
       for (let { y } = ship; y <= ship.y + ship.size + 1; y++) {
-        this.drawCircle(ship.x - 1, ship.y + i, checks)
-        this.drawCircle(ship.x + 1, ship.y + i, checks)
+        this.drawCircle(ship.x - 1, ship.y + i, checks);
+        this.drawCircle(ship.x + 1, ship.y + i, checks);
 
         i++
       }
-      this.drawCircle(ship.x, ship.y + ship.size, checks)
+      this.drawCircle(ship.x, ship.y + ship.size, checks);
     }
   }
 
@@ -239,18 +239,15 @@ export class Draw {
       this.offsetY + last.y * FIELD_SIZE + FIELD_SIZE * 2 - 2 // координата центра по y
     );
     context.stroke();
-
     return this;
   }
 
   drawScore(context, score) {
-    context.textAlign = 'center'
-    context.font = '35px comics sans'
+    context.textAlign = 'center';
+    context.font = '35px comics sans';
     context.fillStyle = 'black';
-
-    context.fillText(':', 500, 250)
-
-    context.fillText(score.count, score.x, score.y)
+    context.fillText(':', 500, 250);
+    context.fillText(score.count, score.x, score.y);
   }
 }
 

@@ -4,22 +4,22 @@ import { Draw } from './Draw';
 
 export class Topology {
   constructor(param) {
-    this.offsetX = param.offsetX
-    this.offsetY = param.offsetY
+    this.offsetX = param.offsetX;
+    this.offsetY = param.offsetY;
     // ссылка на объект реализации
     this.drawer = new Draw({
       offsetX: this.offsetX,
       offsetY: this.offsetY
     })
     // для того, чтобы не показывать корабли бота
-    this.secret = param.secret || false // БОТ
+    this.secret = param.secret || false; // БОТ
 
-    this.ships = []
-    this.checks = []
-    this.injuries = []
-    this.kills = []
-    this.last = {}
-    this.score = {}
+    this.ships = [];
+    this.checks = [];
+    this.injuries = [];
+    this.kills = [];
+    this.last = {};
+    this.score = {};
   }
 
   // добавление кораблей
@@ -50,7 +50,7 @@ export class Topology {
 
   // проверяем не был ли ранее добавлен данный выстрел
   isChecked(point) {
-    return this.checks.find((check) => check.x === point.x && check.y === point.y)
+    return this.checks.find((check) => check.x === point.x && check.y === point.y);
   }
 
   // добавление последнего хода
@@ -99,19 +99,19 @@ export class Topology {
       || point.x > this.offsetX + 11 * FIELD_SIZE
       || point.y < this.offsetY + FIELD_SIZE
       || point.y > this.offsetY + 11 * FIELD_SIZE
-    )
+    );
   }
 
   // получить координаты клетки
   getCoordinates(point) {
     // если мышка не над полем, то возвращаем false
     if (!this.isPointUnder(point)) {
-      return false
+      return false;
     }
 
     // иначе - её координаты
-    const x = parseInt((point.x - this.offsetX - FIELD_SIZE) / FIELD_SIZE)
-    const y = parseInt((point.y - this.offsetY - FIELD_SIZE) / FIELD_SIZE)
+    const x = parseInt((point.x - this.offsetX - FIELD_SIZE) / FIELD_SIZE);
+    const y = parseInt((point.y - this.offsetY - FIELD_SIZE) / FIELD_SIZE);
 
     // причем между 0 и 9
     return {
@@ -242,7 +242,7 @@ export class Topology {
     // если послед индекс элемента вернёт несовпад с инд элемент - удаляем
       .filter((e, i, l) => l.lastIndexOf(e) === i)
     // переводим обратно в объект
-      .map((check) => JSON.parse(check))
+      .map((check) => JSON.parse(check));
 
     // добавляем возможность ранения
 

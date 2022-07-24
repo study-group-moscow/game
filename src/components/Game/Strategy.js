@@ -3,7 +3,7 @@ import { drawRules, getRandomItem } from './utils';
 
 class Strategy {
   constructor() {
-    this.stage = 'completion'
+    this.stage = 'completion';
   }
 
   execute(param) { }
@@ -13,48 +13,47 @@ class Strategy {
 export class StrategyPreparation extends Strategy {
   constructor(param) {
     super();
-    this.player = param.player
-    this.computer = param.computer
-    this.stage = param.stage
-    this.ctx = param.ctx
-    this.mouse = param.mouse
+    this.player = param.player;
+    this.computer = param.computer;
+    this.stage = param.stage;
+    this.ctx = param.ctx;
+    this.mouse = param.mouse;
   }
 
   execute(param) {
-    this.player = param.player
-    this.computer = param.computer
-    this.game = param.game
+    this.player = param.player;
+    this.computer = param.computer;
+    this.game = param.game;
 
     // Правила
-    drawRules(this.ctx)
+    drawRules(this.ctx);
 
     // Счёт
-    this.computer.getScore(520, 250)
-    this.player.getScore(480, 250)
+    this.computer.getScore(520, 250);
+    this.player.getScore(480, 250);
 
     // Кнопка
     const a = document.getElementById('Button');
     function func(event) {
-      param.game.stage = 'play'
+      param.game.stage = 'play';
     }
 
     a.addEventListener('mousedown', () => {
-      param.player.randoming()
-      func()
-      // param?.game?.stage = 'play'
+      param.player.randoming();
+      func();
     });
 
     // если мышь не над полем - выход
     if (!this.player.isPointUnder(this.mouse)) {
-      return
+      return;
     }
 
     // массив размеров кораблей
-    const shipSizes = [4, 3, 3, 2, 2, 2, 1, 1, 1, 1]
+    const shipSizes = [4, 3, 3, 2, 2, 2, 1, 1, 1, 1];
     // текущий размер корабля
-    const shipSize = shipSizes[this.player.ships.length]
+    const shipSize = shipSizes[this.player.ships.length];
     // получаем координаты клетки
-    const coordinats = this.player.getCoordinates(this.mouse)
+    const coordinats = this.player.getCoordinates(this.mouse);
 
     const ship = {
       x: coordinats.x,
@@ -65,18 +64,18 @@ export class StrategyPreparation extends Strategy {
 
     // если корабль вылезает за поле выход
     if (!this.player.canStay(ship)) {
-      return
+      return;
     }
 
-    this.player.drawer.drawShip(this.ctx, ship)
+    this.player.drawer.drawShip(this.ctx, ship);
 
     // добавление корабля, если в текущей итерации прожата левая кнопка мыши
     if (this.mouse.left && !this.mouse.pleft) {
-      this.player.addShips(ship)
+      this.player.addShips(ship);
 
       // проверяем, что выставили все корабли
       if (this.player.ships.length === 10) {
-        this.stage = 'play'
+        this.stage = 'play';
       }
     }
   }
@@ -86,10 +85,10 @@ export class StrategyPreparation extends Strategy {
 export class StrategyPlay extends Strategy {
   constructor(param) {
     super();
-    this.playerOrder = param.playerOrder
-    this.stage = param.stage
-    this.topology = param.topology
-    this.mouse = param.mouse
+    this.playerOrder = param.playerOrder;
+    this.stage = param.stage;
+    this.topology = param.topology;
+    this.mouse = param.mouse;
   }
 
   execute(param) {
@@ -125,7 +124,7 @@ export class StrategyPlayPlayer extends StrategyPlay {
   addPoint() {
     // если мышь над полем бота
     if (!this.topology.isPointUnder(this.mouse)) {
-      return
+      return;
     }
     // получам координаты клетки
     const point = this.topology.getCoordinates(this.mouse);
