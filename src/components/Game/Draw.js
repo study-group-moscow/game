@@ -4,14 +4,14 @@ import { FIELD_SIZE } from '../../constants/constants';
 
 export class Draw {
   constructor(param) {
-    this.offsetX = param.offsetX
-    this.offsetY = param.offsetY
+    this.offsetX = param.offsetX;
+    this.offsetY = param.offsetY;
   }
 
   // рисование клеток морского боя
   drawFields(context) {
-    context.strokeStyle = 'blue'
-    context.lineWidth = 1.7
+    context.strokeStyle = 'blue';
+    context.lineWidth = 1.7;
 
     // вертикальные линии
     for (let i = 1; i <= 11; i++) {
@@ -44,7 +44,7 @@ export class Draw {
         this.offsetX + 11 * FIELD_SIZE,
         this.offsetY + i * FIELD_SIZE
       );
-      context.stroke()
+      context.stroke();
     }
 
     context.textAlign = 'center';
@@ -59,7 +59,7 @@ export class Draw {
         letter,
         this.offsetX + i * FIELD_SIZE + FIELD_SIZE * 1.5,
         this.offsetY + FIELD_SIZE * 0.8
-      )
+      );
     }
 
     // цифры
@@ -68,60 +68,54 @@ export class Draw {
         i,
         this.offsetX + FIELD_SIZE * 0.5,
         this.offsetY + i * FIELD_SIZE + FIELD_SIZE * 0.8 - 2
-      )
+      );
     }
-    return this
+    return this;
   }
 
   // рисование корабля
   drawShip(context, ship) {
-    context.fillStyle = 'rgba(0, 0, 0, 0.75)'
-
-    context.beginPath()
+    context.fillStyle = 'rgba(0, 0, 0, 0.75)';
+    context.beginPath();
     context.rect(
       this.offsetX + ship.x * FIELD_SIZE + FIELD_SIZE + 2,
       this.offsetY + ship.y * FIELD_SIZE + FIELD_SIZE + 2,
       (ship.direct === 0 ? ship.size : 1) * FIELD_SIZE - 4,
       (ship.direct === 1 ? ship.size : 1) * FIELD_SIZE - 4
-    )
-    context.fill()
-
-    return this
+    );
+    context.fill();
+    return this;
   }
 
   // рисование точки (выстрела)a
   drawCheck(context, check) {
-    context.fillStyle = 'black'
+    context.fillStyle = 'black';
 
-    context.beginPath()
+    context.beginPath();
     context.arc(
       this.offsetX + check.x * FIELD_SIZE + FIELD_SIZE * 1.5, // координата центра по x
       this.offsetY + check.y * FIELD_SIZE + FIELD_SIZE * 1.5, // координата центра по y
       3, // радиус
       0,
       Math.PI * 2
-    )
-    context.fill() // заливка
+    );
+    context.fill(); // заливка
 
-    return this
+    return this;
   }
 
   addChecks(point, checks) {
     // проверяем не был ли ранее добавлен данный выстрел,
     // если не был, то добавляем в checks
     if (!checks.includes(point)) {
-      checks.push(point)
+      checks.push(point);
     }
-    return checks
+    return checks;
   }
 
   // проверяем не был ли ранее добавлен данный выстрел
   isChecked(point, checks) {
-    const flag = checks.find((check) => check.x === point.x && check.y === point.y)
-    if (flag) {
-      return true
-    }
-    return false
+    return checks.find((check) => check.x === point.x && check.y === point.y);
   }
 
   drawCircle(pointX, pointY, checks) {
@@ -164,90 +158,89 @@ export class Draw {
 
   // отрисовка ранений
   drawInjury(context, injury) {
-    context.strokeStyle = 'red'
-    context.lineWidth = 1.5
+    context.strokeStyle = 'red';
+    context.lineWidth = 1.5;
 
     // первая линия
-    context.beginPath()
+    context.beginPath();
     context.moveTo(
       this.offsetX + injury.x * FIELD_SIZE + FIELD_SIZE + 1.5, // координата центра по x
       this.offsetY + injury.y * FIELD_SIZE + FIELD_SIZE + 1.5 // координата центра по y
-    )
+    );
     context.lineTo(
       this.offsetX + injury.x * FIELD_SIZE + FIELD_SIZE * 2 - 1.5, // координата центра по x
       this.offsetY + injury.y * FIELD_SIZE + FIELD_SIZE * 2 - 1.5 // координата центра по y
-    )
-    context.stroke()
+    );
+    context.stroke();
 
     // вторая линия
-    context.beginPath()
+    context.beginPath();
     context.moveTo(
       this.offsetX + injury.x * FIELD_SIZE + FIELD_SIZE * 2 - 1.5, // координата центра по x
       this.offsetY + injury.y * FIELD_SIZE + FIELD_SIZE + 1.5 // координата центра по y
-    )
+    );
     context.lineTo(
       this.offsetX + injury.x * FIELD_SIZE + FIELD_SIZE + 1.5, // координата центра по x
       this.offsetY + injury.y * FIELD_SIZE + FIELD_SIZE * 2 - 1.5 // координата центра по y
-    )
-    context.stroke()
-
-    return this
+    );
+    context.stroke();
+    return this;
   }
 
   // рисование последнего хода
   drawLast(context, last) {
-    context.strokeStyle = 'green'
-    context.lineWidth = 2.5
+    context.strokeStyle = 'green';
+    context.lineWidth = 2.5;
 
     // первая линия (лево)
-    context.beginPath()
+    context.beginPath();
     context.moveTo(
       this.offsetX + last.x * FIELD_SIZE + FIELD_SIZE + 2, // координата центра по x
       this.offsetY + last.y * FIELD_SIZE + FIELD_SIZE + 1 // координата центра по y
-    )
+    );
     context.lineTo(
       this.offsetX + last.x * FIELD_SIZE + FIELD_SIZE + 2, // координата центра по x
       this.offsetY + last.y * FIELD_SIZE + FIELD_SIZE * 2 - 1 // координата центра по y
-    )
-    context.stroke()
+    );
+    context.stroke();
 
     // вторая линия (право)
-    context.beginPath()
+    context.beginPath();
     context.moveTo(
       this.offsetX + last.x * FIELD_SIZE + FIELD_SIZE * 2 - 2, // координата центра по x
       this.offsetY + last.y * FIELD_SIZE + FIELD_SIZE + 1 // координата центра по y
-    )
+    );
     context.lineTo(
       this.offsetX + last.x * FIELD_SIZE + FIELD_SIZE * 2 - 2, // координата центра по x
       this.offsetY + last.y * FIELD_SIZE + FIELD_SIZE * 2 - 1 // координата центра по y
-    )
-    context.stroke()
+    );
+    context.stroke();
 
     // третья линия (верх)
-    context.beginPath()
+    context.beginPath();
     context.moveTo(
       this.offsetX + last.x * FIELD_SIZE + FIELD_SIZE * 2 - 2, // координата центра по x
       this.offsetY + last.y * FIELD_SIZE + FIELD_SIZE + 2 // координата центра по y
-    )
+    );
     context.lineTo(
       this.offsetX + last.x * FIELD_SIZE + FIELD_SIZE + 2, // координата центра по x
       this.offsetY + last.y * FIELD_SIZE + FIELD_SIZE + 2 // координата центра по y
-    )
-    context.stroke()
+    );
+    context.stroke();
 
     // четвёртая линия (низ)
-    context.beginPath()
+    context.beginPath();
     context.moveTo(
       this.offsetX + last.x * FIELD_SIZE + FIELD_SIZE + 2, // координата центра по x
       this.offsetY + last.y * FIELD_SIZE + FIELD_SIZE * 2 - 2 // координата центра по y
-    )
+    );
     context.lineTo(
       this.offsetX + last.x * FIELD_SIZE + FIELD_SIZE * 2 - 2, // координата центра по x
       this.offsetY + last.y * FIELD_SIZE + FIELD_SIZE * 2 - 2 // координата центра по y
-    )
-    context.stroke()
+    );
+    context.stroke();
 
-    return this
+    return this;
   }
 
   drawScore(context, score) {

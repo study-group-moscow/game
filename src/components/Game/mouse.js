@@ -15,7 +15,7 @@ export function getMouse(element) {
   })
 
   element.addEventListener('wheel', () => {
-    mouse.s = !mouse.s
+    mouse.s = !mouse.s;
   });
   element.addEventListener('mousedown', (event) => {
     if (event.buttons === 1) {
@@ -28,5 +28,5 @@ export function getMouse(element) {
     }
   })
 
-  return mouse
+  return mouse;
 }

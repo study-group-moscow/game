@@ -29,10 +29,10 @@ export class Topology {
     // если не был, то добавляем в ships
     for (const ship of ships) {
       if (!this.ships.includes(ship)) {
-        this.ships.push(ship)
+        this.ships.push(ship);
       }
     }
-    return this
+    return this;
   }
 
   // добавление выстрелов
@@ -42,25 +42,21 @@ export class Topology {
     // если не был, то добавляем в checks
     for (const check of checks) {
       if (!this.checks.includes(check)) {
-        this.checks.push(check)
+        this.checks.push(check);
       }
     }
-    return this
+    return this;
   }
 
   // проверяем не был ли ранее добавлен данный выстрел
   isChecked(point) {
-    const flag = this.checks.find((check) => check.x === point.x && check.y === point.y)
-    if (flag) {
-      return true
-    }
-    return false
+    return this.checks.find((check) => check.x === point.x && check.y === point.y)
   }
 
   // добавление последнего хода
   addThelast(last) {
-    this.last = last
-    return this
+    this.last = last;
+    return this;
   }
 
   getScore(x, y) {
@@ -73,47 +69,37 @@ export class Topology {
 
   // метод абстракции, делегирует работу связанному методу реализации
   draw(context) {
-    this.drawer.drawFields(context)
-
+    this.drawer.drawFields(context);
     // Отрисовка или не отрисовка кораблей
     // БОТ
     if (!this.secret) {
       for (const ship of this.ships) {
-        this.drawer.drawShip(context, ship)
+        this.drawer.drawShip(context, ship);
       }
     }
-
     for (const check of this.checks) {
-      this.drawer.drawCheck(context, check)
+      this.drawer.drawCheck(context, check);
     }
-
     for (const injury of this.injuries) {
-      this.drawer.drawInjury(context, injury)
+      this.drawer.drawInjury(context, injury);
     }
-
     for (const ship of this.kills) {
-      this.drawer.drawCheckAroundKills(context, ship, this.checks)
+      this.drawer.drawCheckAroundKills(context, ship, this.checks);
     }
-
-    this.drawer.drawLast(context, this.last)
-
-    this.drawer.drawScore(context, this.score)
-
-    return this
+    this.drawer.drawLast(context, this.last);
+    this.drawer.drawScore(context, this.score);
+    return this;
   }
 
   // положение мышки. true, если в области поля морского боя
   // false, если на буквах, цифрах или вне поля
   isPointUnder(point) {
-    if (
+    return !(
       point.x < this.offsetX + FIELD_SIZE
-            || point.x > this.offsetX + 11 * FIELD_SIZE
-            || point.y < this.offsetY + FIELD_SIZE
-            || point.y > this.offsetY + 11 * FIELD_SIZE
-    ) {
-      return false
-    }
-    return true
+      || point.x > this.offsetX + 11 * FIELD_SIZE
+      || point.y < this.offsetY + FIELD_SIZE
+      || point.y > this.offsetY + 11 * FIELD_SIZE
+    )
   }
 
   // получить координаты клетки
@@ -138,18 +124,18 @@ export class Topology {
   canStay(ship) {
     // проверяем не выходит ли корабль за область поля
     if (ship.direct === 0 && ship.x + ship.size > 10) {
-      return false
+      return false;
     }
     if (ship.direct === 1 && ship.y + ship.size > 10) {
-      return false
+      return false;
     }
 
     // пока ничего нет на поле - корабль можно поставить в любое место
     const map = []
     for (let i = 0; i < 10; i++) {
-      map[i] = []
+      map[i] = [];
       for (let j = 0; j < 10; j++) {
-        map[i][j] = true
+        map[i][j] = true;
       }
     }
 
@@ -159,7 +145,7 @@ export class Topology {
         for (let x = ship.x - 1; x < ship.x + ship.size + 1; x++) {
           for (let y = ship.y - 1; y < ship.y + 2; y++) {
             if (map[y] && map[y][x]) {
-              map[y][x] = false
+              map[y][x] = false;
             }
           }
         }
@@ -167,7 +153,7 @@ export class Topology {
         for (let x = ship.x - 1; x < ship.x + 2; x++) {
           for (let y = ship.y - 1; y < ship.y + ship.size + 1; y++) {
             if (map[y] && map[y][x]) {
-              map[y][x] = false
+              map[y][x] = false;
             }
           }
         }
@@ -177,17 +163,17 @@ export class Topology {
     if (ship.direct === 0) {
       for (let i = 0; i < ship.size; i++) {
         if (!map[ship.y][ship.x + i]) {
-          return false
+          return false;
         }
       }
     } else {
       for (let i = 0; i < ship.size; i++) {
         if (!map[ship.y + i][ship.x]) {
-          return false
+          return false;
         }
       }
     }
-    return true
+    return true;
   }
 
   // расстановка кораблей случайным образом
@@ -195,8 +181,7 @@ export class Topology {
     this.ships = []
     for (let size = 4; size > 0; size--) {
       for (let n = 0; n < 5 - size; n++) {
-        let flag = false
-
+        let flag = false;
         while (!flag) {
           const ship = {
             x: Math.floor(Math.random() * 10),
@@ -206,22 +191,22 @@ export class Topology {
           }
 
           if (this.canStay(ship)) {
-            this.addShips(ship)
-            flag = true
+            this.addShips(ship);
+            flag = true;
           }
         }
       }
     }
-    return true
+    return true;
   }
 
   getShipsMap() {
     // формируем карту кораблей
     const map = []
     for (let i = 0; i < 10; i++) {
-      map[i] = []
+      map[i] = [];
       for (let j = 0; j < 10; j++) {
-        map[i][j] = false
+        map[i][j] = false;
       }
     }
 
@@ -230,19 +215,18 @@ export class Topology {
       if (ship.direct === 0) {
         for (let { x } = ship; x < ship.x + ship.size; x++) {
           if (map[ship.y] && !map[ship.y][x]) {
-            map[ship.y][x] = true
+            map[ship.y][x] = true;
           }
         }
       } else {
         for (let { y } = ship; y < ship.y + ship.size; y++) {
           if (map[y] && !map[y][ship.x]) {
-            map[y][ship.x] = true
+            map[y][ship.x] = true;
           }
         }
       }
     }
-
-    return map
+    return map;
   }
 
   isCheckedInjury(point) {
@@ -263,17 +247,16 @@ export class Topology {
     // добавляем возможность ранения
 
     // карта кораблей
-    const map = this.getShipsMap()
+    const map = this.getShipsMap();
 
     // проверяем, является ли точка, которую ранили - положением корабля
     for (const check of this.checks) {
       if (map[check.y][check.x]) {
         if (!this.isCheckedInjury(check)) {
-          this.injuries.push(check)
+          this.injuries.push(check);
         }
-
-        const index = this.checks.indexOf(check)
-        this.checks.splice(index, 1)
+        const index = this.checks.indexOf(check);
+        this.checks.splice(index, 1);
       }
     }
   }
@@ -281,24 +264,22 @@ export class Topology {
   // возвращаем true, если в ячейке стоит корабль
   isShipUnderPoint(point) {
     // карта кораблей
-    const map = this.getShipsMap()
-
-    return map[point.y][point.x]
+    const map = this.getShipsMap();
+    return map[point.y][point.x];
   }
 
   // проверяем был ли выстрел по клетке
   getUnknownFields() {
-    const unknownFields = []
-
+    const unknownFields = [];
     for (let y = 0; y < 10; y++) {
       for (let x = 0; x < 10; x++) {
         // неизвестная клетка
-        let flag = true
+        let flag = true;
         // проходим по всем клеткам c выстрелами
         for (const check of this.checks) {
           if (check.x === x && check.y === y) {
-            flag = false
-            break
+            flag = false;
+            break;
           }
         }
 
@@ -306,36 +287,36 @@ export class Topology {
         if (flag) {
           for (const injury of this.injuries) {
             if (injury.x === x && injury.y === y) {
-              flag = false
-              break
+              flag = false;
+              break;
             }
           }
         }
 
         // если фаг до сих пор не опущен, то добавляем эту клетку в неиследованные
         if (flag) {
-          unknownFields.push({ x, y })
+          unknownFields.push({ x, y });
         }
       }
     }
-    return unknownFields
+    return unknownFields;
   }
 
   addKills() {
     for (const ship of this.ships) {
       if (ship.direct === 0) {
-        const flag = ship.size
-        let i = 0
+        const flag = ship.size;
+        let i = 0;
         for (let { x } = ship; x < ship.x + ship.size; x++) {
           for (const injury of this.injuries) {
             if (injury.x === x && injury.y === ship.y) {
-              i++
+              i++;
             }
           }
         }
         if (flag === i) {
           if (!this.kills.includes(ship)) {
-            this.kills.push(ship)
+            this.kills.push(ship);
           }
         }
       } else {
@@ -344,13 +325,13 @@ export class Topology {
         for (let { y } = ship; y < ship.y + ship.size; y++) {
           for (const injury of this.injuries) {
             if (injury.y === y && injury.x === ship.x) {
-              i++
+              i++;
             }
           }
         }
         if (flag === i) {
           if (!this.kills.includes(ship)) {
-            this.kills.push(ship)
+            this.kills.push(ship);
           }
         }
       }
@@ -360,20 +341,20 @@ export class Topology {
   // проверяет убиты ли все корабли
   isEnd() {
     // карта кораблей
-    const map = this.getShipsMap()
+    const map = this.getShipsMap();
 
     // делаем false все клетки с ранениями
     for (const injury of this.injuries) {
-      map[injury.y][injury.x] = false
+      map[injury.y][injury.x] = false;
     }
 
     // ищем хоть один true
     for (const status of map.flat()) {
       if (status) {
-        return false
+        return false;
       }
     }
 
-    return true
+    return true;
   }
 }
