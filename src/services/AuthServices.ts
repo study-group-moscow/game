@@ -3,11 +3,11 @@ import { IUserResponse } from '../models/IUserResponse';
 import { IErrorResponse } from '../models/IErrorResponse';
 import { ISignInParams, ISignInParamsOauth, ISignInResponseOauth } from '../models/ISignInParams';
 import { ISignUpParams } from '../models/ISignUpParams';
-import { IServiceIdResponse } from '../models/IServiceIdResponse';
+import { IOauthDataResponse } from '../models/IOauthDataResponse';
 import baseApi from '../store/api/baseApi';
 
 export const authAPI = baseApi
-  .enhanceEndpoints({ addTagTypes: ['Auth', 'SignInOauth', 'ServiceId'] })
+  .enhanceEndpoints({ addTagTypes: ['Auth', 'SignInOauth', 'OauthData'] })
   .injectEndpoints({
     endpoints: (build) => ({
       fetchUser: build.query<IUserResponse, void>({
@@ -40,13 +40,13 @@ export const authAPI = baseApi
         }),
         invalidatesTags: ['SignInOauth', 'Auth']
       }),
-      fetchServiceId: build.query<IServiceIdResponse, string>({
+      fetchOauthData: build.query<IOauthDataResponse, string>({
         query: (redirect_uri) => ({
           params: { redirect_uri },
           url: `${ENDPOINTS.AUTH.PATH_OAUTH}${ENDPOINTS.AUTH.YANDEX}${ENDPOINTS.AUTH.SERVICE_ID}`,
           method: 'GET'
         }),
-        providesTags: ['ServiceId']
+        providesTags: ['OauthData']
       }),
       fetchSignUp: build.mutation<IUserResponse, ISignUpParams>({
         query: (body) => ({
@@ -74,6 +74,6 @@ export const {
   useFetchSignUpMutation,
   useFetchUserQuery,
   useFetchLogoutMutation,
-  useFetchServiceIdQuery
+  useFetchOauthDataQuery
 } = authAPI;
 

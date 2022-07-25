@@ -7,7 +7,7 @@ import Button from '@mui/material/Button';
 import { LoadingButton } from '@mui/lab';
 import {
   useFetchSignInMutation,
-  useFetchServiceIdQuery
+  useFetchOauthDataQuery
 } from '../../services/AuthServices';
 import { ISignInParams } from '../../models/ISignInParams';
 import schemaLogin from './schema';
@@ -35,7 +35,7 @@ const Login = () => {
   const navigate = useNavigate();
 
   const [fetchLogin, { isLoading, data, isSuccess }] = useFetchSignInMutation();
-  const { data: serviceId } = useFetchServiceIdQuery(process.env.REDIRECT_URI ?? '')
+  const { data: oAuthData } = useFetchOauthDataQuery(process.env.REDIRECT_URI ?? '')
 
   const [passwordShown, setPasswordShown] = useState(false);
 
@@ -50,7 +50,7 @@ const Login = () => {
   }, [passwordShown])
 
   const goToOathPage = () => {
-    const sId = serviceId?.service_id
+    const sId = oAuthData?.service_id
 
     if (sId) {
       const url = `${ENDPOINTS.OAUTH}/authorize?response_type=code&client_id=${sId}&redirect_uri=${process.env.REDIRECT_URI}`
