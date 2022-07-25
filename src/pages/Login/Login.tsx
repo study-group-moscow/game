@@ -2,7 +2,7 @@ import React, { lazy, useCallback, useEffect, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { Checkbox, FormControlLabel, Grid, Typography } from '@mui/material';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useNavigate } from 'react-router';
+import { useNavigate } from 'react-router-dom';
 import Button from '@mui/material/Button';
 import { LoadingButton } from '@mui/lab';
 import {
@@ -39,6 +39,9 @@ const Login = () => {
 
   const [passwordShown, setPasswordShown] = useState(false);
 
+  const sId = oAuthData?.service_id
+  const url = `${ENDPOINTS.OAUTH}/authorize?response_type=code&client_id=${sId}&redirect_uri=${process.env.REDIRECT_URI}`
+
   useEffect(() => {
     if (isSuccess) {
       navigate(RouterLinks.HOME);
@@ -48,15 +51,6 @@ const Login = () => {
   const togglePasswordVisiblity = useCallback(() => {
     setPasswordShown(!passwordShown);
   }, [passwordShown])
-
-  const goToOAuthPage = () => {
-    const sId = oAuthData?.service_id
-
-    if (sId) {
-      const url = `${ENDPOINTS.OAUTH}/authorize?response_type=code&client_id=${sId}&redirect_uri=${process.env.REDIRECT_URI}`
-      window.location.replace(url)
-    }
-  }
 
   const onSubmit = useCallback((value: ISignInParams) => fetchLogin(value), []);
 
@@ -148,7 +142,7 @@ const Login = () => {
                 backgroundRepeat: 'no-repeat',
                 height: '20px'
               }}
-              onClick={goToOAuthPage}
+              href={url}
             />
           </Grid>
         </Grid>

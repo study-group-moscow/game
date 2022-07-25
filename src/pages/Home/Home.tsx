@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import Button from '@mui/material/Button';
 import {
   useFetchLogoutMutation,
@@ -10,10 +10,11 @@ import styles from '../../styles/centerContent.module.scss'
 import { RouterLinks } from '../../constants/constants'
 
 const Home:React.FC = () => {
+  const location = useLocation();
   const [fetchLoginOauth, { data: signInOauth }] = useFetchSignInOauthMutation();
 
   useEffect(() => {
-    const code = new URLSearchParams(window.location.search).get('code')
+    const code = new URLSearchParams(location.search).get('code')
 
     if (code && (signInOauth !== 'OK')) {
       fetchLoginOauth({ code, redirect_uri: process.env.REDIRECT_URI ?? '' })
