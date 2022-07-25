@@ -28,13 +28,13 @@ const Home:React.FC = () => {
     navigate(RouterLinks.LOGIN)
   }
 
-  const goPlay = () => {
+  const navigateToGamePage = () => {
     navigate(RouterLinks.GAME)
   }
 
   return (
     <div className={styles.center}>
-      <Button onClick={goPlay}>
+      <Button onClick={navigateToGamePage}>
         Играть
       </Button>
 

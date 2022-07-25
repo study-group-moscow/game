@@ -49,7 +49,7 @@ const Login = () => {
     setPasswordShown(!passwordShown);
   }, [passwordShown])
 
-  const goToOathPage = () => {
+  const goToOAuthPage = () => {
     const sId = oAuthData?.service_id
 
     if (sId) {
@@ -148,7 +148,7 @@ const Login = () => {
                 backgroundRepeat: 'no-repeat',
                 height: '20px'
               }}
-              onClick={goToOathPage}
+              onClick={goToOAuthPage}
             />
           </Grid>
         </Grid>

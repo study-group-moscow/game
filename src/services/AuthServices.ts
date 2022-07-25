@@ -7,7 +7,7 @@ import { IOauthDataResponse } from '../models/IOauthDataResponse';
 import baseApi from '../store/api/baseApi';
 
 export const authAPI = baseApi
-  .enhanceEndpoints({ addTagTypes: ['Auth', 'SignInOauth', 'OauthData'] })
+  .enhanceEndpoints({ addTagTypes: ['Auth', 'OauthData'] })
   .injectEndpoints({
     endpoints: (build) => ({
       fetchUser: build.query<IUserResponse, void>({
@@ -38,7 +38,7 @@ export const authAPI = baseApi
               : response.json()),
           body
         }),
-        invalidatesTags: ['SignInOauth', 'Auth']
+        invalidatesTags: ['Auth']
       }),
       fetchOauthData: build.query<IOauthDataResponse, string>({
         query: (redirect_uri) => ({
