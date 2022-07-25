@@ -29,7 +29,7 @@ const Home:React.FC = () => {
   }
 
   const goPlay = () => {
-    navigate(RouterLinks.PROFILE)
+    navigate(RouterLinks.GAME)
   }
 
   return (
