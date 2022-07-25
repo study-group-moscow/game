@@ -38,7 +38,7 @@ export class StrategyPreparation extends Strategy {
       param.game.stage = 'play';
     }
 
-    a.addEventListener('mousedown', () => {
+    a?.addEventListener('mousedown', () => {
       param.player.randoming();
       func();
     });

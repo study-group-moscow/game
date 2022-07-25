@@ -31,7 +31,10 @@ const GamePage: React.FC = () => {
       const game = new Game({ ctx, canvas, mouse });
     }
 
+    console.log('Создал')
+
     return () => {
+      console.log('Удалил')
       if (canvasRef.current) {
         canvasRef.current.removeEventListener('mousemove', removeClick);
         canvasRef.current.removeEventListener('wheel', removeWheel);
