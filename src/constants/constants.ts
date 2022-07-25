@@ -53,13 +53,17 @@ export const ENDPOINTS = {
   HTTP: 'https://ya-praktikum.tech/api/v2',
   RESOURCES: 'https://ya-praktikum.tech/api/v2/resources',
   WSS: 'wss://ya-praktikum.tech/ws',
+  OAUTH: 'https://oauth.yandex.ru',
 
   AUTH: {
     PATH: '/auth',
+    PATH_OAUTH: '/oauth',
     USER: '/user',
     SIGNIN: '/signin',
     SIGNUP: '/signup',
-    LOGOUT: '/logout'
+    LOGOUT: '/logout',
+    YANDEX: '/yandex',
+    SERVICE_ID: '/service-id'
   },
 
   USER: {
