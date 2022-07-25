@@ -10,6 +10,7 @@ import './App.scss';
 
 const About = lazy(() => import(/* webpackChunkName: "About" */ './pages/About/About'))
 const Home = lazy(() => import(/* webpackChunkName: "Home" */ './pages/Home/Home'))
+const Forum = lazy(() => import(/* webpackChunkName: "Forum" */ './pages/Forum/Forum'))
 const Registration = lazy(() => import(/* webpackChunkName: "Registration" */ './pages/Registration/Registration'))
 const Login = lazy(() => import(/* webpackChunkName: "Login" */ './pages/Login/Login'))
 const Leaderboard = lazy(() => import(/* webpackChunkName: "Leaderboard" */ './pages/Leaderboard/Leaderboard'))
@@ -44,7 +45,7 @@ const App = () => (
         </Route>
 
         <Route path={RouterLinks.FORUM} element={<PrivateRoute />}>
-          <Route index element={(<div>Forum</div>)} />
+          <Route index element={(<Forum />)} />
         </Route>
 
         <Route path={RouterLinks.LEADERBOARD} element={<PrivateRoute />}>
