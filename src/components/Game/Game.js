@@ -7,15 +7,16 @@ import {
   StrategyPreparation
 } from './Strategy';
 import { clearCanvas, drawGrid } from './utils';
-import { getMouse } from './mouse';
+// import { getMouse } from './mouse';
 
 export class Game {
-  constructor({ ctx, canvas }) {
+  constructor({ ctx, canvas, mouse }) {
     this.stage = 'preparation' // стадия подготовки
     this.playerOrder = true // чей ход
     this.ctx = ctx;
     this.canvas = canvas;
-    this.mouse = getMouse(canvas);
+    // this.mouse = getMouse(canvas);
+    this.mouse = mouse;
 
     // создание игрока
     this.player = new Topology({

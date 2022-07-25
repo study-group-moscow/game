@@ -7,26 +7,31 @@ export function getMouse(element) {
     pLeft: false
   }
 
-  element.addEventListener('mousemove', (event) => {
+  const myClick = (event) => {
     const rect = element.getBoundingClientRect()
 
     mouse.x = event.clientX - rect.left;
     mouse.y = event.clientY - rect.top;
-  })
-
-  element.addEventListener('wheel', () => {
+  }
+  const myWheel = () => {
     mouse.s = !mouse.s;
-  });
-  element.addEventListener('mousedown', (event) => {
+  }
+  const myMousedown = (event) => {
     if (event.buttons === 1) {
       mouse.left = true;
     }
-  });
-  element.addEventListener('mouseup', (event) => {
+  }
+  const myMouseup = (event) => {
     if (event.buttons !== 1) {
       mouse.left = false;
     }
-  })
+  }
 
-  return mouse;
+  element.addEventListener('mousemove', myClick)
+
+  element.addEventListener('wheel', myWheel);
+  element.addEventListener('mousedown', myMousedown);
+  element.addEventListener('mouseup', myMouseup)
+
+  return { mouse, myClick, myWheel, myMousedown, myMouseup };
 }
