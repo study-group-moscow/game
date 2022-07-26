@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef, useEffect } from 'react';
 import { Button, Container } from '@mui/material';
 import { Game } from '../../components/Game/Game';
 import './GamePage.scss'
@@ -31,10 +31,7 @@ const GamePage: React.FC = () => {
       const game = new Game({ ctx, canvas, mouse });
     }
 
-    console.log('Создал')
-
     return () => {
-      console.log('Удалил')
       if (canvasRef.current) {
         canvasRef.current.removeEventListener('mousemove', removeClick);
         canvasRef.current.removeEventListener('wheel', removeWheel);
