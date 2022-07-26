@@ -1,13 +1,17 @@
 import React, { lazy, useCallback, useEffect, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { Checkbox, FormControlLabel, Grid } from '@mui/material';
+import { Checkbox, FormControlLabel, Grid, Typography } from '@mui/material';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useNavigate } from 'react-router';
+import { useNavigate } from 'react-router-dom';
 import Button from '@mui/material/Button';
 import { LoadingButton } from '@mui/lab';
-import { useFetchSignInMutation } from '../../services/AuthServices';
+import {
+  useFetchSignInMutation,
+  useFetchOauthDataQuery
+} from '../../services/AuthServices';
 import { ISignInParams } from '../../models/ISignInParams';
-import { schemaLogin } from './schema';
+import schemaLogin from './schema';
+import logoYandex from '../../assets/yandex.svg'
 
 import '../../styles/auth.scss';
 
@@ -16,18 +20,14 @@ import {
   InputName,
   InputType,
   RouterLinks,
-  RouterLinksName
+  RouterLinksName,
+  ENDPOINTS
 } from '../../constants/constants';
-
 
 const TextField = lazy(() => import(/* webpackChunkName: "TextField" */ '../../components/TextField/TextField'));
 
 const Login = () => {
   const methods = useForm<ISignInParams>({
-    defaultValues: {
-      [InputName.login]: '',
-      [InputName.password]: ''
-    },
     mode: 'onBlur',
     resolver: yupResolver(schemaLogin)
   });
@@ -35,7 +35,12 @@ const Login = () => {
   const navigate = useNavigate();
 
   const [fetchLogin, { isLoading, data, isSuccess }] = useFetchSignInMutation();
+  const { data: oAuthData } = useFetchOauthDataQuery(process.env.REDIRECT_URI ?? '')
+
   const [passwordShown, setPasswordShown] = useState(false);
+
+  const sId = oAuthData?.service_id
+  const url = `${ENDPOINTS.OAUTH}/authorize?response_type=code&client_id=${sId}&redirect_uri=${process.env.REDIRECT_URI}`
 
   useEffect(() => {
     if (isSuccess) {
@@ -93,6 +98,7 @@ const Login = () => {
                 label={InputLabel.showPassword}
               />
             </Grid>
+
             <Grid item>
               <Button
                 onClick={() => navigate(RouterLinks.REGISTRATION)}
@@ -117,6 +123,28 @@ const Login = () => {
             >
               Войти
             </LoadingButton>
+          </Grid>
+
+          <Typography
+            variant='caption'
+            display='block'
+            sx={{
+              my: 2,
+              color: '#9e9e9e'
+            }}
+          >
+            или войти с помощью
+          </Typography>
+
+          <Grid item xs={12}>
+            <Button
+              sx={{
+                backgroundImage: `url(${logoYandex})`,
+                backgroundRepeat: 'no-repeat',
+                height: '20px'
+              }}
+              href={url}
+            />
           </Grid>
         </Grid>
       </form>

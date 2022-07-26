@@ -51,14 +51,25 @@ export enum InputLabel {
 
 export const ENDPOINTS = {
   HTTP: 'https://ya-praktikum.tech/api/v2',
+  RESOURCES: 'https://ya-praktikum.tech/api/v2/resources',
   WSS: 'wss://ya-praktikum.tech/ws',
+  OAUTH: 'https://oauth.yandex.ru',
 
   AUTH: {
     PATH: '/auth',
+    PATH_OAUTH: '/oauth',
     USER: '/user',
     SIGNIN: '/signin',
     SIGNUP: '/signup',
-    LOGOUT: '/logout'
+    LOGOUT: '/logout',
+    YANDEX: '/yandex',
+    SERVICE_ID: '/service-id'
+  },
+
+  USER: {
+    PATH: '/user',
+    PROFILE: '/profile',
+    AVATAR: '/avatar'
   },
 
   LEADERBOARD: {
@@ -69,12 +80,13 @@ export const ENDPOINTS = {
 };
 
 export const MESSAGES_TEXT = {
-  ERROR_OCCURRED: 'О нет, произошла ошибка!'
+  ERROR_OCCURRED: 'Произошла ошибка!',
+  SUCCESS: 'Выполнено!'
 }
 
 export const TYPES_ALERT = {
   ERROR: 'error',
-  SUCCESS: ' success'
+  SUCCESS: 'success'
 }
 
 export const MENU_ITEMS = {

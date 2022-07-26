@@ -11,16 +11,19 @@ import ListItemText from '@mui/material/ListItemText';
 import IconButton from '@mui/material/IconButton';
 import SailingIcon from '@mui/icons-material/Sailing';
 import Avatar from '@mui/material/Avatar';
-import { useFetchLogoutMutation } from '../../services/AuthServices';
+import { useFetchLogoutMutation, useFetchUserQuery } from '../../services/AuthServices';
 import Icon from '../../utils/Icon'
-import { MENU_ITEMS, RouterLinks } from '../../constants/constants'
+import { MENU_ITEMS, RouterLinks, ENDPOINTS } from '../../constants/constants'
 
 export default () => {
   const [fetchLogout] = useFetchLogoutMutation();
+  const { data: user } = useFetchUserQuery(undefined, { skip: false })
   const [isOpened, setIsOpened] = React.useState(false)
   const navigate = useNavigate()
 
-  const toggleDrawer = useCallback((): void => setIsOpened(!isOpened), [isOpened]);
+  const openDrawer = useCallback((): void => setIsOpened(true), [])
+  const closeDrawer = useCallback((): void => setIsOpened(false), [])
+  const avatar = ENDPOINTS.RESOURCES + (user?.avatar ?? '')
 
   const goToRoute = async (route: string): Promise<void> => {
     if (route === RouterLinks.LOGIN) {
@@ -32,23 +35,23 @@ export default () => {
 
   return (
     <>
-      <IconButton color='inherit' onClick={toggleDrawer}>
+      <IconButton color='inherit' onClick={openDrawer}>
         <SailingIcon sx={{ mr: 'auto' }} />
       </IconButton>
 
-      <Drawer anchor='left' open={isOpened} onClose={toggleDrawer}>
+      <Drawer anchor='left' open={isOpened} onClose={closeDrawer}>
         <Box
           sx={{ width: 200 }}
           role='presentation'
-          onClick={toggleDrawer}
-          onKeyDown={toggleDrawer}
+          onClick={closeDrawer}
+          onKeyDown={closeDrawer}
         >
           <Box sx={{ width: '100%', my: 4 }} display='flex' justifyContent='center'>
             <IconButton onClick={() => goToRoute(MENU_ITEMS.profile.link)}>
               <Avatar
                 title={MENU_ITEMS.profile.title}
                 sx={{ width: 120, height: 120 }}
-                src=''
+                src={avatar}
               />
             </IconButton>
           </Box>

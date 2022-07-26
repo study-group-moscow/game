@@ -1,5 +1,6 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const Dotenv = require('dotenv-webpack');
 
 module.exports = {
   entry: './src/index.js',
@@ -9,6 +10,11 @@ module.exports = {
     sourceMapFilename: '[name].js.map'
   },
   devtool: 'eval-source-map',
+  devServer: {
+    compress: true,
+    port: 5000,
+    historyApiFallback: true
+  },
   module: {
     rules: [
       {
@@ -47,6 +53,10 @@ module.exports = {
             loader: 'sass-loader'
           }
         ]
+      },
+      {
+        test: /\.(png|svg|jpg|jpeg|gif)$/i,
+        type: 'asset/resource'
       }
     ]
   },
@@ -56,9 +66,7 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
       template: './www/index.html'
-    })
-  ],
-  devServer: {
-    historyApiFallback: true
-  }
+    }),
+    new Dotenv()
+  ]
 }
