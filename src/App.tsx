@@ -9,6 +9,7 @@ import NotFound from './utils/NotFound';
 import './App.scss';
 
 const About = lazy(() => import(/* webpackChunkName: "About" */ './pages/About/About'))
+const Game = lazy(() => import(/* webpackChunkName: "GamePage" */ './pages/Game/GamePage'))
 const Home = lazy(() => import(/* webpackChunkName: "Home" */ './pages/Home/Home'))
 const Registration = lazy(() => import(/* webpackChunkName: "Registration" */ './pages/Registration/Registration'))
 const Login = lazy(() => import(/* webpackChunkName: "Login" */ './pages/Login/Login'))
@@ -36,7 +37,7 @@ const App = () => (
         </Route>
 
         <Route path={RouterLinks.GAME} element={<PrivateRoute />}>
-          <Route index element={(<div>Game</div>)} />
+          <Route index element={(<Game />)} />
         </Route>
 
         <Route path={RouterLinks.PROFILE} element={<PrivateRoute />}>

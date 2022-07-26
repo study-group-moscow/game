@@ -118,3 +118,6 @@ export const MENU_ITEMS = {
     }
   ]
 }
+
+export const CELL_SIZE = 23 // размер тетрадной клетки в px
+export const FIELD_SIZE = 30 // размер клетки морского боя

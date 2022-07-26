@@ -15,7 +15,7 @@ const showToast: Middleware = ({ dispatch }: MiddlewareAPI) => (next) => (action
     }))
   }
 
-  return next(action)
+  return next(action);
 }
 
 export default showToast

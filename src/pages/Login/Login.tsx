@@ -118,6 +118,7 @@ const Login = () => {
               size='small'
               type='submit'
               loading={isLoading}
+              disabled={isLoading}
               variant='outlined'
             >
               Войти
