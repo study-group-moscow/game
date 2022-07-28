@@ -1,35 +1,20 @@
-import React, { useState } from 'react';
-import { Button } from '@mui/material';
+import React from 'react';
+import Form from '../../components/Form/Form';
 
-interface IChat {
-  id: string;
-  title: string;
+export interface IChat {
+  id: number;
+  name: string;
+  date: string;
+  text: string;
+  count: number;
 }
 
 const Forum = () => {
-  const [chats, setChats] = useState<IChat[]>([]);
-
   return (
-    <div style={{ marginTop: '100px', marginLeft: '100px' }}>
-      <h1>Forum test</h1>
-      <Button onClick={() => {
-        setChats([
-          { id: '1', title: 'test1' },
-          { id: '2', title: 'test2' }
-        ])
-      }}
-      >
-        Создать чат
-      </Button>
-
-      {
-        chats.map((chat) => (
-          <div onClick={() => {}}>
-            <span>{chat.title}</span>
-          </div>
-        ))
-      }
-
+    <div style={{ marginTop: '100px', marginLeft: '100px', padding: '10px', width: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
+      <div style={{ width: '1000px' }}>
+        <Form />
+      </div>
     </div>
   );
 }

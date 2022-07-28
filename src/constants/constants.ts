@@ -13,6 +13,7 @@ export enum RouterLinks {
 
 export enum InputName {
   login = 'login',
+  forum = 'forum',
   password = 'password',
   displayName = 'display_name',
   firstName = 'first_name',
