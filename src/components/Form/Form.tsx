@@ -7,23 +7,24 @@ import Typography from '@mui/material/Typography';
 import CardActions from '@mui/material/CardActions';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
-import { Button, CardMedia, Checkbox, IconButton, TextField } from '@mui/material';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
+import { Button, Checkbox, IconButton, TextField } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
+import { useAddPostMutation, useDeletePostMutation } from '../../services/PostsService';
+import { useFetchUserQuery } from '../../services/AuthServices';
+import { IPost } from '../../models/IPosts';
 
 type FormValues = {
   message: string;
-  cart: {
-    id: number;
-    name: string;
-    date: string;
-    text: string;
-    isLike: boolean;
-    count: number;
-  }[];
+  posts: IPost[];
 };
 
-const Form = () => {
+const Form = ({ posts }: { posts: IPost[] }) => {
+  const { data: user } = useFetchUserQuery(undefined, { skip: false });
+  const [addPost, { isLoading, isSuccess, data }] = useAddPostMutation();
+  const [deletePost] = useDeletePostMutation()
+
+  // const { posts } = useAppSelector(selectCurrentStatePosts);
+
   const {
     register,
     control,
@@ -33,15 +34,8 @@ const Form = () => {
     formState: { errors }
   } = useForm<FormValues>({
     defaultValues: {
-      message: 'like',
-      cart: [{
-        id: 1,
-        name: 'Петров Владимир',
-        date: 'September 14, 2016',
-        text: 'Привет.',
-        isLike: false,
-        count: 8
-      }]
+      message: '',
+      posts
     },
     mode: 'onBlur'
   });
@@ -51,14 +45,14 @@ const Form = () => {
     prepend,
     remove
   } = useFieldArray({
-    name: 'cart',
+    name: 'posts',
     control
   });
-  const onSubmit = (data: FormValues) => {
-    console.log('data');
-    console.log(data);
-  }
 
+  const onSubmit = (data: FormValues) => {
+    // console.log('data');
+    // console.log(data);
+  }
   return (
     <div>
       <form onSubmit={handleSubmit(onSubmit)}>
@@ -72,70 +66,77 @@ const Form = () => {
         />
         <Button
           onClick={() => {
-            prepend({
-              id: 1,
-              name: 'Петров Владимир',
-              date: 'September 14, 2016',
-              text: watch('message'),
-              count: 8
-            })
+            const post = {
+              content: watch('message'),
+              likes: [],
+              isLike: false,
+              username: user?.first_name,
+              user_id: user?.id
+            }
+            addPost(post)
+            prepend(post)
             reset({
               message: '',
-              cart: watch('cart')
+              posts: watch('posts')
             })
           }}
         >
           добавить пост
         </Button>
-        {fields.map((field, index) => (
-          <Card
-            key={field.id}
-            sx={{
-              maxWidth: 1000,
-              marginTop: '10px'
-            }}
-          >
-            <CardHeader
-              title={field.name}
-              subheader={field.date}
-              action={(
-                <IconButton aria-label='settings'>
-                  <DeleteIcon onClick={() => remove(index)} />
-                </IconButton>
-              )}
-            />
-            {/* <CardMedia */}
-            {/*  component='img' */}
-            {/*  height='194' */}
-            {/*  image='/static/images/cards/paella.jpg' */}
-            {/*  alt='Paella dish' */}
-            {/* /> */}
-            <CardContent>
-              <Typography variant='body2' color='text.secondary'>
-                {field.text}
-              </Typography>
-            </CardContent>
-            <CardActions disableSpacing>
-              <div>
-                <Controller
-                  name={`cart.${index}.isLike`}
-                  control={control}
-                  rules={{ required: true }}
-                  render={({ field }) => (
-                    <Checkbox
-                      icon={<FavoriteBorderIcon />}
-                      checkedIcon={(
-                        <FavoriteIcon />
-                      )}
-                      {...field}
+        {fields.map((field, index) => {
+          return (
+            <Card
+              key={field.id}
+              sx={{
+                maxWidth: 1000,
+                marginTop: '10px'
+              }}
+            >
+              <CardHeader
+                title={`${field.username}`}
+                action={(
+                  <IconButton aria-label='settings'>
+                    <DeleteIcon onClick={() => {
+                      deletePost(field.idPost ? field.idPost : 1)
+                      remove(index)
+                    }}
                     />
-                  )}
-                />
-                {field.count}
-              </div>
-            </CardActions>
-          </Card>
-        ))}
+                  </IconButton>
+                )}
+              />
+              {/* <CardMedia */}
+              {/*  component='img' */}
+              {/*  height='194' */}
+              {/*  image='/static/images/cards/paella.jpg' */}
+              {/*  alt='Paella dish' */}
+              {/* /> */}
+              <CardContent>
+                <Typography variant='body2' color='text.secondary'>
+                  {field.content}
+                </Typography>
+              </CardContent>
+              <CardActions disableSpacing>
+                <div>
+                  <Controller
+                    name={`posts.${index}.isLike`}
+                    control={control}
+                    rules={{ required: true }}
+                    render={({ field }) => (
+                      <Checkbox
+                        icon={<FavoriteBorderIcon />}
+                        checkedIcon={(
+                          <FavoriteIcon />
+                        )}
+                        {...field}
+                      />
+                    )}
+                  />
+                  {field.likes.length}
+                </div>
+              </CardActions>
+            </Card>
+          )
+        })}
       </form>
     </div>
   );

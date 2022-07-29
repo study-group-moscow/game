@@ -2,10 +2,10 @@ const db = require('../db/db')
 
 class PostController {
     async createPost(req, res) {
-        const {title, content,likes, userId} = req.body;
-        const newPost = await db.query(`INSERT INTO "post" (title, content, likes, user_id)
-                                        values ($1, $2, $3, $4)
-                                        RETURNING *`, [title, content, likes, userId]);
+        const {content,likes, userId, isLike, username} = req.body;
+        const newPost = await db.query(`INSERT INTO "post" (content, likes, user_id, isLike, username)
+                                        values ($1, $2, $3, $4, $5)
+                                        RETURNING *`, [content, likes, userId, isLike, username]);
         res.json(newPost.rows[0]).status(200);
     }
 

@@ -8,9 +8,10 @@ create TABLE "user"
 create TABLE "post"
 (
     id      SERIAL PRIMARY KEY,
-    title   VARCHAR(255),
     content VARCHAR(255),
     likes  integer[],
+    isLike bool,
+    username VARCHAR(20),
     user_id INTEGER,
     FOREIGN KEY (user_id) REFERENCES "user" (id)
 );
