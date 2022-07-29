@@ -1,12 +1,23 @@
 version: "3.8"
 services:
+
+  client:
+    container_name: client
+    build: .
+    ports:
+      - "5000:5000"
+    command: yarn start
+    depends_on:
+      - server
+
   server:
     container_name: server
-    build: .
+    build: ./server
     volumes:
       - .:/app
     ports:
       - "8989:8989"
+    command: yarn dev
     depends_on:
       - db_game
 
