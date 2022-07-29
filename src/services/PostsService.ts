@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/dist/query/react';
 import { IPostRequest, IPost } from '../models/IPosts';
 
-type PostsResponse = IPost[]
+type PostsResponse = IPostRequest;
 
 export const postAPI = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:8989/post/' }),
@@ -11,7 +11,7 @@ export const postAPI = createApi({
       query: () => '/',
       providesTags: ['Posts']
     }),
-    addPost: build.mutation<IPostRequest, Partial<IPostRequest>>({
+    addPost: build.mutation<PostsResponse, Partial<PostsResponse>>({
       query: (body) => ({
         url: '/',
         method: 'POST',
@@ -31,4 +31,4 @@ export const postAPI = createApi({
   })
 })
 
-export const { useGetPostsQuery, useAddPostMutation, useDeletePostMutation } = postAPI
+export const { useGetPostsQuery, useAddPostMutation, useDeletePostMutation } = postAPI;

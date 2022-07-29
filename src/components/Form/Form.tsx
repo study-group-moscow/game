@@ -11,7 +11,7 @@ import { Button, Checkbox, IconButton, TextField } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useAddPostMutation, useDeletePostMutation } from '../../services/PostsService';
 import { useFetchUserQuery } from '../../services/AuthServices';
-import { IPost } from '../../models/IPosts';
+import { IPost, IPostRequest } from '../../models/IPosts';
 
 type FormValues = {
   message: string;
@@ -20,7 +20,7 @@ type FormValues = {
 
 const Form = ({ posts }: { posts: IPost[] }) => {
   const { data: user } = useFetchUserQuery(undefined, { skip: false });
-  const [addPost, { isLoading, isSuccess, data }] = useAddPostMutation();
+  const [addPost] = useAddPostMutation();
   const [deletePost] = useDeletePostMutation()
 
   // const { posts } = useAppSelector(selectCurrentStatePosts);
@@ -53,6 +53,42 @@ const Form = ({ posts }: { posts: IPost[] }) => {
     // console.log('data');
     // console.log(data);
   }
+
+  async function http<T>(request: RequestInfo): Promise<T> {
+    const response = await fetch(request)
+    return response.json()
+  }
+
+  const save = async () => {
+    const post = {
+      id: 0,
+      content: watch('message'),
+      likes: [],
+      islike: false,
+      userId: user?.id
+    }
+
+    // const request = new Request('http://localhost:8989/post/', {
+    //   method: 'post',
+    //   body: JSON.stringify(post),
+    //   headers: {
+    //     'Content-type': 'application/json; charset=UTF-8'
+    //   }
+    // })
+    //
+    // const response = await http<IPostRequest>(request)
+    // console.log('response');
+    // console.log(response);
+    addPost(post)
+      .unwrap().then(resp => console.log(resp));
+
+    prepend(post)
+    reset({
+      message: '',
+      posts: watch('posts')
+    })
+  }
+
   return (
     <div>
       <form onSubmit={handleSubmit(onSubmit)}>
@@ -65,78 +101,62 @@ const Form = ({ posts }: { posts: IPost[] }) => {
           render={({ field }) => <TextField fullWidth multiline {...field} />}
         />
         <Button
-          onClick={() => {
-            const post = {
-              content: watch('message'),
-              likes: [],
-              isLike: false,
-              username: user?.first_name,
-              user_id: user?.id
-            }
-            addPost(post)
-            prepend(post)
-            reset({
-              message: '',
-              posts: watch('posts')
-            })
-          }}
+          onClick={save}
         >
           добавить пост
         </Button>
-        {fields.map((field, index) => {
-          return (
-            <Card
-              key={field.id}
-              sx={{
-                maxWidth: 1000,
-                marginTop: '10px'
-              }}
-            >
-              <CardHeader
-                title={`${field.username}`}
-                action={(
-                  <IconButton aria-label='settings'>
-                    <DeleteIcon onClick={() => {
-                      deletePost(field.idPost ? field.idPost : 1)
-                      remove(index)
-                    }}
-                    />
-                  </IconButton>
-                )}
-              />
-              {/* <CardMedia */}
-              {/*  component='img' */}
-              {/*  height='194' */}
-              {/*  image='/static/images/cards/paella.jpg' */}
-              {/*  alt='Paella dish' */}
-              {/* /> */}
-              <CardContent>
-                <Typography variant='body2' color='text.secondary'>
-                  {field.content}
-                </Typography>
-              </CardContent>
-              <CardActions disableSpacing>
-                <div>
-                  <Controller
-                    name={`posts.${index}.isLike`}
-                    control={control}
-                    rules={{ required: true }}
-                    render={({ field }) => (
-                      <Checkbox
-                        icon={<FavoriteBorderIcon />}
-                        checkedIcon={(
-                          <FavoriteIcon />
-                        )}
-                        {...field}
-                      />
-                    )}
+        {fields.map((field, index) => (
+          <Card
+            key={field.id}
+            sx={{
+              maxWidth: 1000,
+              marginTop: '10px'
+            }}
+          >
+            <CardHeader
+              title={`${field.name}`}
+              action={(
+                <IconButton aria-label='settings'>
+                  <DeleteIcon onClick={() => {
+                    deletePost(field.post_id)
+                    remove(index)
+                  }}
                   />
-                  {field.likes.length}
-                </div>
-              </CardActions>
-            </Card>
-          )
-        })}
+                </IconButton>
+                )}
+            />
+            {/* <CardMedia */}
+            {/*  component='img' */}
+            {/*  height='194' */}
+            {/*  image='/static/images/cards/paella.jpg' */}
+            {/*  alt='Paella dish' */}
+            {/* /> */}
+            <CardContent>
+              <Typography variant='body2' color='text.secondary'>
+                {field.content}
+              </Typography>
+            </CardContent>
+            <CardActions disableSpacing>
+              <div>
+                <Controller
+                  name={`posts.${index}.islike`}
+                  control={control}
+                  rules={{ required: true }}
+                  render={({ field }) => (
+                    <Checkbox
+                      icon={<FavoriteBorderIcon />}
+                      checkedIcon={(
+                        <FavoriteIcon />
+                        )}
+                      {...field}
+                    />
+                  )}
+                />
+                {field.likes.length}
+              </div>
+            </CardActions>
+          </Card>
+        ))}
       </form>
     </div>
   );
