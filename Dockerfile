@@ -4,14 +4,12 @@ FROM node:14.16.0-slim
 #Рабочая папка
 WORKDIR /app
 
-#Копируем package.json, package-lock.json
-COPY package*.json ./
+#Копируем все файлы
+COPY . /app
 
 #Установка зависимостей
 RUN npm install
 
-#Копируем все файлы
-COPY . .
 CMD ["npm", "run", "build"]
 #Копируем папку dist
 COPY ./dist ./dist
