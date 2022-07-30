@@ -61,9 +61,10 @@ const Form = ({ posts }: { posts: IPost[] }) => {
 
   const save = async () => {
     const post = {
-      content: watch('message'),
+      content: watch('message') ?? '',
+      likes: [],
       islike: false,
-      userId: user?.id
+      user_id: user?.id ?? 1
     }
 
     await addPost(post).then((resp) => console.log(resp));

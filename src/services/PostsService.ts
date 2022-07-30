@@ -11,7 +11,7 @@ export const postAPI = createApi({
       query: () => '/',
       providesTags: ['Posts']
     }),
-    addPost: build.mutation<PostsResponse, Partial<IPost>>({
+    addPost: build.mutation<IPost, PostsResponse>({
       query: (body) => ({
         url: '/',
         method: 'POST',
