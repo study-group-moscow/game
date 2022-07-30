@@ -9,11 +9,11 @@ import CardActions from '@mui/material/CardActions';
 import { Controller } from 'react-hook-form';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
-import { IPost } from '../models/IPosts';
+import { IPostItem } from '../models/IPosts';
 import { useDeletePostMutation } from '../services/PostsService';
 
 type TPostItemProps = {
-  post: IPost;
+  post: IPostItem;
   index: number;
   remove: any;
   control: any;
@@ -27,7 +27,7 @@ const PostItem = ({ post, remove, index, control }: TPostItemProps) => {
       key={post.id}
       sx={{
         maxWidth: 1000,
-        marginTop: '10px'
+        marginBottom: '10px'
       }}
     >
 
@@ -61,6 +61,10 @@ const PostItem = ({ post, remove, index, control }: TPostItemProps) => {
                 icon={<FavoriteBorderIcon />}
                 checkedIcon={(<FavoriteIcon />)}
                 {...field}
+                onChange={(e) => {
+                  console.log(e.target.value)
+                  field.onChange(e)
+                }}
               />
             )}
           />

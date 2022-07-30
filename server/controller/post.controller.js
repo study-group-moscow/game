@@ -12,8 +12,15 @@ class PostController {
       res.json(post.rows[0]).status(200);
     }
 
+    async updatePost(req, res) {
+        const {content,likes, user_id, islike} = req.body;
+      const id = req.params.id;
+      const posts = await db.query('UPDATE post SET published_date = \'2020-08-01\' WHERE course_id = 3 = $1', [id]);
+      res.json(posts.rows[0]).status(200);
+    }
+
     async getPosts(req, res) {
-        const posts = await db.query('SELECT p.id, p.id as post_id,  p.content, p.likes, p.islike, p.user_id, u.name FROM "post" as p join "user" u on u.id = p.user_id\n');
+        const posts = await db.query('SELECT p.id, p.id as post_id,  p.content, p.likes, p.islike, p.user_id, u.name FROM "post" as p join "user" u on u.id = p.user_id ORDER BY id');
         res.json(posts.rows).status(200);
     }
 

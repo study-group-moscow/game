@@ -4,6 +4,12 @@ export interface IPost extends IPostRequest {
   name: string;
 }
 
+export interface IPostItem extends IPostRequest {
+  id: string;
+  post_id: number;
+  name: string;
+}
+
 export interface IPostRequest {
   content: string;
   likes: Array<number>;

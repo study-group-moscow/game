@@ -1,19 +1,12 @@
 import * as React from 'react';
-import { Controller, useFieldArray, useForm } from 'react-hook-form';
-import Card from '@mui/material/Card';
-import CardHeader from '@mui/material/CardHeader';
-import CardContent from '@mui/material/CardContent';
-import Typography from '@mui/material/Typography';
-import CardActions from '@mui/material/CardActions';
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
-import { Button, Checkbox, IconButton, TextField } from '@mui/material';
-import DeleteIcon from '@mui/icons-material/Delete';
-import { useAddPostMutation, useDeletePostMutation } from '../../services/PostsService';
+import { Controller, useForm } from 'react-hook-form';
+import { Button, TextField } from '@mui/material';
+import { useAddPostMutation } from '../../services/PostsService';
 import { useFetchUserQuery } from '../../services/AuthServices';
 import { IPost } from '../../models/IPosts';
+import PostList from '../PostList';
 
-type FormValues = {
+export type FormValues = {
   message: string;
   posts: IPost[];
 };
@@ -21,7 +14,6 @@ type FormValues = {
 const Form = ({ posts }: { posts: IPost[] }) => {
   const { data: user } = useFetchUserQuery(undefined, { skip: false });
   const [addPost] = useAddPostMutation();
-  const [deletePost] = useDeletePostMutation();
 
   const {
     control,
@@ -32,14 +24,6 @@ const Form = ({ posts }: { posts: IPost[] }) => {
   } = useForm<FormValues>({
     defaultValues: { message: '', posts },
     mode: 'onBlur'
-  });
-
-  const {
-    fields,
-    remove
-  } = useFieldArray({
-    name: 'posts',
-    control
   });
 
   const onSubmit = (data: FormValues) => {
@@ -60,73 +44,27 @@ const Form = ({ posts }: { posts: IPost[] }) => {
       .then((post) => {
         reset({
           message: '',
-          posts: [post, ...watch('posts')]
+          posts: [...watch('posts'), post]
         })
       });
   }
 
   return (
-    <div>
+    <div style={{ marginBottom: '50px' }}>
       <form onSubmit={handleSubmit(onSubmit)}>
+        <PostList control={control} />
         <Controller
           name='message'
           control={control}
           defaultValue='like'
           rules={{ required: true }}
-          render={({ field }) => <TextField fullWidth multiline {...field} />}
+          render={({ field }) => <TextField autoFocus fullWidth multiline {...field} />}
         />
         <Button
           onClick={handleSavePost}
         >
           добавить пост
         </Button>
-        {fields.map((field, index) => (
-          <Card
-            key={field.id}
-            sx={{
-              maxWidth: 1000,
-              marginTop: '10px'
-            }}
-          >
-
-            <CardHeader
-              title={`${field.name}`}
-              action={(
-                <IconButton
-                  onClick={() => {
-                    deletePost(field.post_id)
-                    remove(index)
-                  }}
-                  aria-label='settings'
-                >
-                  <DeleteIcon />
-                </IconButton>
-                )}
-            />
-            <CardContent>
-              <Typography variant='body2' color='text.secondary'>
-                {field.content}
-              </Typography>
-            </CardContent>
-            <CardActions disableSpacing>
-              <div>
-                <Controller
-                  name={`posts.${index}.islike`}
-                  control={control}
-                  rules={{ required: true }}
-                  render={({ field }) => (
-                    <Checkbox
-                      icon={<FavoriteBorderIcon />}
-                      checkedIcon={(<FavoriteIcon />)}
-                      {...field}
-                    />
-                  )}
-                />
-                {15}
-              </div>
-            </CardActions>
-          </Card>
-        ))}
       </form>
     </div>
   );
