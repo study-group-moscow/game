@@ -21,28 +21,21 @@ type FormValues = {
 const Form = ({ posts }: { posts: IPost[] }) => {
   const { data: user } = useFetchUserQuery(undefined, { skip: false });
   const [addPost] = useAddPostMutation();
-  const [deletePost] = useDeletePostMutation()
-
-  // const { posts } = useAppSelector(selectCurrentStatePosts);
+  const [deletePost] = useDeletePostMutation();
 
   const {
-    register,
     control,
     handleSubmit,
     reset,
     watch,
     formState: { errors }
   } = useForm<FormValues>({
-    defaultValues: {
-      message: '',
-      posts
-    },
+    defaultValues: { message: '', posts },
     mode: 'onBlur'
   });
+
   const {
     fields,
-    append,
-    prepend,
     remove
   } = useFieldArray({
     name: 'posts',
@@ -54,34 +47,27 @@ const Form = ({ posts }: { posts: IPost[] }) => {
     // console.log(data);
   }
 
-  async function http<T>(request: RequestInfo): Promise<T> {
-    const response = await fetch(request)
-    return response.json()
-  }
-
-  const save = async () => {
-    const post = {
+  const handleSavePost = async () => {
+    const newPost = {
       content: watch('message') ?? '',
       likes: [],
       islike: false,
       user_id: user?.id ?? 1
     }
 
-    await addPost(post).then((resp) => console.log(resp));
-    await console.log('-----------------------')
-    await addPost(post).then((resp) => console.log(resp));
-
-    // prepend(post)
-    // reset({
-    //   message: '',
-    //   posts: watch('posts')
-    // })
+    await addPost(newPost)
+      .unwrap()
+      .then((post) => {
+        reset({
+          message: '',
+          posts: [post, ...watch('posts')]
+        })
+      });
   }
 
   return (
     <div>
       <form onSubmit={handleSubmit(onSubmit)}>
-        {/* <TextArea name='message' type='text' label='test' /> */}
         <Controller
           name='message'
           control={control}
@@ -90,7 +76,7 @@ const Form = ({ posts }: { posts: IPost[] }) => {
           render={({ field }) => <TextField fullWidth multiline {...field} />}
         />
         <Button
-          onClick={save}
+          onClick={handleSavePost}
         >
           добавить пост
         </Button>
@@ -117,12 +103,6 @@ const Form = ({ posts }: { posts: IPost[] }) => {
                 </IconButton>
                 )}
             />
-            {/* <CardMedia */}
-            {/*  component='img' */}
-            {/*  height='194' */}
-            {/*  image='/static/images/cards/paella.jpg' */}
-            {/*  alt='Paella dish' */}
-            {/* /> */}
             <CardContent>
               <Typography variant='body2' color='text.secondary'>
                 {field.content}
@@ -137,9 +117,7 @@ const Form = ({ posts }: { posts: IPost[] }) => {
                   render={({ field }) => (
                     <Checkbox
                       icon={<FavoriteBorderIcon />}
-                      checkedIcon={(
-                        <FavoriteIcon />
-                        )}
+                      checkedIcon={(<FavoriteIcon />)}
                       {...field}
                     />
                   )}
@@ -154,14 +132,3 @@ const Form = ({ posts }: { posts: IPost[] }) => {
   );
 }
 export default Form;
-// const request = new Request('http://localhost:8989/post/', {
-//   method: 'post',
-//   body: JSON.stringify(post),
-//   headers: {
-//     'Content-type': 'application/json; charset=UTF-8'
-//   }
-// })
-//
-// const response = await http<IPostRequest>(request)
-// console.log('response');
-// console.log(response);

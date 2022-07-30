@@ -4,11 +4,14 @@ import { IPostRequest, IPost } from '../models/IPosts';
 type PostsResponse = IPostRequest;
 
 export const postAPI = createApi({
-  baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:8989/post/' }),
+  reducerPath: 'Posts',
   tagTypes: ['Posts'],
+  baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:8989/post/' }),
   endpoints: (build) => ({
     getPosts: build.query({
-      query: () => '/',
+      query: () => ({
+        url: '/'
+      }),
       providesTags: ['Posts']
     }),
     addPost: build.mutation<IPost, PostsResponse>({
@@ -32,3 +35,4 @@ export const postAPI = createApi({
 })
 
 export const { useGetPostsQuery, useAddPostMutation, useDeletePostMutation } = postAPI;
+

@@ -1,26 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import Form from '../../components/Form/Form';
 import Loader from '../../components/Loader/Loader';
-import { IPost } from '../../models/IPosts';
 import { useGetPostsQuery } from '../../services/PostsService';
 
 const Forum = () => {
-  // const { data, isLoading, isSuccess } = useGetPostsQuery();
-  const [loading, setLoading] = useState(true);
-  const [posts, setPosts] = useState<IPost[]>([]);
+  const { data: posts, isLoading } = useGetPostsQuery(1);
 
-  useEffect(() => {
-    fetch('http://localhost:8989/post')
-      .then((response) => response.json())
-      .then((date) => {
-        setPosts(date)
-        setLoading(false)
-      })
-  }, [])
-
-  // console.log('data')
-  // console.log(data)
-  if (loading) return (<Loader />)
+  if (isLoading) return (<Loader />)
 
   return (
     <div style={{ marginTop: '100px', marginLeft: '100px', padding: '10px', width: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
