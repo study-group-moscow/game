@@ -11,7 +11,7 @@ import { Button, Checkbox, IconButton, TextField } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useAddPostMutation, useDeletePostMutation } from '../../services/PostsService';
 import { useFetchUserQuery } from '../../services/AuthServices';
-import { IPost, IPostRequest } from '../../models/IPosts';
+import { IPost } from '../../models/IPosts';
 
 type FormValues = {
   message: string;
@@ -61,32 +61,20 @@ const Form = ({ posts }: { posts: IPost[] }) => {
 
   const save = async () => {
     const post = {
-      id: 0,
       content: watch('message'),
-      likes: [],
       islike: false,
       userId: user?.id
     }
 
-    // const request = new Request('http://localhost:8989/post/', {
-    //   method: 'post',
-    //   body: JSON.stringify(post),
-    //   headers: {
-    //     'Content-type': 'application/json; charset=UTF-8'
-    //   }
-    // })
-    //
-    // const response = await http<IPostRequest>(request)
-    // console.log('response');
-    // console.log(response);
-    addPost(post)
-      .unwrap().then(resp => console.log(resp));
+    await addPost(post).then((resp) => console.log(resp));
+    await console.log('-----------------------')
+    await addPost(post).then((resp) => console.log(resp));
 
-    prepend(post)
-    reset({
-      message: '',
-      posts: watch('posts')
-    })
+    // prepend(post)
+    // reset({
+    //   message: '',
+    //   posts: watch('posts')
+    // })
   }
 
   return (
@@ -113,15 +101,18 @@ const Form = ({ posts }: { posts: IPost[] }) => {
               marginTop: '10px'
             }}
           >
+
             <CardHeader
               title={`${field.name}`}
               action={(
-                <IconButton aria-label='settings'>
-                  <DeleteIcon onClick={() => {
+                <IconButton
+                  onClick={() => {
                     deletePost(field.post_id)
                     remove(index)
                   }}
-                  />
+                  aria-label='settings'
+                >
+                  <DeleteIcon />
                 </IconButton>
                 )}
             />
@@ -152,7 +143,7 @@ const Form = ({ posts }: { posts: IPost[] }) => {
                     />
                   )}
                 />
-                {field.likes.length}
+                {15}
               </div>
             </CardActions>
           </Card>
@@ -162,3 +153,14 @@ const Form = ({ posts }: { posts: IPost[] }) => {
   );
 }
 export default Form;
+// const request = new Request('http://localhost:8989/post/', {
+//   method: 'post',
+//   body: JSON.stringify(post),
+//   headers: {
+//     'Content-type': 'application/json; charset=UTF-8'
+//   }
+// })
+//
+// const response = await http<IPostRequest>(request)
+// console.log('response');
+// console.log(response);

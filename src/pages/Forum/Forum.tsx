@@ -2,10 +2,10 @@ import React, { useEffect, useState } from 'react';
 import Form from '../../components/Form/Form';
 import Loader from '../../components/Loader/Loader';
 import { IPost } from '../../models/IPosts';
-import { useGetPostsQuery } from '../../services/PostsService';
+// import { useGetPostsQuery } from '../../services/PostsService';
 
 const Forum = () => {
-  const { data, isLoading, isSuccess } = useGetPostsQuery('');
+  // const { data, isLoading, isSuccess } = useGetPostsQuery('');
   const [loading, setLoading] = useState(true);
   const [posts, setPosts] = useState<IPost[]>([]);
 
