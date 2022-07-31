@@ -1,5 +1,6 @@
-import React, { lazy, Suspense } from 'react';
+import React, { lazy, Suspense, useState } from 'react';
 import CssBaseline from '@mui/material/CssBaseline';
+import { createTheme, ThemeProvider } from '@mui/material/styles'
 import { Route, Routes } from 'react-router-dom';
 import { withErrorBoundary } from 'react-error-boundary';
 
@@ -19,50 +20,74 @@ const Loader = lazy(() => import(/* webpackChunkName: "Loader" */ './components/
 const PrivateRoute = lazy(() => import(/* webpackChunkName: "PrivateRoute" */ './utils/PrivateRoute'))
 const CustomAlert = lazy(() => import(/* webpackChunkName: "CustomAlert" */ './components/Alert/CustomAlert'))
 
-const App = () => (
-  <div className='app'>
-    <CssBaseline />
+const light = createTheme({
+  palette: {
+    mode: 'light'
+  }
+})
 
-    <Suspense fallback={<Loader />}>
-      <Routes>
-        <Route path={RouterLinks.LOGIN} element={<Login />} />
-        <Route path={RouterLinks.REGISTRATION} element={<Registration />} />
+const dark = createTheme({
+  palette: {
+    mode: 'dark',
+    background: {
+      paper: '#556f89',
+      default: '#556f89'
+    }
+  }
+})
 
-        <Route path={RouterLinks.HOME} element={<PrivateRoute />}>
-          <Route index element={(<Home />)} />
-        </Route>
+const App = () => {
+  // const [isDarkTheme, setIsDarkTheme] = useState(false);
+  const isDarkTheme = true
+  // const changeTheme = () => setIsDarkTheme(!isDarkTheme);
 
-        <Route path={RouterLinks.ABOUT} element={<PrivateRoute />}>
-          <Route index element={(<About />)} />
-        </Route>
+  return (
+    <div className='app'>
+      <ThemeProvider theme={isDarkTheme ? dark : light}>
+        <CssBaseline />
 
-        <Route path={RouterLinks.GAME} element={<PrivateRoute />}>
-          <Route index element={(<Game />)} />
-        </Route>
+        <Suspense fallback={<Loader />}>
+          <Routes>
+            <Route path={RouterLinks.LOGIN} element={<Login />} />
+            <Route path={RouterLinks.REGISTRATION} element={<Registration />} />
 
-        <Route path={RouterLinks.PROFILE} element={<PrivateRoute />}>
-          <Route index element={(<Profile />)} />
-        </Route>
+            <Route path={RouterLinks.HOME} element={<PrivateRoute />}>
+              <Route index element={(<Home />)} />
+            </Route>
 
-        <Route path={RouterLinks.FORUM} element={<PrivateRoute />}>
-          <Route index element={(<div>Forum</div>)} />
-        </Route>
+            <Route path={RouterLinks.ABOUT} element={<PrivateRoute />}>
+              <Route index element={(<About />)} />
+            </Route>
 
-        <Route path={RouterLinks.LEADERBOARD} element={<PrivateRoute />}>
-          <Route index element={(<Leaderboard />)} />
-        </Route>
+            <Route path={RouterLinks.GAME} element={<PrivateRoute />}>
+              <Route index element={(<Game />)} />
+            </Route>
 
-        <Route path={RouterLinks.ERROR} element={<PrivateRoute />}>
-          <Route index element={(<div>Error</div>)} />
-        </Route>
+            <Route path={RouterLinks.PROFILE} element={<PrivateRoute />}>
+              <Route index element={(<Profile />)} />
+            </Route>
 
-        <Route path='*' element={(<NotFound />)} />
-      </Routes>
+            <Route path={RouterLinks.FORUM} element={<PrivateRoute />}>
+              <Route index element={(<div>Forum</div>)} />
+            </Route>
 
-      <CustomAlert />
-    </Suspense>
-  </div>
-)
+            <Route path={RouterLinks.LEADERBOARD} element={<PrivateRoute />}>
+              <Route index element={(<Leaderboard />)} />
+            </Route>
+
+            <Route path={RouterLinks.ERROR} element={<PrivateRoute />}>
+              <Route index element={(<div>Error</div>)} />
+            </Route>
+
+            <Route path='*' element={(<NotFound />)} />
+          </Routes>
+
+          <CustomAlert />
+        </Suspense>
+      </ThemeProvider>
+    </div>
+  )
+}
 
 export default withErrorBoundary(App, {
   fallback: <>Что-то пошло не так.</>
