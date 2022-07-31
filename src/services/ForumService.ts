@@ -16,7 +16,7 @@ export const forumAPI = createApi({
     }),
     createPost: build.mutation<IPost, IPostRequest>({
       query: (body) => ({
-        url: '/post',
+        url: `${ENDPOINTS.FORUM.PATH_POST}`,
         method: 'POST',
         body
       }),
@@ -25,7 +25,7 @@ export const forumAPI = createApi({
     deletePost: build.mutation<{ success: boolean; id: number }, number>({
       query(id) {
         return {
-          url: `/post/${id}`,
+          url: `${ENDPOINTS.FORUM.PATH_POST}/${id}`,
           method: 'DELETE'
         }
       },
@@ -34,7 +34,7 @@ export const forumAPI = createApi({
     updatePost: build.mutation<IPost, IPost>({
       query(post) {
         return {
-          url: `/post/${post.id}`,
+          url: `${ENDPOINTS.FORUM.PATH_POST}/${post.id}`,
           method: 'PUT',
           body: post
         }
@@ -43,7 +43,7 @@ export const forumAPI = createApi({
     }),
     createUser: build.mutation<IEditUserProfileForumParams, IEditUserProfileForumParams>({
       query: (body) => ({
-        url: '/user',
+        url: `${ENDPOINTS.FORUM.PATH_USER}`,
         method: 'POST',
         body
       }),
@@ -51,7 +51,7 @@ export const forumAPI = createApi({
     }),
     updateUser: build.mutation<IEditUserProfileForumParams, IEditUserProfileForumParams>({
       query: (user) => ({
-        url: '/user',
+        url: `${ENDPOINTS.FORUM.PATH_USER}`,
         method: 'PUT',
         body: user
       }),

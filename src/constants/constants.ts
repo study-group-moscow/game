@@ -74,6 +74,11 @@ export const ENDPOINTS = {
     AVATAR: '/avatar'
   },
 
+  FORUM: {
+    PATH_USER: '/user',
+    PATH_POST: '/post'
+  },
+
   LEADERBOARD: {
     PATH: '/leaderboard',
     TEAM: '/moscow',
