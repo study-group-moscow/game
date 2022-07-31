@@ -12,7 +12,7 @@ export const forumAPI = createApi({
       query: () => ({
         url: '/post'
       }),
-      providesTags: (result) => ['Posts']
+      providesTags: ['Posts']
     }),
     createPost: build.mutation<IPost, IPostRequest>({
       query: (body) => ({
