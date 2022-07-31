@@ -1,10 +1,8 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/dist/query/react';
 import { IPostRequest, IPost } from '../models/IPosts';
 
-type PostsResponse = IPostRequest;
-
 export const postAPI = createApi({
-  reducerPath: 'Posts',
+  reducerPath: 'postAPI',
   tagTypes: ['Posts'],
   baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:8989/post/' }),
   endpoints: (build) => ({
@@ -12,9 +10,9 @@ export const postAPI = createApi({
       query: () => ({
         url: '/'
       }),
-      providesTags: ['Posts']
+      providesTags: result => ['Posts']
     }),
-    addPost: build.mutation<IPost, PostsResponse>({
+    createPost: build.mutation<IPost, IPostRequest>({
       query: (body) => ({
         url: '/',
         method: 'POST',
@@ -30,9 +28,19 @@ export const postAPI = createApi({
         }
       },
       invalidatesTags: ['Posts']
+    }),
+    updatePost: build.mutation<IPost, IPost>({
+      query(post) {
+        return {
+          url: `/${post.id}`,
+          method: 'PUT',
+          body: post
+        }
+      },
+      invalidatesTags: ['Posts']
     })
   })
 })
 
-export const { useGetPostsQuery, useAddPostMutation, useDeletePostMutation } = postAPI;
+export const { useGetPostsQuery, useCreatePostMutation, useDeletePostMutation, useUpdatePostMutation } = postAPI;
 

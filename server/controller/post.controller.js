@@ -2,25 +2,22 @@ const db = require('../db/db')
 
 class PostController {
     async createPost(req, res) {
-        const {content,likes, user_id, islike} = req.body;
-        const newPost = await db.query(`INSERT INTO "post" (content, likes, user_id, islike)
-                                        values ($1, $2, $3, $4)
-                                        RETURNING *`, [content, likes, user_id, islike]);
-      const id = newPost.rows[0].id;
-      const post = await db.query('SELECT p.id, p.user_id, u.name, p.content, p.likes, p.islike, p.id as post_id FROM "post" as p join "user" u on u.id = p.user_id where p.id = $1', [id]);
-      console.log(post.rows[0])
-      res.json(post.rows[0]).status(200);
+        const {content, likes, user_id} = req.body;
+        const newPost = await db.query(`INSERT INTO "post" (content, likes, user_id)
+                                        values ($1, $2, $3)
+                                        RETURNING *`, [content, likes, user_id]);
+       res.json(newPost.rows[0]).status(200);
     }
 
     async updatePost(req, res) {
-        const {content,likes, user_id, islike} = req.body;
+      const { content, likes } = req.body;
       const id = req.params.id;
-      const posts = await db.query('UPDATE post SET published_date = \'2020-08-01\' WHERE course_id = 3 = $1', [id]);
+      const posts = await db.query('UPDATE post SET content = $2, likes = $3 WHERE id = $1', [id, content, likes]);
       res.json(posts.rows[0]).status(200);
     }
 
     async getPosts(req, res) {
-        const posts = await db.query('SELECT p.id, p.id as post_id,  p.content, p.likes, p.islike, p.user_id, u.name FROM "post" as p join "user" u on u.id = p.user_id ORDER BY id');
+        const posts = await db.query('SELECT p.id, p.content, p.likes, p.user_id, u.name FROM "post" as p join "user" u on u.id = p.user_id ORDER BY id');
         res.json(posts.rows).status(200);
     }
 

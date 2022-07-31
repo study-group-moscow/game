@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { FC, useCallback, useMemo } from 'react';
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
 import { Checkbox, IconButton } from '@mui/material';
@@ -6,21 +6,38 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import CardActions from '@mui/material/CardActions';
-import { Controller } from 'react-hook-form';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
-import { IPostItem } from '../models/IPosts';
-import { useDeletePostMutation } from '../services/PostsService';
+import { IPost } from '../models/IPosts';
 
 type TPostItemProps = {
-  post: IPostItem;
-  index: number;
-  remove: any;
-  control: any;
+  post: IPost;
+  remove: (id: number) => void;
+  update: (post: IPost) => void;
 }
 
-const PostItem = ({ post, remove, index, control }: TPostItemProps) => {
-  const [deletePost] = useDeletePostMutation();
+const PostItem: FC<TPostItemProps> = ({ post, remove, update }) => {
+  const isLike = useMemo(() => !!post.likes.find((value: number) => value === post.id), [post]);
+
+  const handleRemove = async (event: React.MouseEvent) => {
+    event.stopPropagation();
+    remove(post.id);
+  }
+
+  const handleUpdate = async (event: React.FormEvent<HTMLInputElement>) => {
+    event.stopPropagation();
+    const result: IPost = JSON.parse(JSON.stringify(post));
+
+    if (isLike) {
+      result.likes = result.likes.filter((id: number) => id !== post.id)
+    } else {
+      result.likes.push(post.id)
+    }
+
+    console.log(result)
+
+    update(result);
+  }
 
   return (
     <Card
@@ -35,10 +52,7 @@ const PostItem = ({ post, remove, index, control }: TPostItemProps) => {
         title={`${post.name}`}
         action={(
           <IconButton
-            onClick={() => {
-              deletePost(post.post_id)
-              remove(index)
-            }}
+            onClick={handleRemove}
             aria-label='settings'
           >
             <DeleteIcon />
@@ -52,23 +66,13 @@ const PostItem = ({ post, remove, index, control }: TPostItemProps) => {
       </CardContent>
       <CardActions disableSpacing>
         <div>
-          <Controller
-            name={`posts.${index}.islike`}
-            control={control}
-            rules={{ required: true }}
-            render={({ field }) => (
-              <Checkbox
-                icon={<FavoriteBorderIcon />}
-                checkedIcon={(<FavoriteIcon />)}
-                {...field}
-                onChange={(e) => {
-                  console.log(e.target.value)
-                  field.onChange(e)
-                }}
-              />
-            )}
+          <Checkbox
+            checked={isLike}
+            icon={<FavoriteBorderIcon />}
+            checkedIcon={(<FavoriteIcon />)}
+            onChange={handleUpdate}
           />
-          {15}
+          {post.likes.length}
         </div>
       </CardActions>
     </Card>

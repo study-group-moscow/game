@@ -1,19 +1,17 @@
 import * as React from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { Button, TextField } from '@mui/material';
-import { useAddPostMutation } from '../../services/PostsService';
+import { useCreatePostMutation } from '../../services/PostsService';
 import { useFetchUserQuery } from '../../services/AuthServices';
-import { IPost } from '../../models/IPosts';
 import PostList from '../PostList';
 
 export type FormValues = {
   message: string;
-  posts: IPost[];
 };
 
-const Form = ({ posts }: { posts: IPost[] }) => {
+const Form = () => {
   const { data: user } = useFetchUserQuery(undefined, { skip: false });
-  const [addPost] = useAddPostMutation();
+  const [createPost] = useCreatePostMutation();
 
   const {
     control,
@@ -22,37 +20,25 @@ const Form = ({ posts }: { posts: IPost[] }) => {
     watch,
     formState: { errors }
   } = useForm<FormValues>({
-    defaultValues: { message: '', posts },
+    defaultValues: { message: '' },
     mode: 'onBlur'
   });
-
-  const onSubmit = (data: FormValues) => {
-    // console.log('data');
-    // console.log(data);
-  }
 
   const handleSavePost = async () => {
     const newPost = {
       content: watch('message') ?? '',
       likes: [],
-      islike: false,
       user_id: user?.id ?? 1
     }
 
-    await addPost(newPost)
-      .unwrap()
-      .then((post) => {
-        reset({
-          message: '',
-          posts: [...watch('posts'), post]
-        })
-      });
+    await createPost(newPost);
+    reset({ message: '' });
   }
 
   return (
     <div style={{ marginBottom: '50px' }}>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <PostList control={control} />
+      <PostList />
+      <form onSubmit={handleSubmit(handleSavePost)}>
         <Controller
           name='message'
           control={control}
@@ -60,9 +46,7 @@ const Form = ({ posts }: { posts: IPost[] }) => {
           rules={{ required: true }}
           render={({ field }) => <TextField autoFocus fullWidth multiline {...field} />}
         />
-        <Button
-          onClick={handleSavePost}
-        >
+        <Button type='submit'>
           добавить пост
         </Button>
       </form>

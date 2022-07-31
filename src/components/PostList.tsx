@@ -1,30 +1,33 @@
 import React from 'react';
-import { useFieldArray } from 'react-hook-form';
 import PostItem from './PostItem';
-import { IPostItem } from '../models/IPosts';
+import { IPost } from '../models/IPosts';
+import {
+  useDeletePostMutation,
+  useGetPostsQuery,
+  useUpdatePostMutation
+} from '../services/PostsService';
+import Loader from './Loader/Loader';
 
-type TPostListProps = {
-  control: any
-}
+const PostList = () => {
+  const { data: posts, isLoading } = useGetPostsQuery(1);
+  const [deletePost] = useDeletePostMutation();
+  const [updatePost] = useUpdatePostMutation();
 
-const PostList = ({ control }: TPostListProps) => {
-  const {
-    fields,
-    remove
-  } = useFieldArray({
-    name: 'posts',
-    control
-  });
+  const handleRemove = async (id: number) => {
+    deletePost(id)
+  }
+  const handleUpdate = async (post: IPost) => {
+    updatePost(post)
+  }
+
+  if (isLoading) return (<Loader />)
 
   return (
     <>
       {
-        fields.map((value, index) => {
-          const post: IPostItem = value as IPostItem;
-          return (
-            <PostItem post={post} index={index} control={control} remove={remove} key={post.id} />
-          )
-        })
+        posts.map((post: IPost) => (
+          <PostItem key={post.id} post={post} remove={handleRemove} update={handleUpdate} />
+        ))
       }
     </>
   )

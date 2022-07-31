@@ -13,6 +13,7 @@ export const store = configureStore({
 
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat([
     baseApi.middleware,
+    postAPI.middleware,
     showToast
   ])
 });
