@@ -1,6 +1,6 @@
 export interface IPost extends IPostRequest {
   id: number;
-  name: string;
+  first_name: string;
 }
 
 export interface IPostRequest {

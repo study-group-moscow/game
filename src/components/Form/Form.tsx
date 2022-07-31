@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { Button, TextField } from '@mui/material';
-import { useCreatePostMutation } from '../../services/PostsService';
+import { useCreatePostMutation } from '../../services/ForumService';
 import { useFetchUserQuery } from '../../services/AuthServices';
 import PostList from '../PostList';
 

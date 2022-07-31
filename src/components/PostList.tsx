@@ -5,7 +5,7 @@ import {
   useDeletePostMutation,
   useGetPostsQuery,
   useUpdatePostMutation
-} from '../services/PostsService';
+} from '../services/ForumService';
 import Loader from './Loader/Loader';
 
 const PostList = () => {
