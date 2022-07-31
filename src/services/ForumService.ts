@@ -1,11 +1,12 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/dist/query/react';
 import { IPostRequest, IPost } from '../models/IPosts';
 import { IEditUserProfileForumParams } from '../models/IUser';
+import { ENDPOINTS } from '../constants/constants';
 
 export const forumAPI = createApi({
   reducerPath: 'forumAPI',
   tagTypes: ['Posts', 'User'],
-  baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:8989/' }),
+  baseQuery: fetchBaseQuery({ baseUrl: ENDPOINTS.HTTP_FORUM }),
   endpoints: (build) => ({
     getPosts: build.query({
       query: () => ({
