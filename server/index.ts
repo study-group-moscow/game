@@ -1,4 +1,4 @@
-const express = require('express');
+import express, {Request, Response} from 'express';
 const cors = require('cors');
 const userRouter = require('./routes/user.routes');
 const postRouter = require('./routes/post.routes');
@@ -8,7 +8,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-app.get('/', (req, res) => {
+app.get('/', (req: Request, res: Response) => {
     res.send('hello');
 });
 

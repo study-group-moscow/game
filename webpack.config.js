@@ -3,7 +3,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const Dotenv = require('dotenv-webpack');
 
 module.exports = {
-  entry: './src/index.js',
+  entry: './src/index.tsx',
   output: {
     path: path.join(__dirname, '/dist'),
     filename: '[name].js',
@@ -12,7 +12,7 @@ module.exports = {
   devtool: 'eval-source-map',
   devServer: {
     compress: true,
-    port: 8080,
+    port: 5000,
     historyApiFallback: true
   },
   module: {
