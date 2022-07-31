@@ -3,6 +3,8 @@ import { ILeaderboardItemTransformed, ILeaderboardItem } from '../models/ILeader
 import { IGetLeaderboardParams } from '../models/IGetLeaderboardParams';
 import baseApi from '../store/api/baseApi';
 
+const http = ENDPOINTS.HTTP;
+
 export const leaderboardAPI = baseApi
   .enhanceEndpoints({ addTagTypes: ['Leaderboard'] })
   .injectEndpoints({
@@ -10,7 +12,7 @@ export const leaderboardAPI = baseApi
       fetchTeamLeaderboard:
         build.mutation<ILeaderboardItemTransformed[], IGetLeaderboardParams>({
           query: (body) => ({
-            url: `${ENDPOINTS.LEADERBOARD.PATH}${ENDPOINTS.LEADERBOARD.TEAM}`,
+            url: `${http}${ENDPOINTS.LEADERBOARD.PATH}${ENDPOINTS.LEADERBOARD.TEAM}`,
             method: 'POST',
             body
           }),
