@@ -50,8 +50,8 @@ export const forumAPI = createApi({
     }),
     updateUser: build.mutation<IEditUserProfileForumParams, IEditUserProfileForumParams>({
       query: (user) => ({
-        url: `/user/${user.id}`,
-        method: 'POST',
+        url: '/user',
+        method: 'PUT',
         body: user
       }),
       invalidatesTags: ['User']
