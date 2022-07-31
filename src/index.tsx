@@ -6,8 +6,8 @@ import { store } from './store/store';
 import App from './App';
 import '@fontsource/graduate'
 
-const container = document.getElementById('root');
-const root = createRoot(container);
+const container: HTMLElement | null = document.getElementById('root');
+const root = createRoot(container as HTMLElement);
 
 root.render(
   <React.StrictMode>
