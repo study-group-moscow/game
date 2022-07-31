@@ -1,4 +1,4 @@
-import React, { FC, useCallback, useMemo } from 'react';
+import React, { FC, useMemo } from 'react';
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
 import { Checkbox, IconButton } from '@mui/material';
@@ -34,8 +34,6 @@ const PostItem: FC<TPostItemProps> = ({ post, remove, update }) => {
       result.likes.push(post.id)
     }
 
-    console.log(result)
-
     update(result);
   }
 
@@ -49,7 +47,7 @@ const PostItem: FC<TPostItemProps> = ({ post, remove, update }) => {
     >
 
       <CardHeader
-        title={`${post.name}`}
+        title={`${post.first_name}`}
         action={(
           <IconButton
             onClick={handleRemove}

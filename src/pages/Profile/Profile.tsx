@@ -1,9 +1,10 @@
-import React, { lazy, useCallback } from 'react';
+import React, { lazy, useCallback, useEffect } from 'react';
 import { useForm, FormProvider } from 'react-hook-form';
 import { Grid, IconButton, Box, Avatar } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useEditProfileMutation, useEditAvatarMutation } from '../../services/UserService';
+
 import { useFetchUserQuery } from '../../services/AuthServices';
 import { useAppDispatch } from '../../hooks/redux';
 import { IEditUserProfileParams, IEditUserProfileParamsResponse } from '../../models/IUser';
@@ -21,12 +22,13 @@ import {
 
 import styles from '../../styles/centerContent.module.scss';
 import '../../styles/auth.scss';
+import { useUpdateUserMutation } from '../../services/ForumService';
 
 const TextField = lazy(() => import(/* webpackChunkName: "TextField" */ '../../components/TextField/TextField'));
 
 const Profile = () => {
   const { data: user, isFetching, isSuccess } = useFetchUserQuery(undefined, { skip: false })
-  const [editProfile] = useEditProfileMutation();
+  const [editProfile, { data: edit, isSuccess: isEditSuccess }] = useEditProfileMutation();
   const [editAvatar] = useEditAvatarMutation();
   const dispatch = useAppDispatch();
 
@@ -42,6 +44,26 @@ const Profile = () => {
     mode: 'onBlur',
     resolver: yupResolver(schema)
   });
+
+  const [updateUser] = useUpdateUserMutation()
+
+  useEffect(() => {
+    const firstName = methods.watch(InputName.firstName);
+    const secondName = methods.watch(InputName.secondName);
+    const displayName = methods.watch(InputName.displayName);
+    if (isEditSuccess) {
+      const id = user?.id;
+      if (id) {
+        updateUser({
+          id,
+          first_name: firstName,
+          second_name: secondName,
+          display_name: displayName,
+          theme: 'dark'
+        })
+      }
+    }
+  }, [edit])
 
   const showSuccessToast = () => {
     if (isSuccess) {

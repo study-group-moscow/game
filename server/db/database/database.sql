@@ -1,7 +1,9 @@
 create TABLE "user"
 (
     id    SERIAL PRIMARY KEY,
-    name  VARCHAR(255),
+    first_name  VARCHAR(255),
+    second_name  VARCHAR(255),
+    display_name  VARCHAR(255),
     theme VARCHAR(255)
 );
 

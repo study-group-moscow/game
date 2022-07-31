@@ -1,12 +1,12 @@
 import * as React from 'react';
 import { Controller, useForm } from 'react-hook-form';
-import { Button, TextField } from '@mui/material';
-import { useCreatePostMutation } from '../../services/PostsService';
+import { Button, Grid, TextField } from '@mui/material';
+import { useCreatePostMutation } from '../../services/ForumService';
 import { useFetchUserQuery } from '../../services/AuthServices';
-import PostList from '../PostList';
+import { InputName, InputType } from '../../constants/constants';
 
 export type FormValues = {
-  message: string;
+  [InputName.message]: string;
 };
 
 const Form = () => {
@@ -17,38 +17,43 @@ const Form = () => {
     control,
     handleSubmit,
     reset,
-    watch,
-    formState: { errors }
+    watch
   } = useForm<FormValues>({
-    defaultValues: { message: '' },
+    defaultValues: { [InputName.message]: '' },
     mode: 'onBlur'
   });
 
   const handleSavePost = async () => {
     const newPost = {
-      content: watch('message') ?? '',
+      content: watch(InputName.message) ?? '',
       likes: [],
       user_id: user?.id ?? 1
     }
 
     await createPost(newPost);
-    reset({ message: '' });
+    reset({ [InputName.message]: '' });
   }
 
   return (
     <div style={{ marginBottom: '50px' }}>
-      <PostList />
       <form onSubmit={handleSubmit(handleSavePost)}>
-        <Controller
-          name='message'
-          control={control}
-          defaultValue='like'
-          rules={{ required: true }}
-          render={({ field }) => <TextField autoFocus fullWidth multiline {...field} />}
-        />
-        <Button type='submit'>
-          добавить пост
-        </Button>
+        <Grid container spacing={2}>
+          <Grid item xs={10}>
+            <Controller
+              name={InputName.message}
+              control={control}
+              rules={{ required: true }}
+              render={({ field }) => (
+                <TextField autoFocus fullWidth type={InputType.text} multiline {...field} />
+              )}
+            />
+          </Grid>
+          <Grid item xs={2}>
+            <Button type='submit'>
+              добавить пост
+            </Button>
+          </Grid>
+        </Grid>
       </form>
     </div>
   );

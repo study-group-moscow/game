@@ -13,7 +13,7 @@ export enum RouterLinks {
 
 export enum InputName {
   login = 'login',
-  forum = 'forum',
+  message = 'message',
   password = 'password',
   displayName = 'display_name',
   firstName = 'first_name',
@@ -52,6 +52,7 @@ export enum InputLabel {
 
 export const ENDPOINTS = {
   HTTP: 'https://ya-praktikum.tech/api/v2',
+  HTTP_FORUM: 'http://localhost:8989/',
   RESOURCES: 'https://ya-praktikum.tech/api/v2/resources',
   WSS: 'wss://ya-praktikum.tech/ws',
   OAUTH: 'https://oauth.yandex.ru',
@@ -71,6 +72,11 @@ export const ENDPOINTS = {
     PATH: '/user',
     PROFILE: '/profile',
     AVATAR: '/avatar'
+  },
+
+  FORUM: {
+    PATH_USER: '/user',
+    PATH_POST: '/post'
   },
 
   LEADERBOARD: {
