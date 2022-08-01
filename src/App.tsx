@@ -1,11 +1,12 @@
 import React, { lazy, Suspense } from 'react';
 import CssBaseline from '@mui/material/CssBaseline';
-import { createTheme, ThemeProvider } from '@mui/material/styles'
+import { ThemeProvider } from '@mui/material/styles'
 import { Route, Routes, useLocation } from 'react-router-dom';
 import { withErrorBoundary } from 'react-error-boundary';
 import { skipToken } from '@reduxjs/toolkit/query'
 import { useFetchUserQuery } from './services/AuthServices';
 import { useGetOneUserQuery } from './services/ForumService';
+import { dark, light } from './constants/themes'
 
 import { RouterLinks } from './constants/constants';
 
@@ -24,24 +25,33 @@ const Loader = lazy(() => import(/* webpackChunkName: "Loader" */ './components/
 const PrivateRoute = lazy(() => import(/* webpackChunkName: "PrivateRoute" */ './utils/PrivateRoute'))
 const CustomAlert = lazy(() => import(/* webpackChunkName: "CustomAlert" */ './components/Alert/CustomAlert'))
 
-const light = createTheme({
-  palette: {
-    mode: 'light'
-  }
-})
+// const light = createTheme({
+//   palette: {
+//     mode: 'light'
+//   }
+// })
 
-const dark = createTheme({
-  palette: {
-    mode: 'dark',
-    primary: {
-      main: '#76adff'
-    },
-    background: {
-      paper: '#385176',
-      default: '#385176'
-    }
-  }
-})
+// const dark = createTheme({
+//   palette: {
+//     mode: 'dark',
+//     primary: {
+//       main: '#76adff'
+//     },
+//     background: {
+//       paper: '#385176',
+//       default: '#385176'
+//     }
+//   },
+//   components: {
+//     MuiAppBar: {
+//       styleOverrides: {
+//         root: {
+//           backgroundColor: '#0a172a'
+//         }
+//       }
+//     }
+//   }
+// })
 
 const App = () => {
   // чтение юзера с темой из локальной БД

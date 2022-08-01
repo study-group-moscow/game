@@ -1,17 +1,22 @@
-const dataGridDark = {
-  borderColor: '#fff',
+import { COLORS } from '../constants/constants'
+
+export const dataGridDark = {
+  borderColor: COLORS.bordersDark,
   '& .MuiDataGrid-cell': {
-    borderColor: '#fff'
+    borderColor: COLORS.bordersDark
   },
   '& .MuiDataGrid-columnHeaders': {
-    borderColor: '#fff'
+    borderColor: COLORS.bordersDark
   },
   '& .MuiDataGrid-footerContainer': {
-    borderColor: '#fff'
+    borderColor: COLORS.bordersDark
   },
   '& .MuiDataGrid-columnSeparator': {
-    color: '#fff'
+    color: COLORS.bordersDark
   }
 }
 
-export default dataGridDark
+export const boxDark = {
+  backgroundColor: COLORS.backgroundDarkStrong
+}
+

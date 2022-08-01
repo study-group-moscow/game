@@ -11,6 +11,8 @@ import ListItemText from '@mui/material/ListItemText';
 import IconButton from '@mui/material/IconButton';
 import SailingIcon from '@mui/icons-material/Sailing';
 import Avatar from '@mui/material/Avatar';
+import { useTheme } from '@mui/material/styles';
+import { boxDark } from '../../styles/darkModeComponents'
 import { useFetchLogoutMutation, useFetchUserQuery } from '../../services/AuthServices';
 import Icon from '../../utils/Icon'
 import { MENU_ITEMS, RouterLinks, ENDPOINTS } from '../../constants/constants'
@@ -24,6 +26,9 @@ export default () => {
   const openDrawer = useCallback((): void => setIsOpened(true), [])
   const closeDrawer = useCallback((): void => setIsOpened(false), [])
   const avatar = ENDPOINTS.RESOURCES + (user?.avatar ?? '')
+
+  const theme = useTheme()
+  const boxThemeOverride = theme.palette.mode === 'dark' ? boxDark : {}
 
   const goToRoute = async (route: string): Promise<void> => {
     if (route === RouterLinks.LOGIN) {
@@ -41,7 +46,7 @@ export default () => {
 
       <Drawer anchor='left' open={isOpened} onClose={closeDrawer}>
         <Box
-          sx={{ width: 200 }}
+          sx={{ width: 200, height: '100%', ...boxThemeOverride }}
           role='presentation'
           onClick={closeDrawer}
           onKeyDown={closeDrawer}

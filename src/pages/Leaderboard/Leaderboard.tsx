@@ -4,7 +4,7 @@ import { useTheme } from '@mui/material/styles';
 import { useFetchTeamLeaderboardMutation } from '../../services/LeaderboardService'
 import styles from '../../styles/centerContent.module.scss'
 import stylesPage from './Leaderboard.module.scss'
-import dataGridDark from '../../styles/darkModeComponents'
+import { dataGridDark } from '../../styles/darkModeComponents'
 
 const Leaderboard = () => {
   const [pageSize, setPageSize] = React.useState(5)
