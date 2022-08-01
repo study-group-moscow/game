@@ -1,8 +1,11 @@
 import React, { lazy, Suspense } from 'react';
 import CssBaseline from '@mui/material/CssBaseline';
 import { createTheme, ThemeProvider } from '@mui/material/styles'
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, useLocation } from 'react-router-dom';
 import { withErrorBoundary } from 'react-error-boundary';
+import { skipToken } from '@reduxjs/toolkit/query'
+import { useFetchUserQuery } from './services/AuthServices';
+import { useGetOneUserQuery } from './services/ForumService';
 
 import { RouterLinks } from './constants/constants';
 
@@ -30,21 +33,33 @@ const light = createTheme({
 const dark = createTheme({
   palette: {
     mode: 'dark',
+    primary: {
+      main: '#76adff'
+    },
     background: {
-      paper: '#556f89',
-      default: '#556f89'
+      paper: '#385176',
+      default: '#385176'
     }
   }
 })
 
 const App = () => {
-  // const [isDarkTheme, setIsDarkTheme] = useState(false);
-  const isDarkTheme = true
-  // const changeTheme = () => setIsDarkTheme(!isDarkTheme);
+  // чтение юзера с темой из локальной БД
+  const location = useLocation();
+  const isNonPrivateRoute = ['/login', '/registration', '/'].includes(location.pathname)
+
+  const {
+    data: user,
+    isSuccess: isSuccessYandex
+  } = useFetchUserQuery(undefined, { skip: isNonPrivateRoute });
+
+  const { data: userWithTheme } = useGetOneUserQuery(isSuccessYandex ? user.id : skipToken);
+
+  const themeGetter = userWithTheme?.theme === 'dark' ? dark : light
 
   return (
     <div className='app'>
-      <ThemeProvider theme={isDarkTheme ? dark : light}>
+      <ThemeProvider theme={themeGetter}>
         <CssBaseline />
 
         <Suspense fallback={<Loader />}>

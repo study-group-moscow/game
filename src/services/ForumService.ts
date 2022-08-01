@@ -56,6 +56,13 @@ export const forumAPI = createApi({
         body: user
       }),
       invalidatesTags: ['User']
+    }),
+    getOneUser: build.query<IEditUserProfileForumParams, number>({
+      query: (id) => ({
+        url: `${ENDPOINTS.FORUM.PATH_USER}/${id}`,
+        method: 'GET'
+      }),
+      providesTags: ['User']
     })
   })
 })
@@ -66,6 +73,7 @@ export const {
   useDeletePostMutation,
   useUpdatePostMutation,
   useCreateUserMutation,
-  useUpdateUserMutation
+  useUpdateUserMutation,
+  useGetOneUserQuery
 } = forumAPI;
 
