@@ -8,7 +8,7 @@ import Typography from '@mui/material/Typography';
 import CardActions from '@mui/material/CardActions';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
-import { IPost } from '../models/IPosts';
+import { IPost } from '../../models/IPosts';
 
 type TPostItemProps = {
   post: IPost;

@@ -5,7 +5,18 @@ const postRouter = require('./routes/post.routes');
 const PORT = process.env.PORT || 8989;
 
 const app = express();
-app.use(cors());
+const whitelist = [`http://localhost:5000`]
+const corsOptions = {
+  origin: function (origin: any, callback: any) {
+    if (!origin || whitelist.indexOf(origin) !== -1) {
+      callback(null, true)
+    } else {
+      callback(new Error("Not allowed by CORS"))
+    }
+  },
+  credentials: true,
+}
+app.use(cors(corsOptions))
 app.use(express.json());
 
 app.get('/', (req: Request, res: Response) => {

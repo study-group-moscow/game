@@ -1,12 +1,12 @@
 import React from 'react';
-import PostItem from './PostItem';
-import { IPost } from '../models/IPosts';
+import PostItem from '../PostItem/PostItem';
+import { IPost } from '../../models/IPosts';
 import {
   useDeletePostMutation,
   useGetPostsQuery,
   useUpdatePostMutation
-} from '../services/ForumService';
-import Loader from './Loader/Loader';
+} from '../../services/ForumService';
+import Loader from '../Loader/Loader';
 
 const PostList = () => {
   const { data: posts, isLoading } = useGetPostsQuery(1);
