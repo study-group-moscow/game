@@ -1,4 +1,5 @@
 import React, { lazy, useCallback, useEffect } from 'react';
+import { skipToken } from '@reduxjs/toolkit/query'
 import { useForm, FormProvider } from 'react-hook-form';
 import { Grid, IconButton, Box, Avatar } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
@@ -22,12 +23,13 @@ import {
 
 import styles from '../../styles/centerContent.module.scss';
 import '../../styles/auth.scss';
-import { useUpdateUserMutation } from '../../services/ForumService';
+import { useUpdateUserMutation, useGetOneUserQuery } from '../../services/ForumService';
 
 const TextField = lazy(() => import(/* webpackChunkName: "TextField" */ '../../components/TextField/TextField'));
 
 const Profile = () => {
   const { data: user, isFetching, isSuccess } = useFetchUserQuery(undefined, { skip: false })
+  const { data: userWithTheme } = useGetOneUserQuery(isSuccess ? user.id : skipToken);
   const [editProfile, { data: edit, isSuccess: isEditSuccess }] = useEditProfileMutation();
   const [editAvatar] = useEditAvatarMutation();
   const dispatch = useAppDispatch();
@@ -53,13 +55,13 @@ const Profile = () => {
     const displayName = methods.watch(InputName.displayName);
     if (isEditSuccess) {
       const id = user?.id;
-      if (id) {
+      if (id && userWithTheme) {
         updateUser({
           id,
           first_name: firstName,
           second_name: secondName,
           display_name: displayName,
-          theme: 'dark'
+          theme: userWithTheme.theme
         })
       }
     }
