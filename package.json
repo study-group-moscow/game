@@ -69,6 +69,7 @@
     "@mui/material": "5.8.2",
     "@mui/x-data-grid": "5.12.3",
     "@reduxjs/toolkit": "1.8.2",
+    "@types/sequelize": "4.28.14",
     "axios": "0.27.2",
     "classnames": "2.3.1",
     "cors": "2.8.5",
@@ -76,6 +77,7 @@
     "history": "5.3.0",
     "node-postgres": "0.6.2",
     "pg": "8.7.3",
+    "pg-hstore": "2.3.4",
     "react": "18.1.0",
     "react-dom": "18.1.0",
     "react-error-boundary": "3.1.4",
@@ -84,6 +86,7 @@
     "react-router": "6.3.0",
     "react-router-dom": "6.3.0",
     "redux": "4.2.0",
+    "sequelize": "6.21.3",
     "uuid": "8.3.2",
     "yup": "0.32.11"
   }
