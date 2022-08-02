@@ -6,7 +6,7 @@ const PORT = process.env.PORT || 8989;
 
 const app = express();
 
-const whitelist = [`http://localhost:5000`]
+const whitelist = [`http://localhost:8080`]
 const corsOptions = {
   origin: function (origin: string, callback: (obj: Error | null, bool?: boolean) => void) {
     if (!origin || whitelist.indexOf(origin) !== -1) {
