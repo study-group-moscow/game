@@ -7,6 +7,7 @@ interface IEditUserProfileGeneralParams {
 }
 export interface IEditUserProfileForumParams extends IEditUserProfileGeneralParams {
   id: number;
+  score: number;
   theme: string;
 }
 
