@@ -10,6 +10,9 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import { IPost } from '../../models/IPosts';
 import { useFetchUserQuery } from '../../services/AuthServices';
+import {IAlertTypeProps, showAlert} from "../../store/reducers/AlertSlice";
+import {MESSAGES_TEXT, TYPES_ALERT} from "../../constants/constants";
+import {useDispatch} from "react-redux";
 
 type TPostItemProps = {
   post: IPost;
@@ -18,15 +21,18 @@ type TPostItemProps = {
 }
 
 const PostItem: FC<TPostItemProps> = ({ post, onRemove, onUpdate }) => {
-  const isLike = useMemo(() => !!post.likes.find((value: number) => value === post.id), [post]);
+  const dispatch = useDispatch();
   const { data: user } = useFetchUserQuery(undefined, { skip: false });
+  const isLike = useMemo(
+    () => !!post.likes.find((value: number) => value === user?.id),
+    [post, user]
+  );
 
   const handleRemove = async (event: React.MouseEvent) => {
     onRemove(post.id);
   }
 
   const handleUpdate = async (event: React.FormEvent<HTMLInputElement>) => {
-    event.stopPropagation();
     try {
       const result: IPost = JSON.parse(JSON.stringify(post));
       if (user) {
@@ -38,7 +44,10 @@ const PostItem: FC<TPostItemProps> = ({ post, onRemove, onUpdate }) => {
         onUpdate(result);
       }
     } catch (e) {
-      console.log(e)
+      dispatch(showAlert({
+        text: MESSAGES_TEXT.ERROR_OCCURRED,
+        type: TYPES_ALERT.ERROR as IAlertTypeProps
+      }))
     }
   }
 

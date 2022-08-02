@@ -5,6 +5,7 @@ import { ISignInParams, ISignInParamsOauth, ISignInResponseOauth } from '../mode
 import { ISignUpParams } from '../models/ISignUpParams';
 import { IOauthDataResponse } from '../models/IOauthDataResponse';
 import baseApi from '../store/api/baseApi';
+import { forumAPI } from './ForumService';
 
 const http = ENDPOINTS.HTTP;
 
@@ -56,6 +57,22 @@ export const authAPI = baseApi
           method: 'POST',
           body
         }),
+        async onQueryStarted(body, { dispatch, queryFulfilled }) {
+          try {
+            const { data } = await queryFulfilled;
+
+            console.log('data')
+            console.log(data)
+
+            // dispatch(
+            //   forumAPI.util.updateQueryData('ge', 1, (draft: any) => {
+            //     draft.unshift(data);
+            //   })
+            // );
+          } catch (e) {
+            console.error('userApi createUser error', e);
+          }
+        },
         invalidatesTags: ['Auth']
       }),
       fetchLogout: build.mutation<IUserResponse, void>({
