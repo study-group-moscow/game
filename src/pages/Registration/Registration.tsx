@@ -37,15 +37,13 @@ const Registration:React.FC = () => {
     if (isSuccess) {
       const id = data?.id;
       if (id) {
-        const firstName = methods.watch(InputName.firstName);
-        const secondName = methods.watch(InputName.secondName);
-        const displayName = methods.watch(InputName.displayName);
         createUser({
           id,
-          first_name: firstName,
-          second_name: secondName,
-          display_name: displayName,
-          theme: 'dark'
+          first_name: methods.watch(InputName.firstName),
+          second_name: methods.watch(InputName.secondName),
+          display_name: methods.watch(InputName.displayName),
+          theme: 'light',
+          score: 0
         })
       }
       navigate(RouterLinks.HOME);

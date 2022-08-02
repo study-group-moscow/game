@@ -1,8 +1,9 @@
 import React from 'react';
+import { Paper } from '@mui/material';
 import PostItem from '../PostItem/PostItem';
 import { IPost } from '../../models/IPosts';
 import {
-  useDeletePostMutation,
+  useRemovePostMutation,
   useGetPostsQuery,
   useUpdatePostMutation
 } from '../../services/ForumService';
@@ -10,11 +11,11 @@ import Loader from '../Loader/Loader';
 
 const PostList = () => {
   const { data: posts, isLoading } = useGetPostsQuery(1);
-  const [deletePost] = useDeletePostMutation();
+  const [removePost] = useRemovePostMutation();
   const [updatePost] = useUpdatePostMutation();
 
   const handleRemove = async (id: number) => {
-    deletePost(id)
+    removePost(id)
   }
   const handleUpdate = async (post: IPost) => {
     updatePost(post)
@@ -26,7 +27,7 @@ const PostList = () => {
     <>
       {
         posts.map((post: IPost) => (
-          <PostItem key={post.id} post={post} remove={handleRemove} update={handleUpdate} />
+          <PostItem key={post.id} post={post} onRemove={handleRemove} onUpdate={handleUpdate} />
         ))
       }
     </>

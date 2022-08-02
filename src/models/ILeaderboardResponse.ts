@@ -1,13 +1,12 @@
 export interface ILeaderboardItem {
   data: {
-    id: number,
     name: string,
     score: number
   }
 }
 
 export interface ILeaderboardItemTransformed {
-  id: number,
+  id: string,
   name: string,
   score: number
 }

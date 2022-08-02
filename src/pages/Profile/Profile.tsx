@@ -28,8 +28,9 @@ const TextField = lazy(() => import(/* webpackChunkName: "TextField" */ '../../c
 
 const Profile = () => {
   const { data: user, isFetching, isSuccess } = useFetchUserQuery(undefined, { skip: false })
-  const [editProfile, { data: edit, isSuccess: isEditSuccess }] = useEditProfileMutation();
+  const [editProfile, { data: userEditData, isSuccess: isEditSuccess }] = useEditProfileMutation();
   const [editAvatar] = useEditAvatarMutation();
+  const [updateUser] = useUpdateUserMutation();
   const dispatch = useAppDispatch();
 
   const methods = useForm<IEditUserProfileParamsResponse>({
@@ -45,25 +46,20 @@ const Profile = () => {
     resolver: yupResolver(schema)
   });
 
-  const [updateUser] = useUpdateUserMutation()
-
   useEffect(() => {
-    const firstName = methods.watch(InputName.firstName);
-    const secondName = methods.watch(InputName.secondName);
-    const displayName = methods.watch(InputName.displayName);
     if (isEditSuccess) {
-      const id = user?.id;
-      if (id) {
+      if (userEditData) {
         updateUser({
-          id,
-          first_name: firstName,
-          second_name: secondName,
-          display_name: displayName,
-          theme: 'dark'
+          id: userEditData.id,
+          first_name: userEditData.first_name,
+          second_name: userEditData.second_name,
+          display_name: userEditData.display_name,
+          theme: 'dark',
+          score: 0
         })
       }
     }
-  }, [edit])
+  }, [userEditData])
 
   const showSuccessToast = () => {
     if (isSuccess) {

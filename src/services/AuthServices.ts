@@ -5,6 +5,7 @@ import { ISignInParams, ISignInParamsOauth, ISignInResponseOauth } from '../mode
 import { ISignUpParams } from '../models/ISignUpParams';
 import { IOauthDataResponse } from '../models/IOauthDataResponse';
 import baseApi from '../store/api/baseApi';
+import { forumAPI } from './ForumService';
 
 const http = ENDPOINTS.HTTP;
 
