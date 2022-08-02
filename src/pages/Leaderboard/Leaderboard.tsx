@@ -7,14 +7,13 @@ import stylesPage from './Leaderboard.module.scss'
 const Leaderboard = () => {
   const [pageSize, setPageSize] = React.useState(5)
 
-  const [fetchLeaderboard, { isLoading, data }] = useFetchTeamLeaderboardMutation();
+  const [fetchLeaderboard, { isLoading, data = [] }] = useFetchTeamLeaderboardMutation();
 
   useEffect(() => {
     fetchLeaderboard({ ratingFieldName: 'score', cursor: 0, limit: 100 })
   }, []);
 
   const handlePageSizeChange = (size: number) => setPageSize(size);
-  const dataGetter = data || [];
 
   const columns = [
     { field: 'name', headerName: 'Имя', width: 195 },
@@ -25,7 +24,7 @@ const Leaderboard = () => {
     <div className={styles.center}>
       <div className={stylesPage.table}>
         <DataGrid
-          rows={dataGetter}
+          rows={data}
           columns={columns}
           pagination
           pageSize={pageSize}
