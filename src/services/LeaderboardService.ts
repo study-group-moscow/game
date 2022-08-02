@@ -16,7 +16,9 @@ export const leaderboardAPI = baseApi
             method: 'POST',
             body
           }),
-          transformResponse: (response: ILeaderboardItem[]) => response.map((r) => r.data),
+          transformResponse: (response: ILeaderboardItem[]) => response.map((r) => ({
+            ...r.data, id: r.data.name + r.data.score
+          })),
           invalidatesTags: ['Leaderboard']
         })
     })

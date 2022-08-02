@@ -50,13 +50,12 @@ const Profile = () => {
 
   useEffect(() => {
     if (isEditSuccess) {
-      const id = user?.id;
-      if (id && userWithTheme) {
+      if (userEditData) {
         updateUser({
-          id,
-          first_name: methods.watch(InputName.firstName),
-          second_name: methods.watch(InputName.secondName),
-          display_name: methods.watch(InputName.displayName),
+          id: userEditData.id,
+          first_name: userEditData.first_name,
+          second_name: userEditData.second_name,
+          display_name: userEditData.display_name,
           theme: userWithTheme.theme
         })
       }

@@ -19,8 +19,8 @@ const Leaderboard = () => {
   const handlePageSizeChange = (size: number) => setPageSize(size);
 
   const columns = [
-    { field: 'name', headerName: 'Имя', width: 195, headerClassName: 'aaaa-aaaa' },
-    { field: 'score', headerName: 'Счет', width: 195, headerClassName: 'aaaa-aaaa' }
+    { field: 'name', headerName: 'Имя', width: 195 },
+    { field: 'score', headerName: 'Счет', width: 195 }
   ]
 
   const dataGridThemeOverride = theme.palette.mode === 'dark' ? dataGridDark : {}

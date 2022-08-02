@@ -1,55 +1,62 @@
-#Winner{
-  position:absolute;
+#winner {
+  position: absolute;
   top: 150px;
   left: 380px;
   width: 250px;
   height: 203px;
-  background:transparent url(static/win.png);
+  background: transparent url("static/win.png");
   z-index: 9999;
   visibility: hidden;
 }
-#Loser{
-  position:absolute;
+
+#loser {
+  position: absolute;
   top: 150px;
   left: 350px;
   width: 320px;
   height: 240px;
-  background:transparent url(static/failed.png);
+  background: transparent url("static/failed.png");
   z-index: 9999;
   visibility: hidden;
 }
+
 a.button {
   top: 550px;
   left: 250px;
-  position:absolute;
-  font-family: arial,sans-serif;
+  position: absolute;
+  font-family: arial, sans-serif;
   font-size: 16px;
   font-weight: bold;
   color: darkblue;
   text-decoration: none;
   user-select: none;
-  padding: .2em 1.2em;
+  padding: 0.2em 1.2em;
   outline: none;
-  border: 1px solid rgba(0,0,0,.1);
+  border: 1px solid rgb(0 0 0 / 10%);
   border-radius: 2px;
-  background: rgb(245,245,245) linear-gradient(#f4f4f4, #f1f1f1);
-  transition: all .218s ease 0s;
+  background: rgb(245 245 245) linear-gradient(#f4f4f4, #f1f1f1);
+  transition: all 0.218s ease 0s;
   z-index: 9999;
 }
+
 a.button:hover {
   color: darkblue;
-  border: 1px solid rgb(198,198,198);
+  border: 1px solid rgb(198 198 198);
   background: #f7f7f7 linear-gradient(#f7f7f7, #f1f1f1);
-  box-shadow: 0 1px 2px rgba(0,0,0,.1);
+  box-shadow: 0 1px 2px rgba(0 0 0 / 10%);
 }
+
 a.button:active {
   color: darkblue;
-  border: 1px solid rgb(204,204,204);
-  background: rgb(238,238,238) linear-gradient(rgb(238,238,238), rgb(224,224,224));
-  box-shadow: 0 1px 2px rgba(0,0,0,.1) inset;
+  border: 1px solid rgb(204 204 204);
+  background: rgb(238 238 238) linear-gradient(rgb(238 238 238), rgb(224 224 224));
+  box-shadow: 0 1px 2px rgba(0 0 0 / 10%) inset;
 }
-canvas { border: 1px solid black; }
 
-.Game {
-  margin-top: 100px
+canvas {
+  border: 1px solid black;
+}
+
+.game {
+  margin-top: 100px;
 }
