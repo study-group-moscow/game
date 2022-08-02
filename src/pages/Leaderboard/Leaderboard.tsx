@@ -9,17 +9,14 @@ import { dataGridDark } from '../../styles/darkModeComponents'
 const Leaderboard = () => {
   const [pageSize, setPageSize] = React.useState(5)
 
-  const [fetchLeaderboard, { isLoading, data }] = useFetchTeamLeaderboardMutation();
+  const [fetchLeaderboard, { isLoading, data = [] }] = useFetchTeamLeaderboardMutation();
+  const theme = useTheme()
 
   useEffect(() => {
     fetchLeaderboard({ ratingFieldName: 'score', cursor: 0, limit: 100 })
   }, []);
 
-  const handlePageSizeChange = (size: number) => setPageSize(size)
-  const theme = useTheme()
-
-  // !!! TO UNCOMMENT !!!
-  const dataGetter = data || [];
+  const handlePageSizeChange = (size: number) => setPageSize(size);
 
   const columns = [
     { field: 'name', headerName: 'Имя', width: 195, headerClassName: 'aaaa-aaaa' },
@@ -32,7 +29,7 @@ const Leaderboard = () => {
     <div className={styles.center}>
       <div className={stylesPage.table}>
         <DataGrid
-          rows={dataGetter}
+          rows={data}
           columns={columns}
           pagination
           pageSize={pageSize}
