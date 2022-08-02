@@ -42,9 +42,9 @@ const GamePage: React.FC = () => {
   }, []);
 
   return (
-    <Container className='Game'>
-      <div id='Winner' />
-      <div id='Loser' />
+    <Container className='game'>
+      <div id='winner' />
+      <div id='loser' />
       <Button className='button' id='Button'>Random</Button>
       <canvas ref={canvasRef} />
     </Container>

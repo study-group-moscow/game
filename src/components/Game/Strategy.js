@@ -191,12 +191,12 @@ export class StrategyCompletion extends Strategy {
 
   execute(param) {
     if (this.stage === 'completionWin') {
-      const div = document.getElementById('Winner');
+      const div = document.getElementById('winner');
       div.style.visibility = 'visible';
       setTimeout("alert('Вы выиграли! Начать заново?')", 500);
       setTimeout('window.location.reload()', 1000);
     } else if (this.stage === 'completionLose') {
-      const div = document.getElementById('Loser');
+      const div = document.getElementById('loser');
       div.style.visibility = 'visible';
       setTimeout("alert('Вы проиграли! Начать заново?')", 500);
       setTimeout('window.location.reload()', 1000);
