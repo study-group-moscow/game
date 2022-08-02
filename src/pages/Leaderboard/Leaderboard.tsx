@@ -11,11 +11,9 @@ const Leaderboard = () => {
 
   useEffect(() => {
     fetchLeaderboard({ ratingFieldName: 'score', cursor: 0, limit: 100 })
-  }, [])
+  }, []);
 
-  const handlePageSizeChange = (size: number) => setPageSize(size)
-
-  // !!! TO UNCOMMENT !!!
+  const handlePageSizeChange = (size: number) => setPageSize(size);
   const dataGetter = data || [];
 
   const columns = [

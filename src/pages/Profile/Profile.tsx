@@ -48,17 +48,14 @@ const Profile = () => {
   const [updateUser] = useUpdateUserMutation()
 
   useEffect(() => {
-    const firstName = methods.watch(InputName.firstName);
-    const secondName = methods.watch(InputName.secondName);
-    const displayName = methods.watch(InputName.displayName);
     if (isEditSuccess) {
       const id = user?.id;
       if (id) {
         updateUser({
           id,
-          first_name: firstName,
-          second_name: secondName,
-          display_name: displayName,
+          first_name: methods.watch(InputName.firstName),
+          second_name: methods.watch(InputName.secondName),
+          display_name: methods.watch(InputName.displayName),
           theme: 'dark'
         })
       }
