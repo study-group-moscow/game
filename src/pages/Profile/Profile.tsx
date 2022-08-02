@@ -30,8 +30,9 @@ const TextField = lazy(() => import(/* webpackChunkName: "TextField" */ '../../c
 const Profile = () => {
   const { data: user, isFetching, isSuccess } = useFetchUserQuery(undefined, { skip: false })
   const { data: userWithTheme } = useGetOneUserQuery(isSuccess ? user.id : skipToken);
-  const [editProfile, { data: edit, isSuccess: isEditSuccess }] = useEditProfileMutation();
+  const [editProfile, { data: userEditData, isSuccess: isEditSuccess }] = useEditProfileMutation();
   const [editAvatar] = useEditAvatarMutation();
+  const [updateUser] = useUpdateUserMutation();
   const dispatch = useAppDispatch();
 
   const methods = useForm<IEditUserProfileParamsResponse>({
@@ -47,25 +48,20 @@ const Profile = () => {
     resolver: yupResolver(schema)
   });
 
-  const [updateUser] = useUpdateUserMutation()
-
   useEffect(() => {
-    const firstName = methods.watch(InputName.firstName);
-    const secondName = methods.watch(InputName.secondName);
-    const displayName = methods.watch(InputName.displayName);
     if (isEditSuccess) {
       const id = user?.id;
       if (id && userWithTheme) {
         updateUser({
           id,
-          first_name: firstName,
-          second_name: secondName,
-          display_name: displayName,
+          first_name: methods.watch(InputName.firstName),
+          second_name: methods.watch(InputName.secondName),
+          display_name: methods.watch(InputName.displayName),
           theme: userWithTheme.theme
         })
       }
     }
-  }, [edit])
+  }, [userEditData])
 
   const showSuccessToast = () => {
     if (isSuccess) {

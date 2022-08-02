@@ -23,7 +23,7 @@ export const forumAPI = baseApi
         }),
         invalidatesTags: ['Posts']
       }),
-      deletePost: build.mutation<{ success: boolean; id: number }, number>({
+      removePost: build.mutation<{ success: boolean; id: number }, number>({
         query(id) {
           return {
             url: `${http}${ENDPOINTS.FORUM.PATH_POST}/${id}`,
@@ -71,7 +71,7 @@ export const forumAPI = baseApi
 export const {
   useGetPostsQuery,
   useCreatePostMutation,
-  useDeletePostMutation,
+  useRemovePostMutation,
   useUpdatePostMutation,
   useCreateUserMutation,
   useUpdateUserMutation,

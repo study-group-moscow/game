@@ -4,8 +4,8 @@ import PostList from '../../components/PostList/PostList';
 import './Forum.scss'
 
 const Forum = () => (
-  <div className='container'>
-    <div className='content'>
+  <div className='container-forum'>
+    <div className='content-forum'>
       <FormForum />
       <PostList />
     </div>
