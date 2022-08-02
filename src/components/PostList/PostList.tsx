@@ -1,4 +1,5 @@
 import React from 'react';
+import { Paper } from '@mui/material';
 import PostItem from '../PostItem/PostItem';
 import { IPost } from '../../models/IPosts';
 import {

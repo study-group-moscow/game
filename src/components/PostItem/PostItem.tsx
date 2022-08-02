@@ -8,11 +8,11 @@ import Typography from '@mui/material/Typography';
 import CardActions from '@mui/material/CardActions';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
+import { useDispatch } from 'react-redux';
 import { IPost } from '../../models/IPosts';
 import { useFetchUserQuery } from '../../services/AuthServices';
-import {IAlertTypeProps, showAlert} from "../../store/reducers/AlertSlice";
-import {MESSAGES_TEXT, TYPES_ALERT} from "../../constants/constants";
-import {useDispatch} from "react-redux";
+import { IAlertTypeProps, showAlert } from '../../store/reducers/AlertSlice';
+import { MESSAGES_TEXT, TYPES_ALERT } from '../../constants/constants';
 
 type TPostItemProps = {
   post: IPost;
@@ -61,7 +61,7 @@ const PostItem: FC<TPostItemProps> = ({ post, onRemove, onUpdate }) => {
     >
 
       <CardHeader
-        title={`${post.first_name}`}
+        title={`${post.second_name} ${post.first_name} (${post.display_name})`}
         action={(
           <IconButton
             onClick={handleRemove}

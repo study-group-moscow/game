@@ -18,7 +18,7 @@ class PostController {
     }
 
     async getPosts(req: Request, res: Response) {
-        const posts = await db.query('SELECT p.id, p.content, p.likes, p.user_id, u.first_name FROM "post" as p join "user" u on u.id = p.user_id ORDER BY id DESC');
+        const posts = await db.query('SELECT p.id, p.content, p.likes, p.user_id, u.first_name, u.display_name, u.second_name FROM "post" as p join "user" u on u.id = p.user_id ORDER BY id DESC');
         res.json(posts.rows).status(200);
     }
 
