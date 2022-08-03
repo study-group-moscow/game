@@ -1,4 +1,4 @@
-import { ENDPOINTS } from '../constants/constants';
+import { ENDPOINTS, MESSAGES_TEXT, TYPES_ALERT } from '../constants/constants';
 import { IUserResponse } from '../models/IUserResponse';
 import { IErrorResponse } from '../models/IErrorResponse';
 import { ISignInParams, ISignInParamsOauth, ISignInResponseOauth } from '../models/ISignInParams';
@@ -6,6 +6,7 @@ import { ISignUpParams } from '../models/ISignUpParams';
 import { IOauthDataResponse } from '../models/IOauthDataResponse';
 import baseApi from '../store/api/baseApi';
 import { forumAPI } from './ForumService';
+import { IAlertTypeProps, showAlert } from '../store/reducers/AlertSlice';
 
 const http = ENDPOINTS.HTTP;
 
@@ -57,6 +58,27 @@ export const authAPI = baseApi
           method: 'POST',
           body
         }),
+        async onQueryStarted(
+          { second_name, first_name, display_name },
+          { dispatch, queryFulfilled }
+        ) {
+          try {
+            const { data: { id } } = await queryFulfilled;
+            await dispatch(forumAPI.endpoints.createUser.initiate({
+              id,
+              second_name,
+              first_name,
+              display_name,
+              score: 0,
+              theme: 'light'
+            }));
+          } catch (e) {
+            dispatch(showAlert({
+              text: MESSAGES_TEXT.ERROR_OCCURRED,
+              type: TYPES_ALERT.ERROR as IAlertTypeProps
+            }))
+          }
+        },
         invalidatesTags: ['Auth']
       }),
       fetchLogout: build.mutation<IUserResponse, void>({

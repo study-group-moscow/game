@@ -7,7 +7,6 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useNavigate } from 'react-router-dom';
 import { useFetchSignUpMutation } from '../../services/AuthServices';
 import { ISignUpParams } from '../../models/ISignUpParams';
-import { useCreateUserMutation } from '../../services/ForumService';
 import schemaRegistration from './schema';
 import {
   InputLabel,
@@ -29,23 +28,11 @@ const Registration:React.FC = () => {
 
   const [passwordShown, setPasswordShown] = useState(false);
   const [fetchSignUp, { isLoading, isSuccess, data }] = useFetchSignUpMutation();
-  const [createUser] = useCreateUserMutation();
 
   const navigate = useNavigate();
 
   useEffect(() => {
     if (isSuccess) {
-      const id = data?.id;
-      if (id) {
-        createUser({
-          id,
-          first_name: methods.watch(InputName.firstName),
-          second_name: methods.watch(InputName.secondName),
-          display_name: methods.watch(InputName.displayName),
-          theme: 'light',
-          score: 0
-        })
-      }
       navigate(RouterLinks.HOME);
     }
   }, [data])
