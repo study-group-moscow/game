@@ -1,4 +1,4 @@
-import React, { lazy, useCallback, useEffect } from 'react';
+import React, { lazy, useCallback } from 'react';
 import { useForm, FormProvider } from 'react-hook-form';
 import { Grid, IconButton, Box, Avatar } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
@@ -22,15 +22,13 @@ import {
 
 import styles from '../../styles/centerContent.module.scss';
 import '../../styles/auth.scss';
-import { useUpdateUserMutation } from '../../services/ForumService';
 
 const TextField = lazy(() => import(/* webpackChunkName: "TextField" */ '../../components/TextField/TextField'));
 
 const Profile = () => {
   const { data: user, isFetching, isSuccess } = useFetchUserQuery(undefined, { skip: false })
-  const [editProfile, { data: userEditData, isSuccess: isEditSuccess }] = useEditProfileMutation();
+  const [editProfile] = useEditProfileMutation();
   const [editAvatar] = useEditAvatarMutation();
-  const [updateUser] = useUpdateUserMutation();
   const dispatch = useAppDispatch();
 
   const methods = useForm<IEditUserProfileParamsResponse>({
@@ -45,21 +43,6 @@ const Profile = () => {
     mode: 'onBlur',
     resolver: yupResolver(schema)
   });
-
-  useEffect(() => {
-    if (isEditSuccess) {
-      if (userEditData) {
-        updateUser({
-          id: userEditData.id,
-          first_name: userEditData.first_name,
-          second_name: userEditData.second_name,
-          display_name: userEditData.display_name,
-          theme: 'dark',
-          score: 0
-        })
-      }
-    }
-  }, [userEditData])
 
   const showSuccessToast = () => {
     if (isSuccess) {
