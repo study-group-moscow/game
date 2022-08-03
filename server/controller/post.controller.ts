@@ -1,39 +1,35 @@
-const db = require('../db/db');
 import {Request, Response} from 'express';
+import {PostModel} from "../db/models/PostModel";
 
 class PostController {
     async createPost(req: Request, res: Response) {
         const {content, likes, user_id} = req.body;
-        const newPost = await db.query(`INSERT INTO "post" (content, likes, user_id)
-                                        values ($1, $2, $3)
-                                        RETURNING *`, [content, likes, user_id]);
-       res.json(newPost.rows[0]).status(200);
+        const newPost = await PostModel.create({content, likes, user_id});
+        res.status(201).json(newPost);
     }
 
     async updatePost(req: Request, res: Response) {
-      const { content, likes } = req.body;
-      const id = req.params.id;
-      const posts = await db.query('UPDATE post SET content = $2, likes = $3 WHERE id = $1', [id, content, likes]);
-      res.json(posts.rows[0]).status(200);
+        const {id} = req.params;
+        const post = await PostModel.update(req.body, {where: {id}});
+        res.status(200).json(post);
     }
 
     async getPosts(req: Request, res: Response) {
-        const posts = await db.query('SELECT p.id, p.content, p.likes, p.user_id, u.first_name, u.display_name, u.second_name FROM "post" as p join "user" u on u.id = p.user_id ORDER BY id DESC');
-        res.json(posts.rows).status(200);
+        const posts = await PostModel.findAll();
+        res.status(200).json(posts);
     }
 
     async getPostsByUser(req: Request, res: Response) {
-        const id = req.params.id;
-        const posts = await db.query('SELECT * FROM "post" where user_id = $1', [id]);
-        res.json(posts.rows).status(200);
+        const {id} = req.params;
+        const posts = await PostModel.findOne({where: {id}});
+        res.status(200).json(posts);
     }
 
     async deletePost(req: Request, res: Response) {
-        const id = req.params.id;
-        const user = await db.query('DELETE FROM "post" where id = $1', [id]);
-        res.json(user.rows[0]).status(200);
+        const {id} = req.params;
+        const posts = await PostModel.destroy({where: {id}});
+        res.status(200).json(posts);
     }
-
 }
 
 module.exports = new PostController;
