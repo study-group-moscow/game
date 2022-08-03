@@ -1,3 +1,5 @@
+import type { FetchBaseQueryError } from '@reduxjs/toolkit/query'
+import type { IEditUserProfileForumParams } from '../models/IUser';
 import { ENDPOINTS, MESSAGES_TEXT, TYPES_ALERT } from '../constants/constants';
 import { IUserResponse } from '../models/IUserResponse';
 import { IErrorResponse } from '../models/IErrorResponse';
@@ -9,15 +11,50 @@ import { forumAPI } from './ForumService';
 import { IAlertTypeProps, showAlert } from '../store/reducers/AlertSlice';
 
 const http = ENDPOINTS.HTTP;
+const http_forum = ENDPOINTS.HTTP_FORUM;
 
 export const authAPI = baseApi
   .enhanceEndpoints({ addTagTypes: ['Auth', 'OauthData'] })
   .injectEndpoints({
     endpoints: (build) => ({
       fetchUser: build.query<IUserResponse, void>({
-        query: () => ({
-          url: `${http}${ENDPOINTS.AUTH.PATH}${ENDPOINTS.AUTH.USER}`
-        }),
+        async queryFn(_arg, _queryApi, _extraOptions, fetchWithBQ) {
+          // 1 шаг - заберем юзера из ручки яндекса
+          const result = await fetchWithBQ({
+            url: `${http}${ENDPOINTS.AUTH.PATH}${ENDPOINTS.AUTH.USER}`,
+            method: 'GET'
+          })
+
+          const user = result.data as IUserResponse
+
+          // 2 шаг - если успешно, то проверим занесен ли он в локальную БД
+          if (user) {
+            const resultLocalDb = await fetchWithBQ({
+              url: `${http_forum}${ENDPOINTS.FORUM.PATH_USER}/${user.id}`,
+              method: 'GET'
+            })
+
+            const userLocalDb = resultLocalDb.data as IEditUserProfileForumParams
+
+            // 3 шаг - если не занесен, то создадим
+            if (!userLocalDb) {
+              await fetchWithBQ({
+                url: `${http_forum}${ENDPOINTS.FORUM.PATH_USER}`,
+                method: 'POST',
+                body: {
+                  id: user.id,
+                  second_name: user.second_name,
+                  first_name: user.first_name,
+                  display_name: user.display_name,
+                  score: 0,
+                  theme: 'light'
+                }
+              })
+            }
+          }
+
+          return user ? { data: user } : { error: result.error as FetchBaseQueryError }
+        },
         providesTags: ['Auth']
       }),
       fetchSignIn: build.mutation<IErrorResponse, ISignInParams>({

@@ -3,8 +3,8 @@ import {UserModel} from "../db/models/UserModel";
 
 class UserController {
     async createUser(req: Request, res: Response) {
-        const {id, first_name, second_name, display_name, theme} = req.body;
-        const newUser = await UserModel.create({id, first_name, second_name, display_name, theme});
+        const {id, first_name, second_name, display_name, theme, score} = req.body;
+        const newUser = await UserModel.create({id, first_name, second_name, display_name, theme, score});
         res.status(201).json(newUser);
     }
 

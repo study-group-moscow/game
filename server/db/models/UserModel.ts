@@ -21,7 +21,7 @@ export const UserModel = db.define('user', {
         type: DataTypes.STRING,
     },
     score: {
-        type: DataTypes.STRING,
+      type: DataTypes.INTEGER,
     }
 },{
     tableName: 'user',
