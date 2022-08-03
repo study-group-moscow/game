@@ -73,7 +73,6 @@ export const {
   useCreatePostMutation,
   useRemovePostMutation,
   useUpdatePostMutation,
-  useCreateUserMutation,
   useUpdateUserMutation,
   useGetOneUserQuery
 } = forumAPI;

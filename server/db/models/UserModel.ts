@@ -19,6 +19,9 @@ export const UserModel = db.define('user', {
     },
     theme: {
         type: DataTypes.STRING,
+    },
+    score: {
+        type: DataTypes.STRING,
     }
 },{
     tableName: 'user',
