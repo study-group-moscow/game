@@ -3,10 +3,10 @@ import {Request, Response} from 'express';
 
 class UserController {
     async createUser(req: Request, res: Response) {
-        const {id, first_name, second_name, display_name, theme} = req.body;
-        const newUser = await db.query(`INSERT INTO "user" (id, first_name, second_name, display_name, theme)
-                                        values ($1, $2, $3, $4, $5)
-                                        RETURNING *`, [id, first_name, second_name, display_name, theme]);
+        const {id, first_name, second_name, display_name, theme, score} = req.body;
+        const newUser = await db.query(`INSERT INTO "user" (id, first_name, second_name, display_name, theme, score)
+                                        values ($1, $2, $3, $4, $5, $6)
+                                        RETURNING *`, [id, first_name, second_name, display_name, theme, score]);
         res.json(newUser.rows[0]).status(200);
     }
 
@@ -22,8 +22,8 @@ class UserController {
     }
 
     async updateUser(req: Request, res: Response) {
-        const {id, first_name, second_name, display_name, theme} = req.body;
-        const user = await db.query('UPDATE "user" set first_name = $1, second_name = $2, display_name = $3, theme = $4 where id = $5 RETURNING *', [first_name, second_name, display_name, theme, id]);
+        const {id, first_name, second_name, display_name, theme, score} = req.body;
+        const user = await db.query('UPDATE "user" set first_name = $1, second_name = $2, display_name = $3, theme = $4, score = $5 where id = $6 RETURNING *', [first_name, second_name, display_name, theme, score, id]);
         res.json(user.rows[0]).status(200);
     }
 

@@ -42,7 +42,8 @@ const Registration:React.FC = () => {
           first_name: methods.watch(InputName.firstName),
           second_name: methods.watch(InputName.secondName),
           display_name: methods.watch(InputName.displayName),
-          theme: 'light'
+          theme: 'light',
+          score: 0
         })
       }
       navigate(RouterLinks.HOME);

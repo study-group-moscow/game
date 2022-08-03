@@ -56,7 +56,8 @@ const Profile = () => {
           first_name: userEditData.first_name,
           second_name: userEditData.second_name,
           display_name: userEditData.display_name,
-          theme: userWithTheme.theme
+          theme: userWithTheme.theme,
+          score: 0
         })
       }
     }
