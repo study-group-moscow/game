@@ -4,7 +4,8 @@ create TABLE "user"
     first_name  VARCHAR(255),
     second_name  VARCHAR(255),
     display_name  VARCHAR(255),
-    theme VARCHAR(255)
+    theme VARCHAR(255),
+    score INTEGER
 );
 
 create TABLE "post"

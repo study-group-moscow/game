@@ -28,7 +28,8 @@ const CustomAppBar = () => {
         first_name: userWithTheme.first_name,
         second_name: userWithTheme.second_name,
         display_name: userWithTheme.display_name,
-        theme: theme.palette.mode === 'dark' ? 'light' : 'dark'
+        theme: theme.palette.mode === 'dark' ? 'light' : 'dark',
+        score: userWithTheme.score
       })
     }
   }
