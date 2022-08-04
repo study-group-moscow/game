@@ -3,9 +3,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 import { ThemeProvider } from '@mui/material/styles'
 import { Route, Routes, useLocation } from 'react-router-dom';
 import { withErrorBoundary } from 'react-error-boundary';
-import { skipToken } from '@reduxjs/toolkit/query'
-import { useFetchUserQuery } from './services/AuthServices';
-import { useGetOneUserQuery } from './services/ForumService';
+import useGetLocalDbUser from './hooks/useGetLocalDbUser'
 import { dark, light } from './constants/themes'
 
 import { RouterLinks } from './constants/constants';
@@ -29,19 +27,12 @@ const App = () => {
   // чтение юзера с темой из локальной БД
   const location = useLocation();
   const isNonPrivateRoute = ['/login', '/registration', '/'].includes(location.pathname)
-
-  const {
-    data: user,
-    isSuccess: isSuccessYandex
-  } = useFetchUserQuery(undefined, { skip: isNonPrivateRoute });
-
-  const { data: userWithTheme } = useGetOneUserQuery(isSuccessYandex ? user.id : skipToken);
-
-  const themeGetter = userWithTheme?.theme === 'dark' ? dark : light
+  const localDbUser = useGetLocalDbUser({ skip: isNonPrivateRoute })
+  const theme = localDbUser?.theme === 'dark' ? dark : light
 
   return (
     <div className='app'>
-      <ThemeProvider theme={themeGetter}>
+      <ThemeProvider theme={theme}>
         <CssBaseline />
 
         <Suspense fallback={<Loader />}>

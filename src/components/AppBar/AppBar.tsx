@@ -1,35 +1,28 @@
 import React from 'react';
 import { useTheme } from '@mui/material/styles';
-import { skipToken } from '@reduxjs/toolkit/query'
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
-import { useUpdateUserMutation, useGetOneUserQuery } from '../../services/ForumService';
-import { useFetchUserQuery } from '../../services/AuthServices';
+import { useUpdateUserMutation } from '../../services/ForumService';
 import Drawer from './Drawer'
+import useGetLocalDbUser from '../../hooks/useGetLocalDbUser'
 
 const CustomAppBar = () => {
   const theme = useTheme()
-
   const [updateUser] = useUpdateUserMutation()
-
-  const {
-    data: user,
-    isSuccess: isSuccessYandex
-  } = useFetchUserQuery(undefined, { skip: false });
-  const { data: userWithTheme } = useGetOneUserQuery(isSuccessYandex ? user.id : skipToken);
+  const localDbUser = useGetLocalDbUser({ skip: false })
 
   const toggleTheme = () => {
-    if (userWithTheme) {
+    if (localDbUser) {
       updateUser({
-        id: userWithTheme.id,
-        first_name: userWithTheme.first_name,
-        second_name: userWithTheme.second_name,
-        display_name: userWithTheme.display_name,
+        id: localDbUser.id,
+        first_name: localDbUser.first_name,
+        second_name: localDbUser.second_name,
+        display_name: localDbUser.display_name,
         theme: theme.palette.mode === 'dark' ? 'light' : 'dark',
-        score: userWithTheme.score
+        score: localDbUser.score
       })
     }
   }
