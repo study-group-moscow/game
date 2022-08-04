@@ -7,7 +7,7 @@ import { ISignInParams, ISignInParamsOauth, ISignInResponseOauth } from '../mode
 import { ISignUpParams } from '../models/ISignUpParams';
 import { IOauthDataResponse } from '../models/IOauthDataResponse';
 import baseApi from '../store/api/baseApi';
-import { checkUserPropsAreUnequal } from '../utils/helperFunctions'
+import { checkObjectKeysAreEqual } from '../utils/helperFunctions'
 
 const http = ENDPOINTS.YANDEX;
 const http_forum = ENDPOINTS.FRONT_BACK;
@@ -51,7 +51,7 @@ export const authAPI = baseApi
                 }
               })
             } else {
-              const shouldUpdateLocalDbUser = checkUserPropsAreUnequal({
+              const shouldUpdateLocalDbUser = checkObjectKeysAreEqual({
                 objA: user,
                 objB: userLocalDb,
                 keys: ['second_name', 'first_name', 'display_name']
