@@ -38,5 +38,3 @@ export default class PostController {
   }
 }
 
-// export default new PostController()
-// export default PostController

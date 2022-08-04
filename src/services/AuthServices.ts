@@ -66,8 +66,6 @@ export const authAPI = baseApi
                     second_name: user.second_name,
                     first_name: user.first_name,
                     display_name: user.display_name
-                    // score: userLocalDb.score,
-                    // theme: userLocalDb.theme
                   }
                 })
               }

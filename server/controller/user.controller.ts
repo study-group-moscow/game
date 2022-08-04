@@ -38,4 +38,3 @@ export default class UserController {
   }
 }
 
-// export default new UserController();
