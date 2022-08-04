@@ -27,6 +27,7 @@
         "semi": 0,
         "@typescript-eslint/semi": 0,
         "jsx-quotes": ["error", "prefer-single"],
+        "import/prefer-default-export": "off",
         "no-multiple-empty-lines": ["error", { "max": 1 }],
         "comma-dangle": ["error", "never"],
         "@typescript-eslint/comma-dangle": ["error", "never"],

@@ -60,14 +60,14 @@ export const authAPI = baseApi
               if (shouldUpdateLocalDbUser) {
                 await fetchWithBQ({
                   url: `${http_forum}${ENDPOINTS.FORUM.PATH_USER}`,
-                  method: 'PUT',
+                  method: 'PATCH',
                   body: {
                     id: userLocalDb.id,
                     second_name: user.second_name,
                     first_name: user.first_name,
-                    display_name: user.display_name,
-                    score: userLocalDb.score,
-                    theme: userLocalDb.theme
+                    display_name: user.display_name
+                    // score: userLocalDb.score,
+                    // theme: userLocalDb.theme
                   }
                 })
               }
