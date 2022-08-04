@@ -5,10 +5,10 @@ interface IEditUserProfileGeneralParams {
   [InputName.secondName]: string,
   [InputName.displayName]: string,
 }
-export interface IEditUserProfileForumParams extends IEditUserProfileGeneralParams {
+export interface IEditUserProfileForumParams extends Partial<IEditUserProfileGeneralParams> {
   id: number;
-  score: number;
-  theme: string;
+  score?: number;
+  theme?: string;
 }
 
 export interface IEditUserProfileParams extends IEditUserProfileGeneralParams {

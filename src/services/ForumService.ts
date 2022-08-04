@@ -53,7 +53,7 @@ export const forumAPI = baseApi
       updateUser: build.mutation<IEditUserProfileForumParams, IEditUserProfileForumParams>({
         query: (user) => ({
           url: `${http}${ENDPOINTS.FORUM.PATH_USER}`,
-          method: 'PUT',
+          method: 'PATCH',
           body: user
         }),
         invalidatesTags: ['User']
@@ -68,6 +68,10 @@ export const forumAPI = baseApi
     })
   })
 
+// selectors
+export const selectOneUser = (id: number) => forumAPI.endpoints.getOneUser.select(id)
+
+// hooks
 export const {
   useGetPostsQuery,
   useCreatePostMutation,

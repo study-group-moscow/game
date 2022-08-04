@@ -15,16 +15,10 @@ const CustomAppBar = () => {
   const localDbUser = useGetLocalDbUser({ skip: false })
 
   const toggleTheme = () => {
-    if (localDbUser) {
-      updateUser({
-        id: localDbUser.id,
-        first_name: localDbUser.first_name,
-        second_name: localDbUser.second_name,
-        display_name: localDbUser.display_name,
-        theme: theme.palette.mode === 'dark' ? 'light' : 'dark',
-        score: localDbUser.score
-      })
-    }
+    updateUser({
+      id: localDbUser!.id,
+      theme: theme.palette.mode === 'dark' ? 'light' : 'dark'
+    })
   }
 
   return (
