@@ -1,5 +1,5 @@
 import {Request, Response} from 'express';
-import {UserModel} from "../db/models/UserModel";
+import {UserModel} from '../db/models/UserModel';
 
 class UserController {
     async createUser(req: Request, res: Response) {
@@ -31,4 +31,5 @@ class UserController {
     }
 }
 
-module.exports = new UserController();
+
+export default new UserController();

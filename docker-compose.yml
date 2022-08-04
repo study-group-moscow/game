@@ -1,14 +1,14 @@
 version: "3.8"
 services:
-  # server:
-  #   container_name: server
-  #   build: .
-  #   volumes:
-  #     - .:/app
-  #   ports:
-  #     - "8989:8989"
-  #   depends_on:
-  #     - db_game
+   server:
+     container_name: server
+     build: .
+     volumes:
+       - .:/app
+     ports:
+       - "8989:8989"
+     depends_on:
+       - db_game
 
   db_game:
     container_name: postgres
