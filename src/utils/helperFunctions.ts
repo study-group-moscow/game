@@ -5,7 +5,7 @@ import { IUserResponse } from '../models/IUserResponse'
 import { IEditUserProfileForumParams } from '../models/IUser'
 
 /**
- * Функция сравнивает два объекта по ключам
+ * @description Функция сравнивает два объекта по ключам
  */
 const checkObjectKeysAreEqual = ({ objA, objB, keys }: {
   objA: IUserResponse,
