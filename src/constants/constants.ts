@@ -51,8 +51,8 @@ export enum InputLabel {
 }
 
 export const ENDPOINTS = {
-  HTTP: 'https://ya-praktikum.tech/api/v2',
-  HTTP_FORUM: 'http://localhost:8989',
+  YANDEX: 'https://ya-praktikum.tech/api/v2',
+  FRONT_BACK: 'http://localhost:8989',
   RESOURCES: 'https://ya-praktikum.tech/api/v2/resources',
   WSS: 'wss://ya-praktikum.tech/ws',
   OAUTH: 'https://oauth.yandex.ru',

@@ -21,8 +21,6 @@ const CustomAppBar = () => {
   } = useFetchUserQuery(undefined, { skip: false });
   const { data: userWithTheme } = useGetOneUserQuery(isSuccessYandex ? user.id : skipToken);
 
-  console.log(skipToken)
-
   const toggleTheme = () => {
     if (userWithTheme) {
       updateUser({

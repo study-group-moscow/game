@@ -8,7 +8,7 @@ import baseApi from '../store/api/baseApi';
 import { forumAPI } from './ForumService';
 import { IAlertTypeProps, showAlert } from '../store/reducers/AlertSlice';
 
-const http = ENDPOINTS.HTTP;
+const http = ENDPOINTS.YANDEX;
 
 export const authAPI = baseApi
   .enhanceEndpoints({ addTagTypes: ['Auth', 'OauthData'] })
