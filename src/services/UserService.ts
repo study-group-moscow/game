@@ -5,7 +5,7 @@ import {
 } from '../models/IUser';
 import baseApi from '../store/api/baseApi';
 
-const http = ENDPOINTS.HTTP;
+const http = ENDPOINTS.YANDEX;
 
 export const userAPI = baseApi
   .enhanceEndpoints({ addTagTypes: ['Auth'] })

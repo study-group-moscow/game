@@ -9,8 +9,8 @@ import { IOauthDataResponse } from '../models/IOauthDataResponse';
 import baseApi from '../store/api/baseApi';
 import { checkUserPropsAreUnequal } from '../utils/helperFunctions'
 
-const http = ENDPOINTS.HTTP;
-const http_forum = ENDPOINTS.HTTP_FORUM;
+const http = ENDPOINTS.YANDEX;
+const http_forum = ENDPOINTS.FRONT_BACK;
 
 export const authAPI = baseApi
   .enhanceEndpoints({ addTagTypes: ['Auth', 'OauthData'] })
