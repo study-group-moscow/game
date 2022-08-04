@@ -1,14 +1,11 @@
 import { ENDPOINTS, MESSAGES_TEXT, TYPES_ALERT } from '../constants/constants';
 import {
-  IEditUserProfileForumParams,
   IEditUserProfileParams,
   IEditUserProfileParamsResponse
 } from '../models/IUser';
 import baseApi from '../store/api/baseApi';
 import { forumAPI } from './ForumService';
 import { IAlertTypeProps, showAlert } from '../store/reducers/AlertSlice';
-import {authAPI} from "./AuthServices";
-import {skipToken} from "@reduxjs/toolkit/query";
 
 const http = ENDPOINTS.HTTP;
 
