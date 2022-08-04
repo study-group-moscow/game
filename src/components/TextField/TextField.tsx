@@ -10,7 +10,7 @@ interface ITextFieldProps {
 }
 
 const TextField = ({ name = '', ...rest }: ITextFieldProps) => {
-  const { register, formState: { errors } } = useFormContext(); // retrieve all hook methods
+  const { register, formState: { errors } } = useFormContext();
 
   return (
     <Input

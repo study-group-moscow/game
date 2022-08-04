@@ -25,34 +25,6 @@ const Loader = lazy(() => import(/* webpackChunkName: "Loader" */ './components/
 const PrivateRoute = lazy(() => import(/* webpackChunkName: "PrivateRoute" */ './utils/PrivateRoute'))
 const CustomAlert = lazy(() => import(/* webpackChunkName: "CustomAlert" */ './components/Alert/CustomAlert'))
 
-// const light = createTheme({
-//   palette: {
-//     mode: 'light'
-//   }
-// })
-
-// const dark = createTheme({
-//   palette: {
-//     mode: 'dark',
-//     primary: {
-//       main: '#76adff'
-//     },
-//     background: {
-//       paper: '#385176',
-//       default: '#385176'
-//     }
-//   },
-//   components: {
-//     MuiAppBar: {
-//       styleOverrides: {
-//         root: {
-//           backgroundColor: '#0a172a'
-//         }
-//       }
-//     }
-//   }
-// })
-
 const App = () => {
   // чтение юзера с темой из локальной БД
   const location = useLocation();

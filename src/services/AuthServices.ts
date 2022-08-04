@@ -1,14 +1,13 @@
 import type { FetchBaseQueryError } from '@reduxjs/toolkit/query'
 import type { IEditUserProfileForumParams } from '../models/IUser';
-import { ENDPOINTS, MESSAGES_TEXT, TYPES_ALERT } from '../constants/constants';
+import { ENDPOINTS } from '../constants/constants';
 import { IUserResponse } from '../models/IUserResponse';
 import { IErrorResponse } from '../models/IErrorResponse';
 import { ISignInParams, ISignInParamsOauth, ISignInResponseOauth } from '../models/ISignInParams';
 import { ISignUpParams } from '../models/ISignUpParams';
 import { IOauthDataResponse } from '../models/IOauthDataResponse';
 import baseApi from '../store/api/baseApi';
-import { forumAPI } from './ForumService';
-import { IAlertTypeProps, showAlert } from '../store/reducers/AlertSlice';
+import { checkUserPropsAreUnequal } from '../utils/helperFunctions'
 
 const http = ENDPOINTS.HTTP;
 const http_forum = ENDPOINTS.HTTP_FORUM;
@@ -36,7 +35,8 @@ export const authAPI = baseApi
 
             const userLocalDb = resultLocalDb.data as IEditUserProfileForumParams
 
-            // 3 шаг - если не занесен, то создадим
+            // 3 шаг - если не занесен, то создадим, иначе проверим на сответствие
+            // и, возможно, обновим.
             if (!userLocalDb) {
               await fetchWithBQ({
                 url: `${http_forum}${ENDPOINTS.FORUM.PATH_USER}`,
@@ -50,6 +50,27 @@ export const authAPI = baseApi
                   theme: 'light'
                 }
               })
+            } else {
+              const shouldUpdateLocalDbUser = checkUserPropsAreUnequal({
+                objA: user,
+                objB: userLocalDb,
+                keys: ['second_name', 'first_name', 'display_name']
+              })
+
+              if (shouldUpdateLocalDbUser) {
+                await fetchWithBQ({
+                  url: `${http_forum}${ENDPOINTS.FORUM.PATH_USER}`,
+                  method: 'PUT',
+                  body: {
+                    id: userLocalDb.id,
+                    second_name: user.second_name,
+                    first_name: user.first_name,
+                    display_name: user.display_name,
+                    score: userLocalDb.score,
+                    theme: userLocalDb.theme
+                  }
+                })
+              }
             }
           }
 
@@ -95,27 +116,6 @@ export const authAPI = baseApi
           method: 'POST',
           body
         }),
-        async onQueryStarted(
-          { second_name, first_name, display_name },
-          { dispatch, queryFulfilled }
-        ) {
-          try {
-            const { data: { id } } = await queryFulfilled;
-            await dispatch(forumAPI.endpoints.createUser.initiate({
-              id,
-              second_name,
-              first_name,
-              display_name,
-              score: 0,
-              theme: 'light'
-            }));
-          } catch (e) {
-            dispatch(showAlert({
-              text: MESSAGES_TEXT.ERROR_OCCURRED,
-              type: TYPES_ALERT.ERROR as IAlertTypeProps
-            }))
-          }
-        },
         invalidatesTags: ['Auth']
       }),
       fetchLogout: build.mutation<IUserResponse, void>({
