@@ -1,5 +1,5 @@
 import {Request, Response} from 'express';
-import {PostModel} from "../db/models/PostModel";
+import {PostModel} from '../db/models/PostModel';
 
 class PostController {
     async createPost(req: Request, res: Response) {
@@ -15,7 +15,13 @@ class PostController {
     }
 
     async getPosts(req: Request, res: Response) {
-        const posts = await PostModel.findAll();
+        const posts = await PostModel.findAll({
+          order: [
+            ['id', 'DESC'],
+          ],
+        });
+
+      console.log(posts)
         res.status(200).json(posts);
     }
 
@@ -32,4 +38,4 @@ class PostController {
     }
 }
 
-module.exports = new PostController;
+export default new PostController();

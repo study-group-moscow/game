@@ -3,7 +3,7 @@ import { ILeaderboardItemTransformed, ILeaderboardItem } from '../models/ILeader
 import { IGetLeaderboardParams } from '../models/IGetLeaderboardParams';
 import baseApi from '../store/api/baseApi';
 
-const http = ENDPOINTS.HTTP;
+const http = ENDPOINTS.YANDEX;
 
 export const leaderboardAPI = baseApi
   .enhanceEndpoints({ addTagTypes: ['Leaderboard'] })
