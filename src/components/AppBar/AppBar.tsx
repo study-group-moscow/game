@@ -7,16 +7,16 @@ import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
 import { useUpdateUserMutation } from '../../services/ForumService';
 import Drawer from './Drawer'
-import useGetLocalDbUser from '../../hooks/useGetLocalDbUser'
+import { useFetchUserQuery } from '../../services/AuthServices';
 
 const CustomAppBar = () => {
   const theme = useTheme()
   const [updateUser] = useUpdateUserMutation()
-  const localDbUser = useGetLocalDbUser({ skip: false })
+  const { data: user } = useFetchUserQuery(undefined, { skip: false })
 
   const toggleTheme = () => {
     updateUser({
-      id: localDbUser!.id,
+      id: user!.id,
       theme: theme.palette.mode === 'dark' ? 'light' : 'dark'
     })
   }

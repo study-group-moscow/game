@@ -10,13 +10,14 @@ import { clearCanvas, drawGrid } from './utils';
 // import { getMouse } from './mouse';
 
 export class Game {
-  constructor({ ctx, canvas, mouse }) {
+  constructor({ ctx, canvas, mouse, handleWin }) {
     this.stage = 'preparation' // стадия подготовки
     this.playerOrder = true // чей ход
     this.ctx = ctx;
     this.canvas = canvas;
     // this.mouse = getMouse(canvas);
     this.mouse = mouse;
+    this.handleWin = handleWin;
 
     // создание игрока
     this.player = new Topology({
@@ -87,6 +88,7 @@ export class Game {
 
       if (this.computer.isEnd()) {
         this.stage = 'completionWin'
+        this.handleWin()
         const strategyCompletion = new StrategyCompletion({
           stage: 'completionWin'
         });

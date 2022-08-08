@@ -1,12 +1,44 @@
-import React, { useRef, useEffect } from 'react';
-import { Button, Container } from '@mui/material';
-import { Game } from '../../components/Game/Game';
+import React, { useRef, useEffect } from 'react'
+import { Button, Container } from '@mui/material'
+import { Game } from '../../components/Game/Game'
 import './GamePage.scss'
-import { getMouse } from '../../components/Game/mouse';
+import { getMouse } from '../../components/Game/mouse'
+import { useUpdateUserMutation } from '../../services/ForumService'
+import { useAddPlayerToLeaderboardMutation } from '../../services/LeaderboardService'
+import useGetLocalDbUser from '../../hooks/useGetLocalDbUser'
+import { IAlertTypeProps, showAlert } from '../../store/reducers/AlertSlice';
+import { MESSAGES_TEXT, TYPES_ALERT } from '../../constants/constants';
+import { useAppDispatch } from '../../hooks/redux';
 
 const GamePage: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const canvasCtxRef = React.useRef<CanvasRenderingContext2D | null>(null);
+
+  const [updateUser] = useUpdateUserMutation()
+  const [addPlayerToLeaderboard] = useAddPlayerToLeaderboardMutation()
+  const localDbUser = useGetLocalDbUser({ skip: false })
+  const dispatch = useAppDispatch()
+
+  const handleWin = async () => {
+    try {
+      const score = (localDbUser!.score ?? 0) + 100
+      const name = localDbUser!.display_name ?? 'player'
+      const { id } = localDbUser!
+
+      await updateUser({ id, score })
+
+      await addPlayerToLeaderboard({
+        data: { score, name },
+        ratingFieldName: 'score',
+        teamName: 'moscow'
+      })
+    } catch (e) {
+      dispatch(showAlert({
+        text: MESSAGES_TEXT.ERROR_OCCURRED,
+        type: TYPES_ALERT.ERROR as IAlertTypeProps
+      }))
+    }
+  }
 
   useEffect(() => {
     let removeClick: () => void;
@@ -28,7 +60,7 @@ const GamePage: React.FC = () => {
       removeMousedown = myMousedown;
       removeMouseup = myMouseup;
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const game = new Game({ ctx, canvas, mouse });
+      const game = new Game({ ctx, canvas, mouse, handleWin });
     }
 
     return () => {

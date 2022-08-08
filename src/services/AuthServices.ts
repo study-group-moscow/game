@@ -51,7 +51,7 @@ export const authAPI = baseApi
                 }
               })
             } else {
-              const shouldUpdateLocalDbUser = checkObjectKeysAreEqual({
+              const shouldUpdateLocalDbUser = !checkObjectKeysAreEqual({
                 objA: user,
                 objB: userLocalDb,
                 keys: ['second_name', 'first_name', 'display_name']
