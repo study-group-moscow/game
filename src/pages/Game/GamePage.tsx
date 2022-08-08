@@ -46,7 +46,7 @@ const GamePage: React.FC = () => {
     let removeMousedown: () => void;
     let removeMouseup: () => void;
 
-    if (canvasRef.current) {
+    if (canvasRef.current && localDbUser?.id) {
       const canvas = canvasRef.current;
       canvas.width = 1000;
       canvas.height = 500;
@@ -71,7 +71,7 @@ const GamePage: React.FC = () => {
         canvasRef.current.removeEventListener('mouseup', removeMouseup);
       }
     }
-  }, []);
+  }, [localDbUser]);
 
   return (
     <Container className='game'>

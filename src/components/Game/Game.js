@@ -17,7 +17,7 @@ export class Game {
     this.canvas = canvas;
     // this.mouse = getMouse(canvas);
     this.mouse = mouse;
-    this.handleWin = handleWin;
+    this.handleWin = handleWin
 
     // создание игрока
     this.player = new Topology({
