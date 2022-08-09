@@ -13,6 +13,7 @@ export enum RouterLinks {
 
 export enum InputName {
   login = 'login',
+  message = 'message',
   password = 'password',
   displayName = 'display_name',
   firstName = 'first_name',
@@ -50,7 +51,8 @@ export enum InputLabel {
 }
 
 export const ENDPOINTS = {
-  HTTP: 'https://ya-praktikum.tech/api/v2',
+  YANDEX: 'https://ya-praktikum.tech/api/v2',
+  FRONT_BACK: 'http://localhost:8989',
   RESOURCES: 'https://ya-praktikum.tech/api/v2/resources',
   WSS: 'wss://ya-praktikum.tech/ws',
   OAUTH: 'https://oauth.yandex.ru',
@@ -70,6 +72,11 @@ export const ENDPOINTS = {
     PATH: '/user',
     PROFILE: '/profile',
     AVATAR: '/avatar'
+  },
+
+  FORUM: {
+    PATH_USER: '/user',
+    PATH_POST: '/post'
   },
 
   LEADERBOARD: {
@@ -117,6 +124,13 @@ export const MENU_ITEMS = {
       link: RouterLinks.LOGIN
     }
   ]
+}
+
+export const COLORS = {
+  primaryDark: '#76adff',
+  bordersDark: '#fff',
+  backgroundDarkNormal: '#385176',
+  backgroundDarkStrong: '#0a172a'
 }
 
 export const CELL_SIZE = 23 // размер тетрадной клетки в px

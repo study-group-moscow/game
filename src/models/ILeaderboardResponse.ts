@@ -1,14 +1,21 @@
 export interface ILeaderboardItem {
   data: {
-    id: number,
     name: string,
     score: number
   }
 }
 
 export interface ILeaderboardItemTransformed {
-  id: number,
+  id: string,
   name: string,
   score: number
 }
 
+export interface ILeaderboardAddPlayer {
+  data: {
+    score: number,
+    name: string
+  },
+  ratingFieldName: string,
+  teamName: string
+}

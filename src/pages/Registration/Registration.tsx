@@ -33,7 +33,7 @@ const Registration:React.FC = () => {
 
   useEffect(() => {
     if (isSuccess) {
-      navigate(RouterLinks.HOME)
+      navigate(RouterLinks.HOME);
     }
   }, [data])
 
