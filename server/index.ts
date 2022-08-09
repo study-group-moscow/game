@@ -1,9 +1,11 @@
 import express, { Request, Response } from 'express';
+import 'dotenv/config';
 import cors from 'cors';
+import morgan from 'morgan';
 import userRouter from './routes/user.routes';
 import postRouter from './routes/post.routes';
 
-const PORT = process.env.PORT || 8989;
+const { PORT } = process.env;
 
 const app = express();
 
@@ -11,7 +13,8 @@ const corsOptions = {
   origin: ['http://localhost:5000'],
   credentials: true
 }
-
+const logger = morgan('combined');
+app.use(logger);
 app.use(cors(corsOptions))
 app.use(express.json());
 
