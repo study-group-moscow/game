@@ -1,5 +1,6 @@
 import { DataTypes } from 'sequelize'
 import { db } from '../db'
+import { UserModel } from './UserModel';
 
 export const PostModel = db.define('post', {
   id: {
@@ -20,5 +21,8 @@ export const PostModel = db.define('post', {
 }, {
   tableName: 'post',
   timestamps: false
-})
+});
+PostModel.belongsTo(UserModel, {
+  foreignKey: 'user_id'
+});
 

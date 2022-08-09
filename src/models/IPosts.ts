@@ -1,10 +1,15 @@
-export interface IPost extends IPostRequest {
+import { IEditUserProfileForumParams } from './IUser';
+
+export interface IPost extends IPostDefault {
   id: number;
-  first_name: string;
-  second_name: string;
-  display_name: string;
 }
 
+export interface IPostDefault {
+  content: string;
+  likes: Array<number>;
+  user: IEditUserProfileForumParams,
+  user_id: number;
+}
 export interface IPostRequest {
   content: string;
   likes: Array<number>;

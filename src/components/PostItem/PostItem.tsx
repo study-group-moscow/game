@@ -51,6 +51,8 @@ const PostItem: FC<TPostItemProps> = ({ post, onRemove, onUpdate }) => {
     }
   }
 
+  console.log(post)
+
   return (
     <Card
       key={post.id}
@@ -61,7 +63,7 @@ const PostItem: FC<TPostItemProps> = ({ post, onRemove, onUpdate }) => {
     >
 
       <CardHeader
-        title={`${post.second_name} ${post.first_name} (${post.display_name})`}
+        title={`${post.user.second_name} ${post.user.first_name} (${post.user.display_name})`}
         action={(
           <IconButton
             onClick={handleRemove}
