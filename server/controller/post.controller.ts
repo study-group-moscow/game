@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import { PostModel } from '../db/models/PostModel';
+import { UserModel } from '../db/models/UserModel';
 
 export default class PostController {
   static async createPost(req: Request, res: Response) {
@@ -16,12 +17,11 @@ export default class PostController {
 
   static async getPosts(req: Request, res: Response) {
     const posts = await PostModel.findAll({
+      include: UserModel,
       order: [
         ['id', 'DESC']
       ]
-    })
-
-    console.log(posts)
+    });
     res.status(200).json(posts);
   }
 
