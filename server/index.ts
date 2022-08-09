@@ -4,6 +4,7 @@ import cors from 'cors';
 import morgan from 'morgan';
 import userRouter from './routes/user.routes';
 import postRouter from './routes/post.routes';
+import { render } from './render/render'
 
 const { PORT } = process.env;
 
@@ -14,9 +15,10 @@ const corsOptions = {
   credentials: true
 }
 const logger = morgan('combined');
-app.use(logger);
+app.use(render) // ssr
+app.use(logger)
 app.use(cors(corsOptions))
-app.use(express.json());
+app.use(express.json())
 
 app.get('/', (req: Request, res: Response) => {
   res.send('hello');

@@ -8,7 +8,9 @@
     "server": "node server/index.ts",
     "dev": "nodemon server/index.ts",
     "build": "webpack --mode production",
-    "lint": "npx eslint src/* --ext .ts,.tsx,.js"
+    "lint": "npx eslint src/* --ext .ts,.tsx,.js",
+    "build:server": "tsc --project ./server",
+    "start:server": "node ./dist/server/index.js"
   },
   "keywords": [],
   "author": "",
