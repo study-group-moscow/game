@@ -10,6 +10,5 @@ const checkObjectKeysAreEqual = ({ objA, objB, keys }: {
   keys: string[]
 }) => !isMatch(pick(objA, keys), pick(objB, keys))
 
-// eslint-disable-next-line
 export { checkObjectKeysAreEqual }
 

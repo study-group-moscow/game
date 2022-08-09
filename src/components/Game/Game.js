@@ -7,7 +7,6 @@ import {
   StrategyPreparation
 } from './Strategy';
 import { clearCanvas, drawGrid } from './utils';
-// import { getMouse } from './mouse';
 
 export class Game {
   constructor({ ctx, canvas, mouse, handleWin }) {
@@ -15,7 +14,6 @@ export class Game {
     this.playerOrder = true // чей ход
     this.ctx = ctx;
     this.canvas = canvas;
-    // this.mouse = getMouse(canvas);
     this.mouse = mouse;
     this.handleWin = handleWin
 
