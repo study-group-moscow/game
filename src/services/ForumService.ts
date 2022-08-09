@@ -68,10 +68,6 @@ export const forumAPI = baseApi
     })
   })
 
-// selectors
-export const selectOneUser = (id: number) => forumAPI.endpoints.getOneUser.select(id)
-
-// hooks
 export const {
   useGetPostsQuery,
   useCreatePostMutation,
