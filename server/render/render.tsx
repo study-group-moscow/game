@@ -8,6 +8,22 @@ import { StaticRouter } from 'react-router-dom/server'
 import { App } from '../../src/ssr'
 import { store } from '../../src/store/store'
 
+require('@babel/register')({
+  presets: ['@babel/preset-env', '@babel/preset-react'],
+  plugins: [
+    [
+      'transform-assets',
+      {
+        extension: [
+          'css',
+          'svg'
+        ],
+        name: 'static/media/[name].[hash:8].[ext]'
+      }
+    ]
+  ]
+})
+
 export const render = (req: Request, res: Response) => {
   const indexHtml = fs.readFileSync(path.resolve(__dirname, '../../../www/index.html'), { encoding: 'utf-8' })
 

@@ -9,8 +9,9 @@
     "dev": "nodemon server/index.ts",
     "build": "webpack --mode production",
     "lint": "npx eslint src/* --ext .ts,.tsx,.js",
-    "build:server": "tsc --project ./server",
-    "start:server": "node ./dist/server/index.js"
+    "build:server": "tsc --project ./server && yarn copy-assets",
+    "start:server": "node ./dist/server/index.js",
+    "copy-assets": "cp -r ./src/assets/ ./dist/src/"
   },
   "keywords": [],
   "author": "",
@@ -63,6 +64,8 @@
     "webpack-dev-server": "4.9.3"
   },
   "dependencies": {
+    "@babel/register": "7.18.9",
+    "babel-plugin-transform-assets": "1.0.2",
     "@emotion/react": "11.9.0",
     "@emotion/styled": "11.8.1",
     "@fontsource/graduate": "4.5.8",
