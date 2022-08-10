@@ -1,4 +1,5 @@
 import express, { Request, Response } from 'express';
+import path from 'path';
 import 'dotenv/config';
 import cors from 'cors';
 import morgan from 'morgan';
@@ -15,6 +16,7 @@ const corsOptions = {
   credentials: true
 }
 const logger = morgan('combined');
+app.use(express.static(path.resolve(__dirname, '../../public')))
 app.use(render) // ssr
 app.use(logger)
 app.use(cors(corsOptions))

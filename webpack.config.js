@@ -1,20 +1,20 @@
 const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
+// const HtmlWebpackPlugin = require('html-webpack-plugin');
 const Dotenv = require('dotenv-webpack');
 
 module.exports = {
   entry: './src/index.tsx',
   output: {
-    path: path.join(__dirname, '/dist'),
+    path: path.join(__dirname, '/public'),
     filename: '[name].js',
     sourceMapFilename: '[name].js.map'
   },
   devtool: 'eval-source-map',
-  devServer: {
-    compress: true,
-    port: 5000,
-    historyApiFallback: true
-  },
+  // devServer: {
+  //   compress: true,
+  //   port: 5000,
+  //   historyApiFallback: true
+  // },
   module: {
     rules: [
       {
@@ -64,9 +64,9 @@ module.exports = {
     extensions: ['.js', '.json', '.ts', '.tsx']
   },
   plugins: [
-    new HtmlWebpackPlugin({
-      template: './www/index.html'
-    }),
+    // new HtmlWebpackPlugin({
+    //   template: './www/index.html'
+    // }),
     new Dotenv()
   ]
 }

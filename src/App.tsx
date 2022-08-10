@@ -9,7 +9,7 @@ import { dark, light } from './constants/themes'
 import { RouterLinks } from './constants/constants';
 
 import NotFound from './utils/NotFound';
-import './App.scss';
+// import './App.scss';
 
 const About = lazy(() => import(/* webpackChunkName: "About" */ './pages/About/About'))
 const Game = lazy(() => import(/* webpackChunkName: "GamePage" */ './pages/Game/GamePage'))
