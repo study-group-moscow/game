@@ -1,4 +1,4 @@
-import React, { lazy, useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useForm, FormProvider } from 'react-hook-form';
 import { Checkbox, FormControlLabel, Grid } from '@mui/material';
 import Button from '@mui/material/Button';
@@ -16,9 +16,9 @@ import {
   RouterLinksName
 } from '../../constants/constants';
 
-import '../../styles/auth.scss';
+// import '../../styles/auth.scss';
 
-const TextField = lazy(() => import(/* webpackChunkName: "TextField" */ '../../components/TextField/TextField'));
+import TextField from '../../components/TextField/TextField'
 
 const Registration:React.FC = () => {
   const methods = useForm<ISignUpParams>({

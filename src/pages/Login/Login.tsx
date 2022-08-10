@@ -1,4 +1,4 @@
-import React, { lazy, useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { Checkbox, FormControlLabel, Grid, Typography } from '@mui/material';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -13,7 +13,7 @@ import { ISignInParams } from '../../models/ISignInParams';
 import schemaLogin from './schema';
 import logoYandex from '../../assets/yandex.svg'
 
-import '../../styles/auth.scss';
+// import '../../styles/auth.scss';
 
 import {
   InputLabel,
@@ -24,7 +24,7 @@ import {
   ENDPOINTS
 } from '../../constants/constants';
 
-const TextField = lazy(() => import(/* webpackChunkName: "TextField" */ '../../components/TextField/TextField'));
+import TextField from '../../components/TextField/TextField'
 
 const Login = () => {
   const methods = useForm<ISignInParams>({

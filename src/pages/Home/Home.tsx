@@ -5,8 +5,8 @@ import {
   useFetchLogoutMutation,
   useFetchSignInOauthMutation
 } from '../../services/AuthServices';
-import './Home.scss'
-import styles from '../../styles/centerContent.module.scss'
+// import './Home.scss'
+// import styles from '../../styles/centerContent.module.scss'
 import { RouterLinks } from '../../constants/constants'
 
 const Home:React.FC = () => {
@@ -34,7 +34,7 @@ const Home:React.FC = () => {
   }
 
   return (
-    <div className={styles.center}>
+    <div className={undefined}>
       <Button onClick={navigateToGamePage}>
         Играть
       </Button>

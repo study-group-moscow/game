@@ -9,7 +9,7 @@ import {
   selectCurrentState
 } from '../../store/reducers/AlertSlice';
 
-import './CustomAlert.scss';
+// import './CustomAlert.scss';
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>((
   props,

@@ -1,4 +1,4 @@
-import React, { lazy, useCallback } from 'react';
+import React, { useCallback } from 'react';
 import { useForm, FormProvider } from 'react-hook-form';
 import { Grid, IconButton, Box, Avatar } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
@@ -20,10 +20,10 @@ import {
   ENDPOINTS
 } from '../../constants/constants';
 
-import styles from '../../styles/centerContent.module.scss';
-import '../../styles/auth.scss';
+// import styles from '../../styles/centerContent.module.scss';
+// import '../../styles/auth.scss';
 
-const TextField = lazy(() => import(/* webpackChunkName: "TextField" */ '../../components/TextField/TextField'));
+import TextField from '../../components/TextField/TextField'
 
 const Profile = () => {
   const { data: user, isFetching, isSuccess } = useFetchUserQuery(undefined, { skip: false })
@@ -69,7 +69,7 @@ const Profile = () => {
   }, [])
 
   return (
-    <div className={styles.center}>
+    <div className={undefined}>
       <Box sx={{ display: 'flex', flexDirection: 'column' }}>
         <IconButton
           color='primary'
