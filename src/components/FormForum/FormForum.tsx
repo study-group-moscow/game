@@ -5,7 +5,7 @@ import { Button, Grid, TextField } from '@mui/material';
 import { useCreatePostMutation } from '../../services/ForumService';
 import { useFetchUserQuery } from '../../services/AuthServices';
 import { InputName, InputType } from '../../constants/constants';
-// import './FormForum.scss'
+import './FormForum.scss'
 import schema from './schema';
 
 export type FormValues = {

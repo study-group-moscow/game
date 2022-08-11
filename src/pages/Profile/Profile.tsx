@@ -20,10 +20,10 @@ import {
   ENDPOINTS
 } from '../../constants/constants';
 
-// import styles from '../../styles/centerContent.module.scss';
-// import '../../styles/auth.scss';
+import '../../styles/centerContent.scss';
+import '../../styles/auth.scss';
 
-import TextField from '../../components/TextField/TextField'
+import TxtField from '../../components/TextField/TextField'
 
 const Profile = () => {
   const { data: user, isFetching, isSuccess } = useFetchUserQuery(undefined, { skip: false })
@@ -69,7 +69,7 @@ const Profile = () => {
   }, [])
 
   return (
-    <div className={undefined}>
+    <div className='center'>
       <Box sx={{ display: 'flex', flexDirection: 'column' }}>
         <IconButton
           color='primary'
@@ -101,7 +101,7 @@ const Profile = () => {
               className='layout'
             >
               <Grid item xs={12} className='input'>
-                <TextField
+                <TxtField
                   type={InputType.text}
                   name={InputName.displayName}
                   label={InputLabel.displayName}
@@ -109,7 +109,7 @@ const Profile = () => {
               </Grid>
 
               <Grid item xs={12} className='input'>
-                <TextField
+                <TxtField
                   type={InputType.text}
                   name={InputName.firstName}
                   label={InputLabel.firstName}
@@ -117,7 +117,7 @@ const Profile = () => {
               </Grid>
 
               <Grid item xs={12} className='input'>
-                <TextField
+                <TxtField
                   type={InputType.text}
                   name={InputName.secondName}
                   label={InputLabel.secondName}
@@ -125,7 +125,7 @@ const Profile = () => {
               </Grid>
 
               <Grid item xs={12} className='input'>
-                <TextField
+                <TxtField
                   type={InputType.text}
                   name={InputName.login}
                   label={InputLabel.login}
@@ -133,7 +133,7 @@ const Profile = () => {
               </Grid>
 
               <Grid item xs={12} className='input'>
-                <TextField
+                <TxtField
                   type={InputType.email}
                   name={InputName.email}
                   label={InputLabel.email}
@@ -141,7 +141,7 @@ const Profile = () => {
               </Grid>
 
               <Grid item xs={12} className='input'>
-                <TextField
+                <TxtField
                   type={InputType.text}
                   name={InputName.phone}
                   label={InputLabel.phone}

@@ -1,6 +1,6 @@
 import React from 'react';
 import { useFormContext } from 'react-hook-form';
-// import Input from '@mui/material/TextField/TextField';
+import TextField from '@mui/material/TextField';
 
 interface ITextFieldProps {
   name?: string;
@@ -9,23 +9,23 @@ interface ITextFieldProps {
   autoFocus?: boolean;
 }
 
-const TextField = ({ name = '', ...rest }: ITextFieldProps) => {
+const TxtField = ({ name = '', ...rest }: ITextFieldProps) => {
   const { register, formState: { errors } } = useFormContext();
 
-  // return (
-  //   <Input
-  //     {...register(name)}
-  //     {...rest}
-  //     fullWidth
-  //     error={Boolean(errors?.[name]?.message)}
-  //     helperText={errors?.[name]?.message}
-  //     size='small'
-  //   />
-  // )
-
   return (
-    <div>AAAA</div>
+    <TextField
+      {...register(name)}
+      {...rest}
+      fullWidth
+      error={Boolean(errors?.[name]?.message)}
+      helperText={errors?.[name]?.message}
+      size='small'
+    />
   )
+
+  // return (
+  //   <div>AAAA</div>
+  // )
 }
 
-export default TextField
+export default TxtField

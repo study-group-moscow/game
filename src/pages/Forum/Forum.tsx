@@ -2,7 +2,7 @@ import React from 'react';
 import { Grid } from '@mui/material';
 import FormForum from '../../components/FormForum/FormForum';
 import PostList from '../../components/PostList/PostList';
-// import './Forum.scss'
+import './Forum.scss'
 
 const Forum = () => (
   <div className='container-forum'>

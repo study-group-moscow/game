@@ -9,7 +9,7 @@ import { dark, light } from './constants/themes'
 import { RouterLinks } from './constants/constants';
 
 import NotFound from './utils/NotFound';
-// import './App.scss';
+import './App.scss';
 
 import About from './pages/About/About'
 import Game from './pages/Game/GamePage'

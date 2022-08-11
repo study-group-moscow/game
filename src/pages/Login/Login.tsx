@@ -13,7 +13,7 @@ import { ISignInParams } from '../../models/ISignInParams';
 import schemaLogin from './schema';
 import logoYandex from '../../assets/yandex.svg'
 
-// import '../../styles/auth.scss';
+import '../../styles/auth.scss';
 
 import {
   InputLabel,
@@ -24,7 +24,7 @@ import {
   ENDPOINTS
 } from '../../constants/constants';
 
-import TextField from '../../components/TextField/TextField'
+import TxtField from '../../components/TextField/TextField'
 
 const Login = () => {
   const methods = useForm<ISignInParams>({
@@ -66,7 +66,7 @@ const Login = () => {
           className='layout'
         >
           <Grid item xs={12} className='input'>
-            <TextField
+            <TxtField
               type={InputType.text}
               name={InputName.login}
               label={InputLabel.login}
@@ -75,7 +75,7 @@ const Login = () => {
           </Grid>
 
           <Grid item xs={12} className='input'>
-            <TextField
+            <TxtField
               type={passwordShown ? '' : InputType.password}
               name={InputName.password}
               label={InputLabel.password}

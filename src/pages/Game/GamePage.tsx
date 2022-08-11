@@ -1,7 +1,7 @@
 import React, { useRef, useEffect } from 'react'
 import { Button, Container } from '@mui/material'
 import { Game } from '../../components/Game/Game'
-// import './GamePage.scss'
+import './GamePage.scss'
 import { getMouse } from '../../components/Game/mouse'
 import { useUpdateUserMutation } from '../../services/ForumService'
 import { useAddPlayerToLeaderboardMutation } from '../../services/LeaderboardService'

@@ -2,8 +2,8 @@ import React, { useEffect } from 'react'
 import { DataGrid, ruRU } from '@mui/x-data-grid'
 import { useTheme } from '@mui/material/styles';
 import { useFetchTeamLeaderboardMutation } from '../../services/LeaderboardService'
-// import styles from '../../styles/centerContent.module.scss'
-// import stylesPage from './Leaderboard.module.scss'
+import '../../styles/centerContent.scss'
+import './Leaderboard.scss'
 import { dataGridDark } from '../../styles/darkModeComponents'
 
 const Leaderboard = () => {
@@ -26,8 +26,8 @@ const Leaderboard = () => {
   const dataGridThemeOverride = theme.palette.mode === 'dark' ? dataGridDark : {}
 
   return (
-    <div className={undefined}>
-      <div className={undefined}>
+    <div className='center'>
+      <div className='table'>
         <DataGrid
           rows={data}
           columns={columns}
