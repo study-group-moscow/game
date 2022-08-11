@@ -1,0 +1,23 @@
+name: CI
+
+on: [push]
+
+env:
+  BUILD_SCRIPT: npm run build
+  BUILD_SCRIPT_OUTPUT: dist
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '14'
+      - name: Get branch name
+        shell: bash
+        run: echo "::set-env name=BRANCH_NAME::$(echo ${GITHUB_REF#refs/heads/} | sed 's/\//-/g' | sed 's/\./_/g')"
+      - name: Install Dependencies
+        run: npm i
+      - name: Build Application
+        run: $BUILD_SCRIPT
