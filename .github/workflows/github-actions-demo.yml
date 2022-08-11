@@ -16,8 +16,6 @@ jobs:
           node-version: '14'
       - name: Get branch name
         shell: bash
-        run: echo "::set-env name=BRANCH_NAME::$(echo ${GITHUB_REF#refs/heads/} | sed 's/\//-/g' | sed 's/\./_/g')"
-      - name: Install Dependencies
         run: npm i
       - name: Build Application
         run: $BUILD_SCRIPT
