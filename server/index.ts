@@ -1,4 +1,5 @@
 import express, { Request, Response } from 'express';
+import helmet from 'helmet';
 import 'dotenv/config';
 import cors from 'cors';
 import morgan from 'morgan';
@@ -15,6 +16,15 @@ const corsOptions = {
 }
 const logger = morgan('combined');
 app.use(logger);
+app.use(
+  helmet.contentSecurityPolicy({
+    useDefaults: false,
+    directives: {
+      'default-src': helmet.contentSecurityPolicy.dangerouslyDisableDefaultSrc,
+      'script-src': ["'self'"]
+    }
+  })
+);
 app.use(cors(corsOptions))
 app.use(express.json());
 
