@@ -1,4 +1,4 @@
-import express, { Request, Response } from 'express';
+import express from 'express';
 import path from 'path';
 import 'dotenv/config';
 import cors from 'cors';
@@ -16,18 +16,15 @@ const corsOptions = {
   credentials: true
 }
 const logger = morgan('combined');
-app.use(express.static(path.resolve(__dirname, '../../public')))
-app.use(render) // ssr
 app.use(logger)
 app.use(cors(corsOptions))
 app.use(express.json())
 
-app.get('/', (req: Request, res: Response) => {
-  res.send('hello');
-});
-
 app.use('/user', userRouter);
 app.use('/post', postRouter);
+
+app.use(express.static(path.resolve(__dirname, '../../public')))
+app.use(render) // ssr
 
 app.listen(PORT, () => {
   console.log(`app run on port ${PORT}`);

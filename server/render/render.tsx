@@ -5,7 +5,6 @@ import path from 'path'
 import { Provider } from 'react-redux'
 import ReactDOMServer from 'react-dom/server'
 import { StaticRouter } from 'react-router-dom/server'
-// import { App } from '../../src/ssr'
 import { store } from '../../src/store/store'
 
 require('@babel/register')(
@@ -19,7 +18,7 @@ require('@babel/register')(
             'css',
             'svg'
           ],
-          name: 'assets/[name].[hash:8].[ext]'
+          name: '[name].[ext]'
         }
       ]
     ]
@@ -27,8 +26,6 @@ require('@babel/register')(
 )
 
 const { App } = require('../../src/ssr')
-
-console.log('!!!-----App=', App)
 
 export const render = (req: Request, res: Response) => {
   const indexHtml = fs.readFileSync(path.resolve(__dirname, '../../../www/index.html'), { encoding: 'utf-8' })

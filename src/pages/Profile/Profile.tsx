@@ -1,5 +1,5 @@
-import React, { useCallback } from 'react';
-import { useForm, FormProvider } from 'react-hook-form';
+import React, { useCallback, useEffect } from 'react';
+import { useForm, FormProvider, Controller } from 'react-hook-form';
 import { Grid, IconButton, Box, Avatar } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -33,16 +33,29 @@ const Profile = () => {
 
   const methods = useForm<IEditUserProfileParamsResponse>({
     defaultValues: {
-      [InputName.displayName]: user?.display_name,
-      [InputName.firstName]: user?.first_name,
-      [InputName.secondName]: user?.second_name,
-      [InputName.login]: user?.login,
-      [InputName.email]: user?.email,
-      [InputName.phone]: user?.phone
+      [InputName.displayName]: '',
+      [InputName.firstName]: '',
+      [InputName.secondName]: '',
+      [InputName.login]: '',
+      [InputName.email]: '',
+      [InputName.phone]: ''
     },
     mode: 'onBlur',
     resolver: yupResolver(schema)
   });
+
+  useEffect(() => {
+    if (isSuccess) {
+      methods.reset({
+        [InputName.displayName]: user.display_name,
+        [InputName.firstName]: user.first_name,
+        [InputName.secondName]: user.second_name,
+        [InputName.login]: user.login,
+        [InputName.email]: user.email,
+        [InputName.phone]: user.phone
+      })
+    }
+  }, [user])
 
   const showSuccessToast = () => {
     if (isSuccess) {
@@ -101,50 +114,98 @@ const Profile = () => {
               className='layout'
             >
               <Grid item xs={12} className='input'>
-                <TxtField
-                  type={InputType.text}
+                <Controller
                   name={InputName.displayName}
-                  label={InputLabel.displayName}
+                  control={methods.control}
+                  render={({ field: { ref, ...field } }) => (
+                    <TxtField
+                      {...field}
+                      inputRef={ref}
+                      type={InputType.text}
+                      name={InputName.displayName}
+                      label={InputLabel.displayName}
+                    />
+                  )}
                 />
               </Grid>
 
               <Grid item xs={12} className='input'>
-                <TxtField
-                  type={InputType.text}
+                <Controller
                   name={InputName.firstName}
-                  label={InputLabel.firstName}
+                  control={methods.control}
+                  render={({ field: { ref, ...field } }) => (
+                    <TxtField
+                      {...field}
+                      inputRef={ref}
+                      type={InputType.text}
+                      name={InputName.firstName}
+                      label={InputLabel.firstName}
+                    />
+                  )}
                 />
               </Grid>
 
               <Grid item xs={12} className='input'>
-                <TxtField
-                  type={InputType.text}
+                <Controller
                   name={InputName.secondName}
-                  label={InputLabel.secondName}
+                  control={methods.control}
+                  render={({ field: { ref, ...field } }) => (
+                    <TxtField
+                      {...field}
+                      inputRef={ref}
+                      type={InputType.text}
+                      name={InputName.secondName}
+                      label={InputLabel.secondName}
+                    />
+                  )}
                 />
               </Grid>
 
               <Grid item xs={12} className='input'>
-                <TxtField
-                  type={InputType.text}
+                <Controller
                   name={InputName.login}
-                  label={InputLabel.login}
+                  control={methods.control}
+                  render={({ field: { ref, ...field } }) => (
+                    <TxtField
+                      {...field}
+                      inputRef={ref}
+                      type={InputType.text}
+                      name={InputName.login}
+                      label={InputLabel.login}
+                    />
+                  )}
                 />
               </Grid>
 
               <Grid item xs={12} className='input'>
-                <TxtField
-                  type={InputType.email}
+                <Controller
                   name={InputName.email}
-                  label={InputLabel.email}
+                  control={methods.control}
+                  render={({ field: { ref, ...field } }) => (
+                    <TxtField
+                      {...field}
+                      inputRef={ref}
+                      type={InputType.email}
+                      name={InputName.email}
+                      label={InputLabel.email}
+                    />
+                  )}
                 />
               </Grid>
 
               <Grid item xs={12} className='input'>
-                <TxtField
-                  type={InputType.text}
+                <Controller
                   name={InputName.phone}
-                  label={InputLabel.phone}
+                  control={methods.control}
+                  render={({ field: { ref, ...field } }) => (
+                    <TxtField
+                      {...field}
+                      inputRef={ref}
+                      type={InputType.text}
+                      name={InputName.phone}
+                      label={InputLabel.phone}
+                    />
+                  )}
                 />
               </Grid>
 

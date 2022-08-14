@@ -10,7 +10,6 @@ export class Draw {
 
   // рисование клеток морского боя
   drawFields(context) {
-    console.log('----aaaaaaaaaaaaaaaaaa')
     context.strokeStyle = 'blue';
     context.lineWidth = 1.7;
 

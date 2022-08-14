@@ -23,8 +23,8 @@ export default class UserController {
   }
 
   static async getUsers(req: Request, res: Response) {
-    const users = await UserModel.findAll();
     try {
+      const users = await UserModel.findAll();
       res.status(200).json(users);
     } catch (e) {
       res.status(500)
@@ -48,8 +48,8 @@ export default class UserController {
   }
 
   static async updateUser(req: Request, res: Response) {
-    const user = await UserModel.update(req.body, { where: { id: req.body.id } });
     try {
+      const user = await UserModel.update(req.body, { where: { id: req.body.id } });
       res.status(200).json(user);
     } catch (e) {
       res.status(500)

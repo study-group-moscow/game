@@ -1,5 +1,5 @@
 import React from 'react';
-import { useFormContext } from 'react-hook-form';
+import { RefCallBack, useFormContext } from 'react-hook-form';
 import TextField from '@mui/material/TextField';
 
 interface ITextFieldProps {
@@ -7,6 +7,7 @@ interface ITextFieldProps {
   label?: string;
   type?: string;
   autoFocus?: boolean;
+  inputRef?: RefCallBack;
 }
 
 const TxtField = ({ name = '', ...rest }: ITextFieldProps) => {
@@ -22,10 +23,6 @@ const TxtField = ({ name = '', ...rest }: ITextFieldProps) => {
       size='small'
     />
   )
-
-  // return (
-  //   <div>AAAA</div>
-  // )
 }
 
 export default TxtField
