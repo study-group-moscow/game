@@ -8,14 +8,16 @@
     "server": "node server/index.ts",
     "dev": "nodemon server/index.ts",
     "build": "webpack --mode production",
-    "lint": "npx eslint src/* --ext .ts,.tsx,.js"
+    "lint": "npx eslint src/* --ext .ts,.tsx,.js",
+    "build:server": "tsc --project ./server && yarn copy-assets",
+    "start:server": "nodemon ./dist/server/index.js",
+    "copy-assets": "cp -r ./src/assets/ ./dist/src/"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "@babel/cli": "7.17.0",
-    "@babel/core": "7.18.2",
     "@babel/preset-env": "7.18.2",
     "@babel/preset-react": "7.17.12",
     "@types/cors": "2.8.12",
@@ -61,6 +63,8 @@
     "webpack-dev-server": "4.9.3"
   },
   "dependencies": {
+    "@babel/core": "7.18.10",
+    "@babel/register": "7.18.9",
     "@emotion/react": "11.9.0",
     "@emotion/styled": "11.8.1",
     "@fontsource/graduate": "4.5.8",
@@ -72,6 +76,7 @@
     "@reduxjs/toolkit": "1.8.2",
     "@types/sequelize": "4.28.14",
     "axios": "0.27.2",
+    "babel-plugin-transform-assets": "1.0.2",
     "classnames": "2.3.1",
     "cors": "2.8.5",
     "dotenv": "16.0.1",

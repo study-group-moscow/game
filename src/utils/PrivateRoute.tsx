@@ -1,6 +1,5 @@
-import React, { Suspense } from 'react';
+import React from 'react';
 import { Navigate, Outlet, useLocation } from 'react-router-dom';
-import Loader from '../components/Loader/Loader';
 import AppBar from '../components/AppBar/AppBar'
 import { useFetchUserQuery } from '../services/AuthServices';
 
@@ -14,9 +13,7 @@ export default () => {
     <>
       { !isOnHomeRoute && <AppBar /> }
 
-      <Suspense fallback={<Loader />}>
-        <Outlet />
-      </Suspense>
+      <Outlet />
     </>
   )
 };

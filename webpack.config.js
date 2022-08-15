@@ -1,20 +1,17 @@
 const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
 const Dotenv = require('dotenv-webpack');
 
 module.exports = {
   entry: './src/index.tsx',
+
   output: {
-    path: path.join(__dirname, '/dist'),
+    path: path.join(__dirname, '/public'),
     filename: '[name].js',
     sourceMapFilename: '[name].js.map'
   },
+
   devtool: 'eval-source-map',
-  devServer: {
-    compress: true,
-    port: 5000,
-    historyApiFallback: true
-  },
+
   module: {
     rules: [
       {
@@ -56,17 +53,19 @@ module.exports = {
       },
       {
         test: /\.(png|svg|jpg|jpeg|gif)$/i,
-        type: 'asset/resource'
+        type: 'asset/resource',
+        generator: {
+          filename: '[name][ext]'
+        }
       }
     ]
   },
+
   resolve: {
     extensions: ['.js', '.json', '.ts', '.tsx']
   },
+
   plugins: [
-    new HtmlWebpackPlugin({
-      template: './www/index.html'
-    }),
     new Dotenv()
   ]
 }
