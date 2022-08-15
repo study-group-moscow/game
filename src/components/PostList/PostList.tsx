@@ -9,7 +9,7 @@ import {
 import Loader from '../Loader/Loader';
 
 const PostList = () => {
-  const { data = [], isLoading } = useGetPostsQuery(1);
+  const { data: posts = [], isLoading } = useGetPostsQuery(1);
   const [removePost] = useRemovePostMutation();
   const [updatePost] = useUpdatePostMutation();
 
@@ -25,7 +25,7 @@ const PostList = () => {
   return (
     <>
       {
-        data.map((post: IPost) => (
+        posts.map((post: IPost) => (
           <PostItem key={post.id} post={post} onRemove={handleRemove} onUpdate={handleUpdate} />
         ))
       }

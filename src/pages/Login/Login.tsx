@@ -24,7 +24,7 @@ import {
   ENDPOINTS
 } from '../../constants/constants';
 
-import TxtField from '../../components/TextField/TextField'
+import TextField from '../../components/TextField/TextField'
 
 const Login = () => {
   const methods = useForm<ISignInParams>({
@@ -66,7 +66,7 @@ const Login = () => {
           className='layout'
         >
           <Grid item xs={12} className='input'>
-            <TxtField
+            <TextField
               type={InputType.text}
               name={InputName.login}
               label={InputLabel.login}
@@ -75,7 +75,7 @@ const Login = () => {
           </Grid>
 
           <Grid item xs={12} className='input'>
-            <TxtField
+            <TextField
               type={passwordShown ? '' : InputType.password}
               name={InputName.password}
               label={InputLabel.password}

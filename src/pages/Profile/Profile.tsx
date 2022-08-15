@@ -23,7 +23,7 @@ import {
 import '../../styles/centerContent.scss';
 import '../../styles/auth.scss';
 
-import TxtField from '../../components/TextField/TextField'
+import TextField from '../../components/TextField/TextField'
 
 const Profile = () => {
   const { data: user, isFetching, isSuccess } = useFetchUserQuery(undefined, { skip: false })
@@ -118,7 +118,7 @@ const Profile = () => {
                   name={InputName.displayName}
                   control={methods.control}
                   render={({ field: { ref, ...field } }) => (
-                    <TxtField
+                    <TextField
                       {...field}
                       inputRef={ref}
                       type={InputType.text}
@@ -134,7 +134,7 @@ const Profile = () => {
                   name={InputName.firstName}
                   control={methods.control}
                   render={({ field: { ref, ...field } }) => (
-                    <TxtField
+                    <TextField
                       {...field}
                       inputRef={ref}
                       type={InputType.text}
@@ -150,7 +150,7 @@ const Profile = () => {
                   name={InputName.secondName}
                   control={methods.control}
                   render={({ field: { ref, ...field } }) => (
-                    <TxtField
+                    <TextField
                       {...field}
                       inputRef={ref}
                       type={InputType.text}
@@ -166,7 +166,7 @@ const Profile = () => {
                   name={InputName.login}
                   control={methods.control}
                   render={({ field: { ref, ...field } }) => (
-                    <TxtField
+                    <TextField
                       {...field}
                       inputRef={ref}
                       type={InputType.text}
@@ -182,7 +182,7 @@ const Profile = () => {
                   name={InputName.email}
                   control={methods.control}
                   render={({ field: { ref, ...field } }) => (
-                    <TxtField
+                    <TextField
                       {...field}
                       inputRef={ref}
                       type={InputType.email}
@@ -198,7 +198,7 @@ const Profile = () => {
                   name={InputName.phone}
                   control={methods.control}
                   render={({ field: { ref, ...field } }) => (
-                    <TxtField
+                    <TextField
                       {...field}
                       inputRef={ref}
                       type={InputType.text}

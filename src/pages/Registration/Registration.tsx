@@ -18,7 +18,7 @@ import {
 
 import '../../styles/auth.scss';
 
-import TxtField from '../../components/TextField/TextField'
+import TextField from '../../components/TextField/TextField'
 
 const Registration:React.FC = () => {
   const methods = useForm<ISignUpParams>({
@@ -54,7 +54,7 @@ const Registration:React.FC = () => {
           className='layout'
         >
           <Grid item xs={12} className='input'>
-            <TxtField
+            <TextField
               type={InputType.text}
               name={InputName.displayName}
               label={InputLabel.displayName}
@@ -62,7 +62,7 @@ const Registration:React.FC = () => {
           </Grid>
 
           <Grid item xs={12} className='input'>
-            <TxtField
+            <TextField
               type={InputType.text}
               name={InputName.firstName}
               label={InputLabel.firstName}
@@ -70,7 +70,7 @@ const Registration:React.FC = () => {
           </Grid>
 
           <Grid item xs={12} className='input'>
-            <TxtField
+            <TextField
               type={InputType.text}
               name={InputName.secondName}
               label={InputLabel.secondName}
@@ -78,7 +78,7 @@ const Registration:React.FC = () => {
           </Grid>
 
           <Grid item xs={12} className='input'>
-            <TxtField
+            <TextField
               type={InputType.text}
               name={InputName.login}
               label={InputLabel.login}
@@ -86,7 +86,7 @@ const Registration:React.FC = () => {
           </Grid>
 
           <Grid item xs={12} className='input'>
-            <TxtField
+            <TextField
               type={InputType.email}
               name={InputName.email}
               label={InputLabel.email}
@@ -94,7 +94,7 @@ const Registration:React.FC = () => {
           </Grid>
 
           <Grid item xs={12} className='input'>
-            <TxtField
+            <TextField
               type={InputType.text}
               name={InputName.phone}
               label={InputLabel.phone}
@@ -102,7 +102,7 @@ const Registration:React.FC = () => {
           </Grid>
 
           <Grid item xs={12} className='input'>
-            <TxtField
+            <TextField
               type={passwordShown ? '' : InputType.password}
               name={InputName.password}
               label={InputLabel.password}

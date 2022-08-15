@@ -1,6 +1,6 @@
 import React from 'react';
 import { RefCallBack, useFormContext } from 'react-hook-form';
-import TextField from '@mui/material/TextField';
+import MUITextField from '@mui/material/TextField';
 
 interface ITextFieldProps {
   name?: string;
@@ -10,11 +10,11 @@ interface ITextFieldProps {
   inputRef?: RefCallBack;
 }
 
-const TxtField = ({ name = '', ...rest }: ITextFieldProps) => {
+const TextField = ({ name = '', ...rest }: ITextFieldProps) => {
   const { register, formState: { errors } } = useFormContext();
 
   return (
-    <TextField
+    <MUITextField
       {...register(name)}
       {...rest}
       fullWidth
@@ -25,4 +25,4 @@ const TxtField = ({ name = '', ...rest }: ITextFieldProps) => {
   )
 }
 
-export default TxtField
+export default TextField
