@@ -12,9 +12,3 @@ RUN npm install
 
 #Копируем все файлы
 COPY . .
-CMD ["npm", "run", "build"]
-#Копируем папку dist
-COPY ./dist ./dist
-
-CMD ["npm", "run", "dev"]
-CMD ["npm", "run", "start"]
