@@ -4,7 +4,8 @@ name: CI-CD
 
 on:
   push:
-    branches: [ "test-branch" ]
+    branches:
+      - test-branch
 
 jobs:
   my_testing:
