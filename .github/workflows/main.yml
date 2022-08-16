@@ -1,0 +1,21 @@
+# This is a basic deploy to yandex-cloud
+
+name: CI-CD
+
+on:
+  push:
+    branches:
+      - test-branch
+
+jobs:
+  my_testing:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Print hello 1
+        run: echo "Hello world 1"
+
+      - name: Print hello 2
+        run: echo "Hello world 2"
+  
+
