@@ -6,7 +6,7 @@ import {
   useFetchSignInOauthMutation
 } from '../../services/AuthServices';
 import '../../styles/centerContent.scss'
-import { RouterLinks } from '../../constants/constants'
+import { RouterLinks, ENDPOINTS } from '../../constants/constants'
 
 const Home:React.FC = () => {
   const location = useLocation();
@@ -16,7 +16,7 @@ const Home:React.FC = () => {
     const code = new URLSearchParams(location.search).get('code')
 
     if (code && (signInOauth !== 'OK')) {
-      fetchLoginOauth({ code, redirect_uri: process.env.REDIRECT_URI ?? '' })
+      fetchLoginOauth({ code, redirect_uri: ENDPOINTS.FRONT_BACK ?? '' })
     }
   }, [signInOauth])
 
