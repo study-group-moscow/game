@@ -12,8 +12,8 @@
     "build:server": "tsc --project ./server && yarn copy-assets",
     "start:server": "nodemon ./dist/server/index.js",
     "copy-assets": "cp -r ./src/assets/ ./dist/src/",
-    "build:image": "docker build -t sea-battle-game .",
-    "start:container": "docker run -p 5000:5000 sea-battle-game",
+    "build:image": "docker build -t krasnokutskiyea/sea-battle .",
+    "start:container": "docker run -p 5000:5000 krasnokutskiyea/sea-battle",
     "docker": "npm-run-all build:image start:container"
   },
   "keywords": [],
