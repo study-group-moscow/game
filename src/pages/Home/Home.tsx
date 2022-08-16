@@ -5,7 +5,6 @@ import {
   useFetchLogoutMutation,
   useFetchSignInOauthMutation
 } from '../../services/AuthServices';
-import './Home.scss'
 import '../../styles/centerContent.scss'
 import { RouterLinks } from '../../constants/constants'
 
