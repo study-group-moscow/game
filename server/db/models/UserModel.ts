@@ -1,5 +1,6 @@
 import { DataTypes } from 'sequelize'
 import { db } from '../db'
+import {PostModel} from "./PostModel";
 
 export const UserModel = db.define('user', {
   id: {
@@ -27,3 +28,14 @@ export const UserModel = db.define('user', {
   tableName: 'user',
   timestamps: false
 })
+
+async function create_table() {
+  await UserModel.sync();
+  await PostModel.sync();
+}
+
+async function run() {
+  await create_table()
+}
+
+run()

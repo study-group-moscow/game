@@ -16,13 +16,13 @@ export const PostModel = db.define('post', {
     type: DataTypes.ARRAY(DataTypes.STRING)
   },
   user_id: {
-    type: DataTypes.STRING
+    type: DataTypes.INTEGER,
+    references: {
+      model: UserModel,
+      key: 'id'
+    }
   }
 }, {
   tableName: 'post',
   timestamps: false
 });
-PostModel.belongsTo(UserModel, {
-  foreignKey: 'user_id'
-});
-
