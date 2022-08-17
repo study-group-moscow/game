@@ -1,6 +1,6 @@
 import { DataTypes } from 'sequelize'
 import { db } from '../db'
-import {PostModel} from "./PostModel";
+import { PostModel } from './PostModel';
 
 export const UserModel = db.define('user', {
   id: {
