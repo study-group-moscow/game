@@ -35,7 +35,7 @@ jobs:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.KEY }}
-          script: cd app && sudo docker pull krasnokutskiyea/sea-battle:latest && sudo docker compose up -d && docker-image prune -f
+          script: cd app && sudo docker pull krasnokutskiyea/sea-battle:latest && sudo docker compose up -d && docker image prune -f
        
       
         
