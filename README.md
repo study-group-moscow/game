@@ -1,7 +1,7 @@
 # game
 sea battle game
 
-# variables
+# run in development mode
 
 add `.env` with the following variables to the root folder:
 

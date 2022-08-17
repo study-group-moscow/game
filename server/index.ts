@@ -27,6 +27,5 @@ app.use(express.static(path.resolve(__dirname, '../../public')))
 app.use(render) // ssr
 
 app.listen(FRONT_BACK_PORT, () => {
-  console.log('---pr ', process.env);
   console.log(`app run on port ${FRONT_BACK_PORT}`);
 });
