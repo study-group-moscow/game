@@ -36,7 +36,7 @@ jobs:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.KEY }}
-          script: cd app && sudo docker pull name/image:latest && sudo docker compose up -d --no-deps app
+          script: cd app && sudo docker pull krasnokutskiyea/sea-battle:latest && sudo docker compose up -d --no-deps app
        
       
         
