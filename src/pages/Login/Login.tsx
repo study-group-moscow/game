@@ -35,12 +35,12 @@ const Login = () => {
   const navigate = useNavigate();
 
   const [fetchLogin, { isLoading, data, isSuccess }] = useFetchSignInMutation();
-  const { data: oAuthData } = useFetchOauthDataQuery(process.env.REDIRECT_URI ?? '')
+  const { data: oAuthData } = useFetchOauthDataQuery(ENDPOINTS.FRONT_BACK ?? '')
 
   const [passwordShown, setPasswordShown] = useState(false);
 
   const sId = oAuthData?.service_id
-  const url = `${ENDPOINTS.OAUTH}/authorize?response_type=code&client_id=${sId}&redirect_uri=${process.env.REDIRECT_URI}`
+  const url = `${ENDPOINTS.OAUTH}/authorize?response_type=code&client_id=${sId}&redirect_uri=${ENDPOINTS.FRONT_BACK}`
 
   useEffect(() => {
     if (isSuccess) {
