@@ -25,6 +25,6 @@
     "baseUrl": "./",
   },
   "include": [
-    "src", "server", "index.d.ts", "webpack.config.js"
+    "server", "src", "index.d.ts", "webpack.config.js"
   ]
 }
