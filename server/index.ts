@@ -12,7 +12,12 @@ const { HOST, FRONT_BACK_PORT } = process.env;
 const app = express();
 
 const corsOptions = {
-  origin: [`http://${HOST}:${FRONT_BACK_PORT}`, `http://${HOST}`],
+  origin: [`
+  http://${HOST}:${FRONT_BACK_PORT}`,
+  `http://${HOST}`,
+  'http://moscow-sea-battle-14.ya-praktikum.tech',
+  'https://moscow-sea-battle-14.ya-praktikum.tech'
+  ],
   credentials: true
 }
 const logger = morgan('combined');

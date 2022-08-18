@@ -10,7 +10,7 @@ import baseApi from '../store/api/baseApi';
 import { checkObjectKeysAreEqual } from '../utils/helperFunctions'
 
 const http = ENDPOINTS.YANDEX;
-const http_forum = ENDPOINTS.FRONT_BACK;
+const http_forum = ENDPOINTS.PROD_URL;
 
 export const authAPI = baseApi
   .enhanceEndpoints({ addTagTypes: ['Auth', 'OauthData'] })

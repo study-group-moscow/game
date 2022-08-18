@@ -3,7 +3,7 @@ import { IEditUserProfileForumParams } from '../models/IUser';
 import { ENDPOINTS } from '../constants/constants';
 import baseApi from '../store/api/baseApi';
 
-const http = ENDPOINTS.FRONT_BACK;
+const http = ENDPOINTS.PROD_URL;
 
 export const forumAPI = baseApi
   .enhanceEndpoints({ addTagTypes: ['Posts', 'User'] })
