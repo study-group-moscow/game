@@ -1,6 +1,5 @@
 import { Request, Response } from 'express';
-import { PostModel } from '../db/models/PostModel';
-import { UserModel } from '../db/models/UserModel';
+import { UserModel, PostModel } from '../db/models/Model';
 
 export default class PostController {
   static async createPost(req: Request, res: Response) {
