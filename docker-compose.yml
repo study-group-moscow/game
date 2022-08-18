@@ -5,22 +5,25 @@ services:
     container_name: nginx
     image: nginx:latest
     ports:
-      - "8081:80"
+      - "80:80"
+      - "443:443"
+    restart: always
     volumes:
-      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
-    depends_on:
-      - server
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+    networks:
+      - my-network
+
 
   server:
     container_name: server
     image: krasnokutskiyea/sea-battle:latest
-    build: .
-    volumes:
-      - .:/app
     ports:
       - "5000:5000"
     depends_on:
       - db_game
+    networks:
+      - my-network
+
 
   db_game:
     container_name: postgres
@@ -35,6 +38,12 @@ services:
     volumes:
       - /var/lib/postgresql/data
     restart: always
+    networks:
+      - my-network
+
 
 volumes:
   pgdata:
+
+networks:
+  my-network:
