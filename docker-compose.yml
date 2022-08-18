@@ -21,6 +21,7 @@ services:
       - "5000:5000"
     depends_on:
       - db_game
+    restart: always
     networks:
       - my-network
 
