@@ -16,7 +16,7 @@ const Home:React.FC = () => {
     const code = new URLSearchParams(location.search).get('code')
 
     if (code && (signInOauth !== 'OK')) {
-      fetchLoginOauth({ code, redirect_uri: ENDPOINTS.FRONT_BACK ?? '' })
+      fetchLoginOauth({ code, redirect_uri: ENDPOINTS.PROD_URL ?? '' })
     }
   }, [signInOauth])
 

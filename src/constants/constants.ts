@@ -52,6 +52,7 @@ export enum InputLabel {
 
 export const ENDPOINTS = {
   YANDEX: 'https://ya-praktikum.tech/api/v2',
+  PROD_URL: 'http://moscow-sea-battle-14.ya-praktikum.tech',
   FRONT_BACK: `http://${process.env.HOST}:${process.env.FRONT_BACK_PORT}`,
   RESOURCES: 'https://ya-praktikum.tech/api/v2/resources',
   WSS: 'wss://ya-praktikum.tech/ws',
