@@ -3,9 +3,9 @@ import { Button, Container } from '@mui/material'
 import { Game } from '../../components/Game/Game'
 import './GamePage.scss'
 import { getMouse } from '../../components/Game/mouse'
-import { useUpdateUserMutation } from '../../services/ForumService'
-import { useAddPlayerToLeaderboardMutation } from '../../services/LeaderboardService'
-import useGetLocalDbUser from '../../hooks/useGetLocalDbUser'
+// import { useUpdateUserMutation } from '../../services/ForumService'
+// import { useAddPlayerToLeaderboardMutation } from '../../services/LeaderboardService'
+// import useGetLocalDbUser from '../../hooks/useGetLocalDbUser'
 import { IAlertTypeProps, showAlert } from '../../store/reducers/AlertSlice';
 import { MESSAGES_TEXT, TYPES_ALERT } from '../../constants/constants';
 import { useAppDispatch } from '../../hooks/redux';
@@ -14,13 +14,14 @@ const GamePage: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const canvasCtxRef = React.useRef<CanvasRenderingContext2D | null>(null);
 
-  const [updateUser] = useUpdateUserMutation()
-  const [addPlayerToLeaderboard] = useAddPlayerToLeaderboardMutation()
-  const localDbUser = useGetLocalDbUser({ skip: false })
+  // const [updateUser] = useUpdateUserMutation()
+  // const [addPlayerToLeaderboard] = useAddPlayerToLeaderboardMutation()
+  // const localDbUser = useGetLocalDbUser({ skip: false })
   const dispatch = useAppDispatch()
 
   const handleWin = async () => {
     try {
+      /*
       const score = (localDbUser!.score ?? 0) + 100
       const name = localDbUser!.display_name ?? 'player'
       const { id } = localDbUser!
@@ -32,6 +33,7 @@ const GamePage: React.FC = () => {
         ratingFieldName: 'score',
         teamName: 'moscow'
       })
+      */
     } catch (e) {
       dispatch(showAlert({
         text: MESSAGES_TEXT.ERROR_OCCURRED,
@@ -46,7 +48,7 @@ const GamePage: React.FC = () => {
     let removeMousedown: () => void;
     let removeMouseup: () => void;
 
-    if (canvasRef.current && localDbUser?.id) {
+    if (canvasRef.current) {
       const canvas = canvasRef.current;
       canvas.width = 1000;
       canvas.height = 500;
@@ -71,7 +73,7 @@ const GamePage: React.FC = () => {
         canvasRef.current.removeEventListener('mouseup', removeMouseup);
       }
     }
-  }, [localDbUser]);
+  }, []);
 
   return (
     <Container className='game'>
