@@ -1,24 +1,25 @@
 const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
 const Dotenv = require('dotenv-webpack');
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 
 module.exports = {
+  mode: 'production',
+
   entry: './src/index.tsx',
+
   output: {
-    path: path.join(__dirname, '/dist'),
+    path: path.join(__dirname, '/public'),
     filename: '[name].js',
     sourceMapFilename: '[name].js.map'
   },
-  devtool: 'eval-source-map',
-  devServer: {
-    compress: true,
-    port: 5000,
-    historyApiFallback: true
-  },
+
+  devtool: false,
+
   module: {
     rules: [
       {
         test: /\.tsx?$/,
+        exclude: /node_modules/,
         use: [
           {
             loader: 'ts-loader',
@@ -26,12 +27,11 @@ module.exports = {
               configFile: path.resolve(__dirname, 'tsconfig.json')
             }
           }
-        ],
-        exclude: /(node_modules)/
+        ]
       },
       {
         test: /\.m?js$/,
-        exclude: /(node_modules)/,
+        exclude: /node_modules/,
         use: {
           loader: 'babel-loader',
           options: {
@@ -56,17 +56,21 @@ module.exports = {
       },
       {
         test: /\.(png|svg|jpg|jpeg|gif)$/i,
-        type: 'asset/resource'
+        exclude: /node_modules/,
+        type: 'asset/resource',
+        generator: {
+          filename: '[name][ext]'
+        }
       }
     ]
   },
+
   resolve: {
     extensions: ['.js', '.json', '.ts', '.tsx']
   },
+
   plugins: [
-    new HtmlWebpackPlugin({
-      template: './www/index.html'
-    }),
-    new Dotenv()
+    new Dotenv(),
+    new BundleAnalyzerPlugin({ analyzerMode: 'disabled' })
   ]
 }

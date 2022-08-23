@@ -1,40 +1,41 @@
-import express, { Request, Response } from 'express';
+import express from 'express';
 import helmet from 'helmet';
+import path from 'path';
 import 'dotenv/config';
 import cors from 'cors';
 import morgan from 'morgan';
 import userRouter from './routes/user.routes';
 import postRouter from './routes/post.routes';
+import { render } from './render/render'
 
-const { PORT } = process.env;
+const { HOST, FRONT_BACK_PORT } = process.env;
 
 const app = express();
 
 const corsOptions = {
-  origin: ['http://localhost:5000'],
+  origin: [`http://${HOST}:${FRONT_BACK_PORT}`],
   credentials: true
 }
 const logger = morgan('combined');
-app.use(logger);
+app.use(logger)
 app.use(
-  helmet.contentSecurityPolicy({
-    useDefaults: false,
-    directives: {
-      'default-src': helmet.contentSecurityPolicy.dangerouslyDisableDefaultSrc,
-      'script-src': ["'self'"]
-    }
-  })
+    helmet.contentSecurityPolicy({
+        useDefaults: false,
+        directives: {
+            'default-src': helmet.contentSecurityPolicy.dangerouslyDisableDefaultSrc,
+            'script-src': ["'self'"]
+        }
+    })
 );
 app.use(cors(corsOptions))
-app.use(express.json());
-
-app.get('/', (req: Request, res: Response) => {
-  res.send('hello');
-});
+app.use(express.json())
 
 app.use('/user', userRouter);
 app.use('/post', postRouter);
 
-app.listen(PORT, () => {
-  console.log(`app run on port ${PORT}`);
+app.use(express.static(path.resolve(__dirname, '../../public')))
+app.use(render) // ssr
+
+app.listen(FRONT_BACK_PORT, () => {
+  console.log(`app run on port ${FRONT_BACK_PORT}`);
 });

@@ -51,8 +51,6 @@ const PostItem: FC<TPostItemProps> = ({ post, onRemove, onUpdate }) => {
     }
   }
 
-  console.log(post)
-
   return (
     <Card
       key={post.id}

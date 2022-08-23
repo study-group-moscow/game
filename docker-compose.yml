@@ -2,11 +2,12 @@ version: "3.8"
 services:
   server:
     container_name: server
+    image: krasnokutskiyea/sea-battle:latest
     build: .
     volumes:
       - .:/app
     ports:
-      - "8989:8989"
+      - "5000:5000"
     depends_on:
       - db_game
 

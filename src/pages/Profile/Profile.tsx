@@ -1,5 +1,5 @@
-import React, { lazy, useCallback } from 'react';
-import { useForm, FormProvider } from 'react-hook-form';
+import React, { useCallback, useEffect } from 'react';
+import { useForm, FormProvider, Controller } from 'react-hook-form';
 import { Grid, IconButton, Box, Avatar } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -20,10 +20,10 @@ import {
   ENDPOINTS
 } from '../../constants/constants';
 
-import styles from '../../styles/centerContent.module.scss';
+import '../../styles/centerContent.scss';
 import '../../styles/auth.scss';
 
-const TextField = lazy(() => import(/* webpackChunkName: "TextField" */ '../../components/TextField/TextField'));
+import TextField from '../../components/TextField/TextField'
 
 const Profile = () => {
   const { data: user, isFetching, isSuccess } = useFetchUserQuery(undefined, { skip: false })
@@ -33,16 +33,29 @@ const Profile = () => {
 
   const methods = useForm<IEditUserProfileParamsResponse>({
     defaultValues: {
-      [InputName.displayName]: user?.display_name,
-      [InputName.firstName]: user?.first_name,
-      [InputName.secondName]: user?.second_name,
-      [InputName.login]: user?.login,
-      [InputName.email]: user?.email,
-      [InputName.phone]: user?.phone
+      [InputName.displayName]: '',
+      [InputName.firstName]: '',
+      [InputName.secondName]: '',
+      [InputName.login]: '',
+      [InputName.email]: '',
+      [InputName.phone]: ''
     },
     mode: 'onBlur',
     resolver: yupResolver(schema)
   });
+
+  useEffect(() => {
+    if (isSuccess) {
+      methods.reset({
+        [InputName.displayName]: user.display_name,
+        [InputName.firstName]: user.first_name,
+        [InputName.secondName]: user.second_name,
+        [InputName.login]: user.login,
+        [InputName.email]: user.email,
+        [InputName.phone]: user.phone
+      })
+    }
+  }, [user])
 
   const showSuccessToast = () => {
     if (isSuccess) {
@@ -69,7 +82,7 @@ const Profile = () => {
   }, [])
 
   return (
-    <div className={styles.center}>
+    <div className='center'>
       <Box sx={{ display: 'flex', flexDirection: 'column' }}>
         <IconButton
           color='primary'
@@ -101,50 +114,98 @@ const Profile = () => {
               className='layout'
             >
               <Grid item xs={12} className='input'>
-                <TextField
-                  type={InputType.text}
+                <Controller
                   name={InputName.displayName}
-                  label={InputLabel.displayName}
+                  control={methods.control}
+                  render={({ field: { ref, ...field } }) => (
+                    <TextField
+                      {...field}
+                      inputRef={ref}
+                      type={InputType.text}
+                      name={InputName.displayName}
+                      label={InputLabel.displayName}
+                    />
+                  )}
                 />
               </Grid>
 
               <Grid item xs={12} className='input'>
-                <TextField
-                  type={InputType.text}
+                <Controller
                   name={InputName.firstName}
-                  label={InputLabel.firstName}
+                  control={methods.control}
+                  render={({ field: { ref, ...field } }) => (
+                    <TextField
+                      {...field}
+                      inputRef={ref}
+                      type={InputType.text}
+                      name={InputName.firstName}
+                      label={InputLabel.firstName}
+                    />
+                  )}
                 />
               </Grid>
 
               <Grid item xs={12} className='input'>
-                <TextField
-                  type={InputType.text}
+                <Controller
                   name={InputName.secondName}
-                  label={InputLabel.secondName}
+                  control={methods.control}
+                  render={({ field: { ref, ...field } }) => (
+                    <TextField
+                      {...field}
+                      inputRef={ref}
+                      type={InputType.text}
+                      name={InputName.secondName}
+                      label={InputLabel.secondName}
+                    />
+                  )}
                 />
               </Grid>
 
               <Grid item xs={12} className='input'>
-                <TextField
-                  type={InputType.text}
+                <Controller
                   name={InputName.login}
-                  label={InputLabel.login}
+                  control={methods.control}
+                  render={({ field: { ref, ...field } }) => (
+                    <TextField
+                      {...field}
+                      inputRef={ref}
+                      type={InputType.text}
+                      name={InputName.login}
+                      label={InputLabel.login}
+                    />
+                  )}
                 />
               </Grid>
 
               <Grid item xs={12} className='input'>
-                <TextField
-                  type={InputType.email}
+                <Controller
                   name={InputName.email}
-                  label={InputLabel.email}
+                  control={methods.control}
+                  render={({ field: { ref, ...field } }) => (
+                    <TextField
+                      {...field}
+                      inputRef={ref}
+                      type={InputType.email}
+                      name={InputName.email}
+                      label={InputLabel.email}
+                    />
+                  )}
                 />
               </Grid>
 
               <Grid item xs={12} className='input'>
-                <TextField
-                  type={InputType.text}
+                <Controller
                   name={InputName.phone}
-                  label={InputLabel.phone}
+                  control={methods.control}
+                  render={({ field: { ref, ...field } }) => (
+                    <TextField
+                      {...field}
+                      inputRef={ref}
+                      type={InputType.text}
+                      name={InputName.phone}
+                      label={InputLabel.phone}
+                    />
+                  )}
                 />
               </Grid>
 

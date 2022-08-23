@@ -1,5 +1,4 @@
 import React from 'react';
-import { Paper } from '@mui/material';
 import PostItem from '../PostItem/PostItem';
 import { IPost } from '../../models/IPosts';
 import {
@@ -10,7 +9,7 @@ import {
 import Loader from '../Loader/Loader';
 
 const PostList = () => {
-  const { data: posts, isLoading } = useGetPostsQuery(1);
+  const { data: posts = [], isLoading } = useGetPostsQuery(1);
   const [removePost] = useRemovePostMutation();
   const [updatePost] = useUpdatePostMutation();
 

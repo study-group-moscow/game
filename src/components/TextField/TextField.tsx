@@ -1,19 +1,20 @@
 import React from 'react';
-import { useFormContext } from 'react-hook-form';
-import Input from '@mui/material/TextField/TextField';
+import { RefCallBack, useFormContext } from 'react-hook-form';
+import MUITextField from '@mui/material/TextField';
 
 interface ITextFieldProps {
   name?: string;
   label?: string;
   type?: string;
   autoFocus?: boolean;
+  inputRef?: RefCallBack;
 }
 
 const TextField = ({ name = '', ...rest }: ITextFieldProps) => {
   const { register, formState: { errors } } = useFormContext();
 
   return (
-    <Input
+    <MUITextField
       {...register(name)}
       {...rest}
       fullWidth

@@ -1,20 +1,12 @@
-#На каком образе работает приложение
-FROM node:14.16.0-slim
+FROM node:16-alpine
 
-#Рабочая папка
 WORKDIR /app
 
-#Копируем package.json, package-lock.json
 COPY package*.json ./
+RUN yarn
+COPY . ./
+RUN yarn run build
+RUN yarn run build:server
 
-#Установка зависимостей
-RUN npm install
-
-#Копируем все файлы
-COPY . .
-CMD ["npm", "run", "build"]
-#Копируем папку dist
-COPY ./dist ./dist
-
-CMD ["npm", "run", "dev"]
-CMD ["npm", "run", "start"]
+EXPOSE 5000
+CMD [ "node", "./dist/server/index.js" ]

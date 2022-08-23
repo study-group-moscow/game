@@ -1,4 +1,4 @@
-import React, { lazy, useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { Checkbox, FormControlLabel, Grid, Typography } from '@mui/material';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -24,7 +24,7 @@ import {
   ENDPOINTS
 } from '../../constants/constants';
 
-const TextField = lazy(() => import(/* webpackChunkName: "TextField" */ '../../components/TextField/TextField'));
+import TextField from '../../components/TextField/TextField'
 
 const Login = () => {
   const methods = useForm<ISignInParams>({
@@ -35,12 +35,12 @@ const Login = () => {
   const navigate = useNavigate();
 
   const [fetchLogin, { isLoading, data, isSuccess }] = useFetchSignInMutation();
-  const { data: oAuthData } = useFetchOauthDataQuery(process.env.REDIRECT_URI ?? '')
+  const { data: oAuthData } = useFetchOauthDataQuery(ENDPOINTS.FRONT_BACK ?? '')
 
   const [passwordShown, setPasswordShown] = useState(false);
 
   const sId = oAuthData?.service_id
-  const url = `${ENDPOINTS.OAUTH}/authorize?response_type=code&client_id=${sId}&redirect_uri=${process.env.REDIRECT_URI}`
+  const url = `${ENDPOINTS.OAUTH}/authorize?response_type=code&client_id=${sId}&redirect_uri=${ENDPOINTS.FRONT_BACK}`
 
   useEffect(() => {
     if (isSuccess) {
