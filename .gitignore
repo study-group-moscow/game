@@ -15,3 +15,6 @@ public
 .env
 .idea/
 .yarn
+/test-results/
+/playwright-report/
+/playwright/.cache/
