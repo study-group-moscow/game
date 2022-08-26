@@ -1,21 +1,7 @@
 # game
 sea battle game
 
-# scripts
-
-```
-yarn run build - build static resources
-```
-
-```
-yarn run build:server - build server locally
-```
-
-```
-yarn run start:server - start server locally
-```
-
-# variables
+# run in development mode
 
 add `.env` with the following variables to the root folder:
 
